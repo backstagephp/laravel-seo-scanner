@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\HtmlSizeCheck;
+use Backstage\Seo\Checks\Performance\HtmlSizeCheck;
 
 it('can perform the HTML size check on HTML that is smaller than 100 KB', function () {
     $check = new HtmlSizeCheck;

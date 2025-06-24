@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Meta\LangCheck;
+use Backstage\Seo\Checks\Meta\LangCheck;
 
 it('can perform the lang check on a page with a lang attribute', function () {
     $check = new LangCheck;

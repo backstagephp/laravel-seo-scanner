@@ -1,13 +1,13 @@
 <?php
 
-namespace Vormkracht10\Seo\Checks\Performance;
+namespace Backstage\Seo\Checks\Performance;
 
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Interfaces\Check;
-use Vormkracht10\Seo\Traits\PerformCheck;
-use Vormkracht10\Seo\Traits\Translatable;
+use Backstage\Seo\Interfaces\Check;
+use Backstage\Seo\Traits\PerformCheck;
+use Backstage\Seo\Traits\Translatable;
 
 class CompressionCheck implements Check
 {

@@ -37,7 +37,7 @@ return [
     | various methods. Feel free to customize it.
     |
     | An example of a check class:
-    | \Vormkracht10\Seo\Checks\Content\BrokenLinkCheck::class
+    | \Backstage\Seo\Checks\Content\BrokenLinkCheck::class
     |
     */
     'checks' => ['*'],
@@ -57,7 +57,7 @@ return [
     |
     */
     'check_paths' => [
-        'Vormkracht10\\Seo\\Checks' => base_path('vendor/vormkracht10/laravel-seo-scanner/src/Checks'),
+        'Backstage\\Seo\\Checks' => base_path('vendor/backstagephp/laravel-seo-scanner/src/Checks'),
     ],
 
     /*

@@ -11,7 +11,7 @@ it('can run the SEO check for routes', function () {
         'https://vormkracht10.nl',
     ]]);
     config(['seo.checks' => [
-        \Vormkracht10\Seo\Checks\Content\MultipleHeadingCheck::class,
+        \Backstage\Seo\Checks\Content\MultipleHeadingCheck::class,
     ]]);
 
     $this->artisan('seo:scan')
@@ -22,7 +22,7 @@ it('can only run configured checks', function () {
     config(['seo.database.save' => false]);
     config(['seo.check_routes' => false]);
     config(['seo.checks' => [
-        \Vormkracht10\Seo\Checks\Content\MultipleHeadingCheck::class,
+        \Backstage\Seo\Checks\Content\MultipleHeadingCheck::class,
     ]]);
 
     $this->artisan('seo:scan-url', ['url' => 'https://vormkracht10.nl'])

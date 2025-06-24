@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\AltTagCheck;
+use Backstage\Seo\Checks\Content\AltTagCheck;
 
 it('can perform the alt tag check with alt', function () {
     $check = new AltTagCheck;

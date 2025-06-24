@@ -1,11 +1,11 @@
 # Laravel SEO Scanner
 
-[![Total Downloads](https://img.shields.io/packagist/dt/vormkracht10/laravel-seo-scanner.svg?style=flat-square)](https://packagist.org/packages/vormkracht10/laravel-seo-scanner)
-[![Tests](https://github.com/vormkracht10/laravel-seo-scanner/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/vormkracht10/laravel-seo-scanner/actions/workflows/run-tests.yml)
-[![PHPStan](https://github.com/vormkracht10/laravel-seo-scanner/actions/workflows/phpstan.yml/badge.svg?branch=main)](https://github.com/vormkracht10/laravel-seo-scanner/actions/workflows/phpstan.yml)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/vormkracht10/laravel-seo-scanner)
-![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/vormkracht10/laravel-seo-scanner)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/vormkracht10/laravel-seo-scanner.svg?style=flat-square)](https://packagist.org/packages/vormkracht10/laravel-seo-scanner)
+[![Total Downloads](https://img.shields.io/packagist/dt/backstagephp/laravel-seo-scanner.svg?style=flat-square)](https://packagist.org/packages/backstagephp/laravel-seo-scanner)
+[![Tests](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/run-tests.yml)
+[![PHPStan](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/phpstan.yml/badge.svg?branch=main)](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/phpstan.yml)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/backstagephp/laravel-seo-scanner)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/backstagephp/laravel-seo-scanner)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/backstagephp/laravel-seo-scanner.svg?style=flat-square)](https://packagist.org/packages/backstagephp/laravel-seo-scanner)
 
 ## Nice to meet you, we're [Vormkracht10](https://vormkracht10.nl)
 
@@ -57,7 +57,7 @@ Easily configure which routes to scan, exclude or include specific checks or eve
 You can install the package via composer:
 
 ```bash
-composer require vormkracht10/laravel-seo-scanner
+composer require backstage/laravel-seo-scanner
 ```
 
 If you want to scan pages that are rendered using Javascript, for example Vue or React, you need to install Puppeteer. You can install it using the following command:
@@ -85,7 +85,7 @@ php artisan migrate
 php artisan vendor:publish --tag="seo-config"
 ```
 
-Click here to see the [config file](https://github.com/vormkracht10/laravel-seo-scanner/blob/too-long-sentences-check/config/seo.php).
+Click here to see the [config file](https://github.com/backstagephp/laravel-seo-scanner/blob/too-long-sentences-check/config/seo.php).
 
 ## Available checks
 
@@ -166,7 +166,7 @@ php artisan seo:scan
 If you want to queue the scan and trigger it manually you can dispatch the 'Scan' job:
 
 ```php
-use Vormkracht10\LaravelSeo\Jobs\Scan;
+use Backstage\LaravelSeo\Jobs\Scan;
 
 Scan::dispatch();
 ```
@@ -216,8 +216,8 @@ For example, you have a `BlogPost` model which has a page for each content item:
 
 ```php
 
-use Vormkracht10\Seo\Traits\HasSeoScore;
-use Vormkracht10\Seo\SeoInterface;
+use Backstage\Seo\Traits\HasSeoScore;
+use Backstage\Seo\SeoInterface;
 
 class BlogPost extends Model implements SeoInterface
 {
@@ -316,7 +316,7 @@ protected $listen = [
 You can retrieve the scans from the database by using the `SeoScan` model. This model is used to save the scans to the database. You can use the `SeoScan` model to retrieve the scans from the database. For example:
 
 ```php
-use Vormkracht10\Seo\Models\SeoScan;
+use Backstage\Seo\Models\SeoScan;
 
 // Get the latest scan
 $scan = SeoScan::latest()->first();
@@ -333,7 +333,7 @@ $totalPages = $scan->pages;
 You can retrieve the scores from the database by using the `SeoScore` model. This model is used to save the scores to the database. You can use the `SeoScore` model to retrieve the scores from the database. For example:
 
 ```php
-use Vormkracht10\Seo\Models\SeoScore;
+use Backstage\Seo\Models\SeoScore;
 
 // Get the latest score
 $score = SeoScore::latest()->first();
@@ -346,8 +346,8 @@ $scan = SeoScan::latest()->with('scores')->first();
 
 You can add your own checks to the package. To do this, you need to create a `check` class in your application.
 
-1. Create a new class in your application which implements the `Vormkracht10\Seo\Interfaces\Check` interface.
-2. Add the `Vormkracht10\Seo\Traits\PerformCheck` trait to your class.
+1. Create a new class in your application which implements the `Backstage\Seo\Interfaces\Check` interface.
+2. Add the `Backstage\Seo\Traits\PerformCheck` trait to your class.
 3. Add the base path of your check classes to the `check_paths` array in the config file.
 
 #### Example
@@ -361,8 +361,8 @@ namespace App\Support\Seo\Checks;
 
 use Illuminate\Http\Client\Response;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Interfaces\Check;
-use Vormkracht10\Seo\Traits\PerformCheck;
+use Backstage\Seo\Interfaces\Check;
+use Backstage\Seo\Traits\PerformCheck;
 
 class CanonicalCheck implements Check
 {
@@ -452,7 +452,7 @@ The config file:
 return [
     // ...
     'check_paths' => [
-        'Vormkracht10\\Seo\\Checks' => base_path('vendor/vormkracht10/laravel-seo-scanner/src/Checks'),
+        'Backstage\\Seo\\Checks' => base_path('vendor/backstagephp/laravel-seo-scanner/src/Checks'),
         'App\\Support\\Seo\\Checks' => base_path('app/Support/Seo/Checks'),
     ],
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vormkracht10\Seo;
+namespace Backstage\Seo;
 
 use Illuminate\Support\Facades\Http as HttpFacade;
 

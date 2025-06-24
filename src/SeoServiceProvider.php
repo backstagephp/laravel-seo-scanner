@@ -1,12 +1,12 @@
 <?php
 
-namespace Vormkracht10\Seo;
+namespace Backstage\Seo;
 
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Vormkracht10\Seo\Commands\SeoScan;
-use Vormkracht10\Seo\Commands\SeoScanUrl;
+use Backstage\Seo\Commands\SeoScan;
+use Backstage\Seo\Commands\SeoScanUrl;
 
 class SeoServiceProvider extends PackageServiceProvider
 {
@@ -34,7 +34,7 @@ class SeoServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub('vormkracht10/laravel-seo');
+                    ->askToStarRepoOnGitHub('backstage/laravel-seo');
             });
     }
 }

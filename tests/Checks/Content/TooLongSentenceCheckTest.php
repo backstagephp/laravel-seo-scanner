@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\TooLongSentenceCheck;
+use Backstage\Seo\Checks\Content\TooLongSentenceCheck;
 
 it('can perform the too long sentence check on page with too long sentence', function () {
     $check = new TooLongSentenceCheck;

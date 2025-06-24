@@ -1,6 +1,6 @@
 <?php
 
-namespace Vormkracht10\Seo;
+namespace Backstage\Seo;
 
 use Illuminate\Http\Client\Response;
 use Illuminate\Pipeline\Pipeline;
@@ -115,7 +115,7 @@ class Seo
                 ->toArray();
         }
 
-        return collect(config('seo.check_paths', ['Vormkracht10\\Seo\\Checks' => __DIR__.'/Checks']))
+        return collect(config('seo.check_paths', ['Backstage\\Seo\\Checks' => __DIR__.'/Checks']))
             ->filter(fn ($dir) => file_exists($dir))
             ->toArray();
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Vormkracht10\Seo\Tests;
+namespace Backstage\Seo\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Vormkracht10\Seo\SeoServiceProvider;
+use Backstage\Seo\SeoServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,7 +13,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Vormkracht10\\Seo\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Backstage\\Seo\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 

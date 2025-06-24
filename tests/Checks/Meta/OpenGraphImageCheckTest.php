@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Meta\OpenGraphImageCheck;
+use Backstage\Seo\Checks\Meta\OpenGraphImageCheck;
 
 it('can perform open graph image check on a page with a broken open graph image', function () {
     $check = new OpenGraphImageCheck;

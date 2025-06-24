@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\JavascriptSizeCheck;
+use Backstage\Seo\Checks\Performance\JavascriptSizeCheck;
 
 /**
  * @see In this test, we pass the javascript file as a response to the check method.

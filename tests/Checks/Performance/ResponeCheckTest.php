@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\ResponseCheck;
+use Backstage\Seo\Checks\Performance\ResponseCheck;
 
 it('can perform response check on a page with a 200 status code', function () {
     $check = new ResponseCheck;

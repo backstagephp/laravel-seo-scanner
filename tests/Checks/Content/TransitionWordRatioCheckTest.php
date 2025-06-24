@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\TransitionWordRatioCheck;
+use Backstage\Seo\Checks\Content\TransitionWordRatioCheck;
 
 it('can perform the transition word ratio check where sentence matches criteria', function () {
     $check = new TransitionWordRatioCheck;

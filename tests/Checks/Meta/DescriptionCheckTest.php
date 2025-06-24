@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Meta\DescriptionCheck;
+use Backstage\Seo\Checks\Meta\DescriptionCheck;
 
 it('can perform the description check on a page with multiple description tags', function () {
     $check = new DescriptionCheck;

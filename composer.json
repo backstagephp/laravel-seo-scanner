@@ -1,12 +1,12 @@
 {
-    "name": "vormkracht10/laravel-seo-scanner",
+    "name": "backstage/laravel-seo-scanner",
     "description": "The Laravel tool to boost the SEO score of your web pages.",
     "keywords": [
         "vormkracht10",
         "laravel",
         "laravel-seo-scanner"
     ],
-    "homepage": "https://github.com/vormkracht10/laravel-seo-scanner",
+    "homepage": "https://github.com/backstagephp/laravel-seo-scanner",
     "license": "MIT",
     "authors": [
         {
@@ -41,8 +41,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Vormkracht10\\Seo\\": "src",
-            "Vormkracht10\\Seo\\Database\\Factories\\": "database/factories"
+            "Backstage\\Seo\\": "src",
+            "Backstage\\Seo\\Database\\Factories\\": "database/factories"
         },
         "files": [
             "src/helpers.php"
@@ -50,7 +50,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Vormkracht10\\Seo\\Tests\\": "tests"
+            "Backstage\\Seo\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -69,10 +69,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Vormkracht10\\Seo\\SeoServiceProvider"
+                "Backstage\\Seo\\SeoServiceProvider"
             ],
             "aliases": {
-                "Seo": "Vormkracht10\\Seo\\Facades\\Seo"
+                "Seo": "Backstage\\Seo\\Facades\\Seo"
             }
         }
     },

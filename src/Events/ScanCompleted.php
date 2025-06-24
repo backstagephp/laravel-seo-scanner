@@ -1,6 +1,6 @@
 <?php
 
-namespace Vormkracht10\Seo\Events;
+namespace Backstage\Seo\Events;
 
 class ScanCompleted
 {

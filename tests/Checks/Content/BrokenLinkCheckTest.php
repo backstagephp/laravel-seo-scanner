@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\BrokenLinkCheck;
+use Backstage\Seo\Checks\Content\BrokenLinkCheck;
 
 it('can perform the broken link check on broken links', function () {
     $check = new BrokenLinkCheck;
