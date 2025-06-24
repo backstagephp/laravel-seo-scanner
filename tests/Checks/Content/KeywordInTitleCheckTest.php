@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\KeywordInTitleCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Content\KeywordInTitleCheck;
 
 it('can perform the keyword in title check on a page with the keyword in the title', function () {
     $check = new KeywordInTitleCheck;

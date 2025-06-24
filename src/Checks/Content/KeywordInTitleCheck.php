@@ -2,12 +2,12 @@
 
 namespace Backstage\Seo\Checks\Content;
 
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Str;
-use Symfony\Component\DomCrawler\Crawler;
 use Backstage\Seo\Interfaces\Check;
 use Backstage\Seo\Traits\PerformCheck;
 use Backstage\Seo\Traits\Translatable;
+use Illuminate\Http\Client\Response;
+use Illuminate\Support\Str;
+use Symfony\Component\DomCrawler\Crawler;
 
 class KeywordInTitleCheck implements Check
 {

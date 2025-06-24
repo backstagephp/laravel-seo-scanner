@@ -1,9 +1,9 @@
 <?php
 
+use Backstage\Seo\Http;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
-use Backstage\Seo\Http;
 
 if (! function_exists('isBrokenLink')) {
     function isBrokenLink(string $url): bool

@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\MixedContentCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Content\MixedContentCheck;
 
 it('can perform the mixed content check on content where http is used', function () {
     $check = new MixedContentCheck;

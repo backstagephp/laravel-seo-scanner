@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\BrokenLinkCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Content\BrokenLinkCheck;
 
 it('can perform the broken link check on broken links', function () {
     $check = new BrokenLinkCheck;

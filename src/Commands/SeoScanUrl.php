@@ -2,8 +2,8 @@
 
 namespace Backstage\Seo\Commands;
 
-use Illuminate\Console\Command;
 use Backstage\Seo\Facades\Seo;
+use Illuminate\Console\Command;
 
 class SeoScanUrl extends Command
 {

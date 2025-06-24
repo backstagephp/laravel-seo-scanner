@@ -2,11 +2,11 @@
 
 namespace Backstage\Seo;
 
+use Backstage\Seo\Commands\SeoScan;
+use Backstage\Seo\Commands\SeoScanUrl;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Backstage\Seo\Commands\SeoScan;
-use Backstage\Seo\Commands\SeoScanUrl;
 
 class SeoServiceProvider extends PackageServiceProvider
 {

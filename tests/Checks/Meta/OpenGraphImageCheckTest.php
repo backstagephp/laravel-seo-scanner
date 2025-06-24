@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Meta\OpenGraphImageCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Meta\OpenGraphImageCheck;
 
 it('can perform open graph image check on a page with a broken open graph image', function () {
     $check = new OpenGraphImageCheck;

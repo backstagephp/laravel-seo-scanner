@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Performance\CssSizeCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Performance\CssSizeCheck;
 
 /**
  * @see In this test, we pass the stylesheet as a response to the check method.

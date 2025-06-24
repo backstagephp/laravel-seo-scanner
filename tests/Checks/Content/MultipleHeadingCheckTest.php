@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\MultipleHeadingCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Content\MultipleHeadingCheck;
 
 it('can perform the multiple heading check test on no headings', function () {
     $check = new MultipleHeadingCheck;

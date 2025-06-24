@@ -2,13 +2,13 @@
 
 namespace Backstage\Seo\Checks\Content;
 
-use Illuminate\Http\Client\Response;
-use Symfony\Component\DomCrawler\Crawler;
 use Backstage\Seo\Helpers\TransitionWords;
 use Backstage\Seo\Interfaces\Check;
 use Backstage\Seo\Traits\Actions;
 use Backstage\Seo\Traits\PerformCheck;
 use Backstage\Seo\Traits\Translatable;
+use Illuminate\Http\Client\Response;
+use Symfony\Component\DomCrawler\Crawler;
 
 class TransitionWordRatioCheck implements Check
 {

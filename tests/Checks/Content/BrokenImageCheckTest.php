@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\BrokenImageCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Content\BrokenImageCheck;
 
 it('can perform the broken image check on broken images', function () {
     $check = new BrokenImageCheck;

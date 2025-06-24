@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Performance\ImageSizeCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Backstage\Seo\Checks\Performance\ImageSizeCheck;
 
 it('can perform the image size check on broken images', function () {
     $check = new ImageSizeCheck;
