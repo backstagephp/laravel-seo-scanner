@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Performance\JavascriptSizeCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\JavascriptSizeCheck;
 
 /**
  * @see In this test, we pass the javascript file as a response to the check method.
@@ -15,7 +15,7 @@ it('can perform the Javascript size check on a page with a Javascript file large
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><script src="https://vormkracht10.nl/script.js"></script></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><script src="https://backstagephp.com/script.js"></script></head><body></body></html>', 200),
     ]);
 
     Http::fake([
@@ -32,7 +32,7 @@ it('can perform the Javascript size check on a page with a Javascript file small
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><script src="https://vormkracht10.nl/script.js"></script></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><script src="https://backstagephp.com/script.js"></script></head><body></body></html>', 200),
     ]);
 
     Http::fake([

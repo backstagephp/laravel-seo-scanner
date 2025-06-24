@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Performance\CompressionCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\CompressionCheck;
 
 it('can perform a compression check on a compressed response', function () {
     $check = new CompressionCheck;

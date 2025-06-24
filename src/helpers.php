@@ -1,9 +1,9 @@
 <?php
 
+use Backstage\Seo\Http;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
-use Vormkracht10\Seo\Http;
 
 if (! function_exists('isBrokenLink')) {
     function isBrokenLink(string $url): bool
@@ -89,7 +89,7 @@ if (! function_exists('getCheckCount')) {
     {
         $checks = collect();
 
-        collect(config('seo.check_paths', ['Vormkracht10\\Seo\\Checks' => __DIR__.'/Checks']))
+        collect(config('seo.check_paths', ['Backstage\\Seo\\Checks' => __DIR__.'/Checks']))
             ->each(function ($path, $baseNamespace) use (&$checks) {
                 if (app()->runningUnitTests()) {
                     $path = __DIR__.'/Checks';

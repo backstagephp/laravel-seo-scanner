@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Meta\TitleLengthCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Meta\TitleLengthCheck;
 
 it('can perform the title length check on a page with a too long title', function () {
     $check = new TitleLengthCheck;

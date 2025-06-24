@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\KeywordInFirstParagraphCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\KeywordInFirstParagraphCheck;
 
 it('can perform the keyword in first paragraph check on a page with the keyword in the first paragraph', function () {
     $check = new KeywordInFirstParagraphCheck;

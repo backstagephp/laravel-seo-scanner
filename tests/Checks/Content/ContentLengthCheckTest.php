@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\ContentLengthCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\ContentLengthCheck;
 
 it('can perform the content length check on content with a length of 2100 characters', function () {
     $check = new ContentLengthCheck;

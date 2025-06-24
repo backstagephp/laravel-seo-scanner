@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Configuration\NoFollowCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Configuration\NoFollowCheck;
 
 it('can perform the nofollow check with robots tag', function () {
     $check = new NoFollowCheck;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Vormkracht10\Seo\Commands;
+namespace Backstage\Seo\Commands;
 
+use Backstage\Seo\Facades\Seo;
 use Illuminate\Console\Command;
-use Vormkracht10\Seo\Facades\Seo;
 
 class SeoScanUrl extends Command
 {

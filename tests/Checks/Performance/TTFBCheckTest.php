@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Performance\TtfbCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\TtfbCheck;
 
 it('can perform the ttfb check', function () {
     $this->markTestSkipped('We can\'t fully rely on this test as we can\'t manually set the ttfb value.');

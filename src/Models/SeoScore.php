@@ -1,6 +1,6 @@
 <?php
 
-namespace Vormkracht10\Seo\Models;
+namespace Backstage\Seo\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;

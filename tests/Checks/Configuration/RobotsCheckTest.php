@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Configuration\RobotsCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Configuration\RobotsCheck;
 
 it('can perform the robots check', function () {
     $check = new RobotsCheck;

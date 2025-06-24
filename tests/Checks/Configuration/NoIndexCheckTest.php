@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Configuration\NoIndexCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Configuration\NoIndexCheck;
 
 it('can perform the noindex check with robots tag', function () {
     $check = new NoIndexCheck;

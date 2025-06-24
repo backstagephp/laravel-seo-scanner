@@ -1,15 +1,15 @@
 <?php
 
+use Backstage\Seo\Checks\Meta\OpenGraphImageCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Meta\OpenGraphImageCheck;
 
 it('can perform open graph image check on a page with a broken open graph image', function () {
     $check = new OpenGraphImageCheck;
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><meta property="og:image" content="https://vormkracht10.nl/images/og-image.png"></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><meta property="og:image" content="https://backstagephp.com/images/og-image.png"></head><body></body></html>', 200),
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());

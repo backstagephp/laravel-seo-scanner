@@ -1,12 +1,12 @@
 <?php
 
-namespace Vormkracht10\Seo\Checks\Configuration;
+namespace Backstage\Seo\Checks\Configuration;
 
+use Backstage\Seo\Interfaces\Check;
+use Backstage\Seo\Traits\PerformCheck;
+use Backstage\Seo\Traits\Translatable;
 use Illuminate\Http\Client\Response;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Interfaces\Check;
-use Vormkracht10\Seo\Traits\PerformCheck;
-use Vormkracht10\Seo\Traits\Translatable;
 
 class NoFollowCheck implements Check
 {

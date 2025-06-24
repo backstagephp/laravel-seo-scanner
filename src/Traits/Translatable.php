@@ -1,6 +1,6 @@
 <?php
 
-namespace Vormkracht10\Seo\Traits;
+namespace Backstage\Seo\Traits;
 
 trait Translatable
 {

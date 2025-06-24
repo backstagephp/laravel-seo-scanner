@@ -1,15 +1,15 @@
 <?php
 
+use Backstage\Seo\Checks\Content\AltTagCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\AltTagCheck;
 
 it('can perform the alt tag check with alt', function () {
     $check = new AltTagCheck;
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body><img src="https://vormkracht10.nl/images/logo.png" width="5" height="5" alt="Vormkracht10 logo"></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head></head><body><img src="https://backstagephp.com/images/logo.png" width="5" height="5" alt="Vormkracht10 logo"></body></html>', 200),
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
@@ -22,7 +22,7 @@ it('can perform the alt tag check without alt', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body><img src="https://vormkracht10.nl/images/logo.png" width="5" height="5"></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head></head><body><img src="https://backstagephp.com/images/logo.png" width="5" height="5"></body></html>', 200),
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
@@ -35,7 +35,7 @@ it('can perform the alt tag check with empty alt', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body><img src="https://vormkracht10.nl/images/logo.png" width="5" height="5" alt=""></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head></head><body><img src="https://backstagephp.com/images/logo.png" width="5" height="5" alt=""></body></html>', 200),
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
