@@ -9,7 +9,7 @@ it('can perform open graph image check on a page with a broken open graph image'
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><meta property="og:image" content="https://vormkracht10.nl/images/og-image.png"></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><meta property="og:image" content="https://backstagephp.com/images/og-image.png"></head><body></body></html>', 200),
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());

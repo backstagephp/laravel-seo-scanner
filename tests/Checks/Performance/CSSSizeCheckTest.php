@@ -15,7 +15,7 @@ it('can perform the CSS size check on a page with a CSS file larger than 15 KB',
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><link rel="stylesheet" href="https://vormkracht10.nl/style.css"></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><link rel="stylesheet" href="https://backstagephp.com/style.css"></head><body></body></html>', 200),
     ]);
 
     Http::fake([
@@ -32,7 +32,7 @@ it('can perform the CSS size check on a page with a CSS file smaller than 15 KB'
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><link rel="stylesheet" href="https://vormkracht10.nl/style.css"></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><link rel="stylesheet" href="https://backstagephp.com/style.css"></head><body></body></html>', 200),
     ]);
 
     Http::fake([

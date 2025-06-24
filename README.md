@@ -7,7 +7,7 @@
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/backstagephp/laravel-seo-scanner)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/backstagephp/laravel-seo-scanner.svg?style=flat-square)](https://packagist.org/packages/backstagephp/laravel-seo-scanner)
 
-## Nice to meet you, we're [Vormkracht10](https://vormkracht10.nl)
+## Nice to meet you, we're [Backstage](https://backstagephp.com)
 
 Hi! We are a web development agency from Nijmegen in the Netherlands and we use Laravel for everything: advanced websites with a lot of bells and whitles and large web applications.
 
@@ -176,7 +176,7 @@ Scan::dispatch();
 Want to get the score of a specific url? Run the following command:
 
 ```bash
-php artisan seo:scan-url https://vormkracht10.nl
+php artisan seo:scan-url https://backstagephp.com
 ```
 
 > Note: The command will only check the SEO score of the url and output the score in the CLI. It will not save the score to the database.
@@ -186,7 +186,7 @@ php artisan seo:scan-url https://vormkracht10.nl
 If you have an SPA application, you can enable javascript rendering. This will use a headless browser to render the content. To enable javascript rendering, set the `javascript` option to `true` in the config file. You can also enable javascript rendering for a single route by adding the `--javascript` option to the command:
 
 ```bash
-php artisan seo:scan-url https://vormkracht10.nl --javascript
+php artisan seo:scan-url https://backstagephp.com --javascript
 ```
 
 > Note: This command will use Puppeteer to render the page. Make sure that you have Puppeteer installed on your system. You can install Puppeteer by running the following command: `npm install puppeteer`. **At this moment it's only available when scanning single routes.**
@@ -233,7 +233,7 @@ class BlogPost extends Model implements SeoInterface
 
     public function getUrlAttribute(): string
     {
-        return 'https://vormkracht10.nl/' . $this->slug;
+        return 'https://backstagephp.com/' . $this->slug;
     }
 }
 ```

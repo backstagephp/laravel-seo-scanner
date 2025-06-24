@@ -195,7 +195,7 @@ return [
         'status_codes' => [],
 
         // If you wish to skip running, list the URLs in the array below.
-        // You can use exact match or wildcards to match on beginning of URLs: https://vormkracht10.nl/directory/*
+        // You can use exact match or wildcards to match on beginning of URLs: https://backstagephp.com/directory/*
         'exclude_links' => [
             //
         ],

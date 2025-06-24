@@ -15,7 +15,7 @@ it('can perform the Javascript size check on a page with a Javascript file large
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><script src="https://vormkracht10.nl/script.js"></script></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><script src="https://backstagephp.com/script.js"></script></head><body></body></html>', 200),
     ]);
 
     Http::fake([
@@ -32,7 +32,7 @@ it('can perform the Javascript size check on a page with a Javascript file small
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><script src="https://vormkracht10.nl/script.js"></script></head><body></body></html>', 200),
+        'vormkracht10.nl' => Http::response('<html><head><script src="https://backstagephp.com/script.js"></script></head><body></body></html>', 200),
     ]);
 
     Http::fake([
