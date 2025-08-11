@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.1|^8.2|^8.3|^8.4",
         "guzzlehttp/guzzle": "^7.5",
         "illuminate/contracts": "^9.0|^10.0|^11.0|^12.0",
         "j0k3r/php-readability": "^2.0",

@@ -33,10 +33,8 @@ class ResponseCheck implements Check
 
     public function check(Response $response, Crawler $crawler): bool
     {
-        /** @phpstan-ignore-next-line */
         $this->actualValue = $response->getStatusCode();
 
-        /** @phpstan-ignore-next-line */
         if ($response->getStatusCode() === 200) {
             return true;
         }

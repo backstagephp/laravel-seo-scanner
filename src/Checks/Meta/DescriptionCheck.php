@@ -44,10 +44,10 @@ class DescriptionCheck implements Check
 
     public function getDescriptionContent(Crawler $crawler): ?string
     {
-        /** @var \DOMElement $node */
+        /** @var \DOMElement|null $node */
         $node = $crawler->filterXPath('//meta[@name="description"]')->getNode(0);
 
-        if ($node instanceof \DOMElement && $node->hasAttribute('content')) {
+        if ($node && $node->hasAttribute('content')) {
             return $node->getAttribute('content');
         }
 
