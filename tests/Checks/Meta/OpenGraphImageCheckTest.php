@@ -14,7 +14,7 @@ it('can perform open graph image check on a page with a broken open graph image'
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
-    
+
     $check->url = 'vormkracht10.nl';
 
     $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
@@ -29,7 +29,7 @@ it('can perform open graph image check on a page without an open graph image', f
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
-    
+
     $check->url = 'vormkracht10.nl';
 
     $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
@@ -46,7 +46,7 @@ it('can perform open graph image check on a page with a working open graph image
     ]);
 
     $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
-    
+
     $check->url = 'vormkracht10.nl';
 
     $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));

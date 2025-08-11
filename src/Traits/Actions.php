@@ -19,7 +19,7 @@ trait Actions
         try {
             $readability = new Readability($body);
             $readability->init();
-            
+
             return $readability->getContent()->textContent;
         } catch (\Exception $e) {
             // If Readability fails, fall back to extracting text from the body
