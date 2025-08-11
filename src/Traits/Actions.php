@@ -16,11 +16,16 @@ trait Actions
             $body = $crawler->filter('body')->html();
         }
 
-        $readability = new Readability($body);
-
-        $readability->init();
-
-        return $readability->getContent()->textContent;
+        try {
+            $readability = new Readability($body);
+            $readability->init();
+            
+            return $readability->getContent()->textContent;
+        } catch (\Exception $e) {
+            // If Readability fails, fall back to extracting text from the body
+            // Remove HTML tags and return plain text
+            return strip_tags($body);
+        }
     }
 
     private function extractPhrases(string $content): array
