@@ -57,7 +57,7 @@ return [
     |
     */
     'check_paths' => [
-        'Backstage\\Seo\\Checks' => base_path('vendor/backstagephp/laravel-seo-scanner/src/Checks'),
+        'Backstage\\Seo\\Checks' => base_path('vendor/backstage/laravel-seo-scanner/src/Checks'),
     ],
 
     /*
