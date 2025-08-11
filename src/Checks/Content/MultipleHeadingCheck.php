@@ -52,7 +52,7 @@ class MultipleHeadingCheck implements Check
             return false;
         }
 
-        if (is_array($content) && count($content) > 1) {
+        if (count($content) > 1) {
             $this->actualValue = $content;
 
             $this->failureReason = __('failed.content.multiple_h1', [

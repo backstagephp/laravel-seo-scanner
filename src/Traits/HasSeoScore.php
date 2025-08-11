@@ -8,6 +8,7 @@ use Backstage\Seo\SeoScore;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+/** @phpstan-ignore-next-line */
 trait HasSeoScore
 {
     public function seoScore(): SeoScore

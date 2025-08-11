@@ -49,8 +49,8 @@ Easily configure which routes to scan, exclude or include specific checks or eve
 
 ## Minimum requirements
 
--   PHP 8.1 or higher
--   Laravel 9.0 or higher
+-   PHP 8.1 or higher (8.1, 8.2, 8.3, 8.4)
+-   Laravel 9.0 or higher (9.x, 10.x, 11.x, 12.x)
 
 ## Installation
 
@@ -62,7 +62,7 @@ composer require backstage/laravel-seo-scanner
 
 If you want to scan pages that are rendered using Javascript, for example Vue or React, you need to install Puppeteer. You can install it using the following command:
 
-> If you want to know how to scan Javascript rendered pages, check out [Scanning routes in an SPA application](#scanning-routes-in-an-spa-application). Want to know more about Puppeteer? Check out the [Puppeteer documentation](https://pptr.dev/). 
+> If you want to know how to scan Javascript rendered pages, check out [Scanning routes in an SPA application](#scanning-routes-in-an-spa-application). Want to know more about Puppeteer? Check out the [Puppeteer documentation](https://pptr.dev/).
 
 ```bash
 npm install puppeteer
@@ -283,6 +283,7 @@ When you want to save the SEO score to the database, you need to set the `save` 
 Optionally you can specify the database connection in the config file. If you want to save the SEO score to a model, you need to add the model to the `models` array in the config file. More information about this can be found in the [Check the SEO score of a model](#check-the-seo-score-of-a-model) section.
 
 #### Pruning the database
+
 Per default the package will prune the database from old scans. You can specify the number of days you want to keep the scans in the database. The default is 30 days.
 
 If you want to prune the database, you need to add the prune command to your `App\Console\Kernel`:
