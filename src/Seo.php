@@ -8,17 +8,17 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Laravel\Prompts\Progress;
 use Spatie\Browsershot\Browsershot;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Finder\Finder;
 
 class Seo
 {
     /**
-     * @var ProgressBar|null The progress bar to use for the checks.
+     * @var Progress|null The progress bar to use for the checks.
      */
-    public ?ProgressBar $progress;
+    public ?Progress $progress;
 
     public string $url;
 
@@ -28,7 +28,7 @@ class Seo
         protected Collection $failed,
     ) {}
 
-    public function check(string $url, ?ProgressBar $progress = null, bool $useJavascript = false): SeoScore
+    public function check(string $url, ?Progress $progress = null, bool $useJavascript = false): SeoScore
     {
         $this->progress = $progress;
         $this->url = $url;

@@ -21,6 +21,7 @@
         "illuminate/contracts": "^9.0|^10.0|^11.0|^12.0",
         "j0k3r/php-readability": "^2.0",
         "jeremykendall/php-domain-parser": "^6.3",
+        "laravel/prompts": "^0.3.2",
         "spatie/browsershot": "^3.0|^4.0|^5.0",
         "spatie/laravel-package-tools": "^1.13",
         "symfony/dom-crawler": "^6.2|^7.0",

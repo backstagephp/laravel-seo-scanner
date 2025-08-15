@@ -5,28 +5,53 @@ namespace Backstage\Seo\Commands;
 use Backstage\Seo\Facades\Seo;
 use Illuminate\Console\Command;
 
+use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\progress;
+use function Laravel\Prompts\text;
+
 class SeoScanUrl extends Command
 {
-    public $signature = 'seo:scan-url {url} {--javascript}';
+    public $signature = 'seo:scan-url {url?} {--javascript}';
 
     public $description = 'Scan the SEO score of a url';
 
     public function handle(): int
     {
-        $this->info('Please wait while we scan your web page...');
-        $this->line('');
+        $url = $this->argument('url') ?? text(
+            label: 'Pleaes enter the url',
+            validate: function (string $value) {
+                try {
+                    if (! \Illuminate\Support\Facades\Http::get($value)->successful()) {
+                        return 'Please enter a valid url.';
+                    }
 
-        $progress = $this->output->createProgressBar(getCheckCount());
+                    return null;
+                } catch (\Exception $e) {
+                    return 'Please enter a valid url.';
+                }
+            }
+        );
+
+        $useJavascript = $this->option('javascript') ?
+            $this->option('javascript') :
+            confirm(
+                label: 'Do you want to use JavaScript?',
+                default: true,
+                yes: 'I do',
+                no: 'I dont'
+            );
+
+        $progress = progress(label: 'Please wait while we scan your web page...', steps: getCheckCount(), hint: $url);
         $progress->start();
 
-        $score = Seo::check($this->argument('url'), $progress, $this->option('javascript'));
+        $score = Seo::check($url, $progress, $useJavascript);
 
         $progress->finish();
 
         $this->line('');
         $this->line('');
         $this->line('-----------------------------------------------------------------------------------------------------------------------------------');
-        $this->line('> '.$this->argument('url').' | <fg=green>'.$score->getSuccessfulChecks()->count().' passed</> <fg=red>'.($score->getFailedChecks()->count().' failed</>'));
+        $this->line('> '.$url.' | <fg=green>'.$score->getSuccessfulChecks()->count().' passed</> <fg=red>'.($score->getFailedChecks()->count().' failed</>'));
         $this->line('-----------------------------------------------------------------------------------------------------------------------------------');
         $this->line('');
 
