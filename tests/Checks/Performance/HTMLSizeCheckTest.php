@@ -9,10 +9,10 @@ it('can perform the HTML size check on HTML that is smaller than 100 KB', functi
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body>abcdefghij</body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head></head><body>abcdefghij</body></html>', 200),
     ]);
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the HTML size check on HTML that is larger than 100 KB', function () {
@@ -20,8 +20,8 @@ it('can perform the HTML size check on HTML that is larger than 100 KB', functio
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body>'.str_repeat('abcdefghij', 10000).'</body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head></head><body>'.str_repeat('abcdefghij', 10000).'</body></html>', 200),
     ]);
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });

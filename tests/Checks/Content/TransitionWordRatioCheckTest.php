@@ -11,7 +11,7 @@ it('can perform the transition word ratio check where sentence matches criteria'
     $body = 'This is the first sentence. This is the second sentence, which contains a transition word. This is the third sentence. This is the fourth sentence, which also contains a transition word. This is the fifth sentence.';
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -22,9 +22,9 @@ it('can perform the transition word ratio check where sentence matches criteria'
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the transition word ratio check where sentence does not match criteria', function () {
@@ -34,7 +34,7 @@ it('can perform the transition word ratio check where sentence does not match cr
     $body = 'Lorem ipsum. Dolor sit amet. This is the next sentence. Fourth sentence. Fifth sentence.';
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -45,9 +45,9 @@ it('can perform the transition word ratio check where sentence does not match cr
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the transition word ratio check on page without content', function () {
@@ -57,7 +57,7 @@ it('can perform the transition word ratio check on page without content', functi
     $body = '';
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -68,7 +68,7 @@ it('can perform the transition word ratio check on page without content', functi
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });

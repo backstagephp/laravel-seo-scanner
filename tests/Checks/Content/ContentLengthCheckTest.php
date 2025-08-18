@@ -9,7 +9,7 @@ it('can perform the content length check on content with a length of 2100 charac
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -20,9 +20,9 @@ it('can perform the content length check on content with a length of 2100 charac
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the content length check on content with less characters', function () {
@@ -30,7 +30,7 @@ it('can perform the content length check on content with less characters', funct
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -41,7 +41,7 @@ it('can perform the content length check on content with less characters', funct
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });

@@ -9,12 +9,12 @@ it('can perform the nofollow check with robots tag', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('', 200, ['X-Robots-Tag' => 'nofollow']),
+        'backstagephp.com' => Http::response('', 200, ['X-Robots-Tag' => 'nofollow']),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the nofollow check with robots metatag', function () {
@@ -22,12 +22,12 @@ it('can perform the nofollow check with robots metatag', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><meta name="robots" content="nofollow"></head></html>', 200),
+        'backstagephp.com' => Http::response('<html><head><meta name="robots" content="nofollow"></head></html>', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the nofollow check with googlebot metatag', function () {
@@ -35,10 +35,10 @@ it('can perform the nofollow check with googlebot metatag', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><meta name="googlebot" content="nofollow"></head></html>', 200),
+        'backstagephp.com' => Http::response('<html><head><meta name="googlebot" content="nofollow"></head></html>', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });

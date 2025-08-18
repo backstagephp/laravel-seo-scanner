@@ -9,12 +9,12 @@ it('can perform the keyword in first paragraph check on a page with the keyword 
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><meta name="keywords" content="vormkracht10, seo, laravel, package"></head><body><p>vormkracht10 is a great company that specializes in SEO and Laravel packages.</p></body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head><meta name="keywords" content="vormkracht10, seo, laravel, package"></head><body><p>vormkracht10 is a great company that specializes in SEO and Laravel packages.</p></body></html>', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the keyword in first paragraph check on a page without the keyword in the first paragraph', function () {
@@ -22,12 +22,12 @@ it('can perform the keyword in first paragraph check on a page without the keywo
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><meta name="keywords" content="seo, laravel, package"></head><body><p>Lorem ipsum dolor sit amet.</p></body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head><meta name="keywords" content="seo, laravel, package"></head><body><p>Lorem ipsum dolor sit amet.</p></body></html>', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the keyword in first paragraph check on a page without keywords', function () {
@@ -35,10 +35,10 @@ it('can perform the keyword in first paragraph check on a page without keywords'
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body></body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head></head><body></body></html>', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });
