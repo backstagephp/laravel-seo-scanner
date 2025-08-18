@@ -200,4 +200,24 @@ return [
             //
         ],
     ],
+
+    'keywords_check' => [
+        // Minimum overall score required to pass the check (0-100)
+        'minimum_score' => 60,
+
+        // Weight for title keyword usage in overall score calculation (0-1)
+        'title_weight' => 0.4,
+
+        // Weight for content keyword usage in overall score calculation (0-1)
+        'content_weight' => 0.6,
+
+        // Whether to use word boundary matching (prevents partial word matches)
+        'use_word_boundaries' => true,
+
+        // Whether to prioritize model keywords over meta keywords when both are available
+        'prioritize_model_keywords' => true,
+
+        // The attribute/column name to use for keywords on models (default: 'keywords')
+        'model_keywords_attribute' => 'keywords',
+    ],
 ];

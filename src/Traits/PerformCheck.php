@@ -10,11 +10,19 @@ trait PerformCheck
 
     public bool $useJavascript = false;
 
+    /**
+     * The current Eloquent model associated with the scan, if any.
+     */
+    public mixed $model = null;
+
     public function __invoke(array $data, Closure $next)
     {
         $this->url = $data['url'] ?? null;
 
         $this->useJavascript = $data['javascriptResponse'] ?? false;
+
+        // Provide model context when available
+        $this->model = $data['model'] ?? null;
 
         if (! in_array('exit', $data)) {
             $result = $this->check($data['response'], $data['crawler']);

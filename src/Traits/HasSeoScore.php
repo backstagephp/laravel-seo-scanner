@@ -13,7 +13,8 @@ trait HasSeoScore
 {
     public function seoScore(): SeoScore
     {
-        return Seo::check(url: $this->url);
+        // Pass the model instance so checks can access model context (e.g., keywords column)
+        return Seo::check(url: $this->url, model: $this);
     }
 
     public function seoScores(): MorphMany

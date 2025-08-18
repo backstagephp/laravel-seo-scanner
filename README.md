@@ -107,8 +107,101 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ Length of the content is at least 2100 characters. <br>
 ✅ No more than 20% of the content contains too long sentences (more than 20 words). <br>
 ✅ A minimum of 30% of the sentences contain a transition word or phrase. <br>
+✅ The page has the keywords from the content model sufficiently applied in the title and content. <br>
 
 > Note: To change the locale of the transition words, you can publish the config file and change the locale in the config file. The default locale is `null` which uses the language of your `app` config. If set to `nl` or `en`, the transition words will be in Dutch or English. If you want to add more locales, you can create a pull request.
+
+#### KeywordsCheck (model-aware)
+
+The KeywordsCheck verifies whether your page sufficiently applies the keywords from your content model in both the `<title>` and the page content.
+
+- **Source of keywords**:
+  - When scanning models, the check uses the model's `keywords` attribute if present. Supported formats:
+    - String: `"laravel, seo, package"`
+    - Array: `["laravel", "seo", "package"]`
+  - Otherwise, it falls back to the `<meta name="keywords" content="...">` tag.
+- **Matching rules**: Configurable word-boundary matching (prevents partial word matches).
+- **Scoring**: Configurable weights for title vs content usage. Default: title (40%) + content (60%). A configurable minimum score is required to pass.
+
+**Configuration options** (in `config/seo.php`):
+
+```php
+'keywords_check' => [
+    // Minimum overall score required to pass the check (0-100)
+    'minimum_score' => 60,
+
+    // Weight for title keyword usage in overall score calculation (0-1)
+    'title_weight' => 0.4,
+
+    // Weight for content keyword usage in overall score calculation (0-1)
+    'content_weight' => 0.6,
+
+    // Whether to use word boundary matching (prevents partial word matches)
+    'use_word_boundaries' => true,
+
+    // Whether to prioritize model keywords over meta keywords when both are available
+    'prioritize_model_keywords' => true,
+
+    // The attribute/column name to use for keywords on models (default: 'keywords')
+    'model_keywords_attribute' => 'keywords',
+],
+```
+
+**How to enable model-based keyword checks**:
+
+1. Register models in `config/seo.php` under `models` to include them in full scans, or call `seoScore()` on a model that uses the `HasSeoScore` trait.
+2. Add a `keywords` attribute on your model (string or array) if you want to provide keywords from your content model instead of the meta tag.
+
+**Example model**:
+
+```php
+use Backstage\Seo\Traits\HasSeoScore;
+
+class BlogPost extends Model
+{
+    use HasSeoScore;
+
+    protected $casts = [
+        'keywords' => 'array', // or store a comma-separated string if you prefer
+    ];
+
+    public function getUrlAttribute(): string
+    {
+        return 'https://example.com/blog/' . $this->slug;
+    }
+}
+```
+
+**Using custom column names**:
+
+If your model uses a different column name for keywords (e.g., `seo_keywords`, `meta_keywords`, etc.), you can configure this in the `config/seo.php` file:
+
+```php
+'keywords_check' => [
+    // ... other options ...
+    'model_keywords_attribute' => 'seo_keywords', // Use 'seo_keywords' column instead of 'keywords'
+],
+```
+
+**Example with custom column**:
+
+```php
+class Article extends Model
+{
+    use HasSeoScore;
+
+    protected $casts = [
+        'seo_keywords' => 'array', // Custom column name
+    ];
+
+    public function getUrlAttribute(): string
+    {
+        return 'https://example.com/articles/' . $this->slug;
+    }
+}
+```
+
+With the configuration above, the KeywordsCheck will look for the `seo_keywords` attribute on your Article model instead of the default `keywords` attribute.
 
 ### Meta
 

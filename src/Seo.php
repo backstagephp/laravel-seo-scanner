@@ -22,16 +22,22 @@ class Seo
 
     public string $url;
 
+    /**
+     * The current Eloquent model (when scanning models) to be passed into checks.
+     */
+    public mixed $model = null;
+
     public function __construct(
         protected Http $http,
         protected Collection $successful,
         protected Collection $failed,
     ) {}
 
-    public function check(string $url, ?ProgressBar $progress = null, bool $useJavascript = false): SeoScore
+    public function check(string $url, ?ProgressBar $progress = null, bool $useJavascript = false, mixed $model = null): SeoScore
     {
         $this->progress = $progress;
         $this->url = $url;
+        $this->model = $model;
 
         try {
             $response = $this->visitPage(url: $url);
@@ -93,6 +99,7 @@ class Seo
                 'crawler' => $crawler,
                 'url' => $this->url,
                 'javascriptResponse' => $javascriptResponse,
+                'model' => $this->model,
             ])
             ->through($checks->keys()->toArray())
             ->then(function ($data) {
