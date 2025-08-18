@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Content\TooLongSentenceCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Content\TooLongSentenceCheck;
 
 it('can perform the too long sentence check on page with too long sentence', function () {
     $check = new TooLongSentenceCheck;
@@ -12,7 +12,7 @@ it('can perform the too long sentence check on page with too long sentence', fun
     $body .= $body; // Needed because we need a ratio of 20% or more.
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -23,9 +23,9 @@ it('can perform the too long sentence check on page with too long sentence', fun
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the too long sentence check on page with no too long sentence', function () {
@@ -35,7 +35,7 @@ it('can perform the too long sentence check on page with no too long sentence', 
     $body = 'One two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen';
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -46,11 +46,11 @@ it('can perform the too long sentence check on page with no too long sentence', 
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $check->check(Http::get('vormkracht10.nl'), $crawler);
+    $check->check(Http::get('backstagephp.com'), $crawler);
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform the too long sentence check on page with no body', function () {
@@ -58,7 +58,7 @@ it('can perform the too long sentence check on page with no body', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response(
+        'backstagephp.com' => Http::response(
             '<html>
                 <head>
                     <title>Test</title>
@@ -67,9 +67,9 @@ it('can perform the too long sentence check on page with no body', function () {
             200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $check->check(Http::get('vormkracht10.nl'), $crawler);
+    $check->check(Http::get('backstagephp.com'), $crawler);
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });

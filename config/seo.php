@@ -37,7 +37,7 @@ return [
     | various methods. Feel free to customize it.
     |
     | An example of a check class:
-    | \Vormkracht10\Seo\Checks\Content\BrokenLinkCheck::class
+    | \Backstage\Seo\Checks\Content\BrokenLinkCheck::class
     |
     */
     'checks' => ['*'],
@@ -57,7 +57,7 @@ return [
     |
     */
     'check_paths' => [
-        'Vormkracht10\\Seo\\Checks' => base_path('vendor/vormkracht10/laravel-seo-scanner/src/Checks'),
+        'Backstage\\Seo\\Checks' => base_path('vendor/backstage/laravel-seo-scanner/src/Checks'),
     ],
 
     /*
@@ -195,7 +195,7 @@ return [
         'status_codes' => [],
 
         // If you wish to skip running, list the URLs in the array below.
-        // You can use exact match or wildcards to match on beginning of URLs: https://vormkracht10.nl/directory/*
+        // You can use exact match or wildcards to match on beginning of URLs: https://backstagephp.com/directory/*
         'exclude_links' => [
             //
         ],

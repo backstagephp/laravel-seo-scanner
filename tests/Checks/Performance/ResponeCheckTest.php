@@ -1,20 +1,20 @@
 <?php
 
+use Backstage\Seo\Checks\Performance\ResponseCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\ResponseCheck;
 
 it('can perform response check on a page with a 200 status code', function () {
     $check = new ResponseCheck;
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body></body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head></head><body></body></html>', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can perform response check on a page with a 404 status code', function () {
@@ -22,10 +22,10 @@ it('can perform response check on a page with a 404 status code', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body></body></html>', 404),
+        'backstagephp.com' => Http::response('<html><head></head><body></body></html>', 404),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com'), $crawler));
 });

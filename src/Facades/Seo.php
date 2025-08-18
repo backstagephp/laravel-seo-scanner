@@ -1,16 +1,16 @@
 <?php
 
-namespace Vormkracht10\Seo\Facades;
+namespace Backstage\Seo\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Vormkracht10\Seo\Seo
+ * @see \Backstage\Seo\Seo
  */
 class Seo extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Vormkracht10\Seo\Seo::class;
+        return \Backstage\Seo\Seo::class;
     }
 }

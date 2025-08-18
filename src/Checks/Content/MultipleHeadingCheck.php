@@ -1,12 +1,12 @@
 <?php
 
-namespace Vormkracht10\Seo\Checks\Content;
+namespace Backstage\Seo\Checks\Content;
 
+use Backstage\Seo\Interfaces\Check;
+use Backstage\Seo\Traits\PerformCheck;
+use Backstage\Seo\Traits\Translatable;
 use Illuminate\Http\Client\Response;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Interfaces\Check;
-use Vormkracht10\Seo\Traits\PerformCheck;
-use Vormkracht10\Seo\Traits\Translatable;
 
 class MultipleHeadingCheck implements Check
 {
@@ -52,7 +52,7 @@ class MultipleHeadingCheck implements Check
             return false;
         }
 
-        if (is_array($content) && count($content) > 1) {
+        if (count($content) > 1) {
             $this->actualValue = $content;
 
             $this->failureReason = __('failed.content.multiple_h1', [

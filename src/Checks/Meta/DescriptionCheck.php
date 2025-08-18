@@ -1,12 +1,12 @@
 <?php
 
-namespace Vormkracht10\Seo\Checks\Meta;
+namespace Backstage\Seo\Checks\Meta;
 
+use Backstage\Seo\Interfaces\Check;
+use Backstage\Seo\Traits\PerformCheck;
+use Backstage\Seo\Traits\Translatable;
 use Illuminate\Http\Client\Response;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Interfaces\Check;
-use Vormkracht10\Seo\Traits\PerformCheck;
-use Vormkracht10\Seo\Traits\Translatable;
 
 class DescriptionCheck implements Check
 {
@@ -44,10 +44,10 @@ class DescriptionCheck implements Check
 
     public function getDescriptionContent(Crawler $crawler): ?string
     {
-        /** @var \DOMElement $node */
+        /** @var \DOMElement|null $node */
         $node = $crawler->filterXPath('//meta[@name="description"]')->getNode(0);
 
-        if ($node instanceof \DOMElement && $node->hasAttribute('content')) {
+        if ($node && $node->hasAttribute('content')) {
             return $node->getAttribute('content');
         }
 

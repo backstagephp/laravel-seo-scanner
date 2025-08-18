@@ -1,8 +1,8 @@
 <?php
 
+use Backstage\Seo\Checks\Performance\CssSizeCheck;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use Vormkracht10\Seo\Checks\Performance\CssSizeCheck;
 
 /**
  * @see In this test, we pass the stylesheet as a response to the check method.
@@ -15,16 +15,16 @@ it('can perform the CSS size check on a page with a CSS file larger than 15 KB',
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><link rel="stylesheet" href="https://vormkracht10.nl/style.css"></head><body></body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head><link rel="stylesheet" href="https://backstagephp.com/style.css"></head><body></body></html>', 200),
     ]);
 
     Http::fake([
-        'vormkracht10.nl/style.css' => Http::response(str_repeat('abcdefghij', 10000), 200),
+        'backstagephp.com/style.css' => Http::response(str_repeat('abcdefghij', 10000), 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertFalse($check->check(Http::get('vormkracht10.nl/style.css'), $crawler));
+    $this->assertFalse($check->check(Http::get('backstagephp.com/style.css'), $crawler));
 });
 
 it('can perform the CSS size check on a page with a CSS file smaller than 15 KB', function () {
@@ -32,16 +32,16 @@ it('can perform the CSS size check on a page with a CSS file smaller than 15 KB'
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head><link rel="stylesheet" href="https://vormkracht10.nl/style.css"></head><body></body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head><link rel="stylesheet" href="https://backstagephp.com/style.css"></head><body></body></html>', 200),
     ]);
 
     Http::fake([
-        'vormkracht10.nl/style.css' => Http::response('abcdefghij', 200),
+        'backstagephp.com/style.css' => Http::response('abcdefghij', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl/style.css'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com/style.css'), $crawler));
 });
 
 it('can perform the CSS size check on a page with no CSS files', function () {
@@ -49,10 +49,10 @@ it('can perform the CSS size check on a page with no CSS files', function () {
     $crawler = new Crawler;
 
     Http::fake([
-        'vormkracht10.nl' => Http::response('<html><head></head><body></body></html>', 200),
+        'backstagephp.com' => Http::response('<html><head></head><body></body></html>', 200),
     ]);
 
-    $crawler->addHtmlContent(Http::get('vormkracht10.nl')->body());
+    $crawler->addHtmlContent(Http::get('backstagephp.com')->body());
 
-    $this->assertTrue($check->check(Http::get('vormkracht10.nl'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });

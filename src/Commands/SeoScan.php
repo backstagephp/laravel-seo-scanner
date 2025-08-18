@@ -1,16 +1,16 @@
 <?php
 
-namespace Vormkracht10\Seo\Commands;
+namespace Backstage\Seo\Commands;
 
+use Backstage\Seo\Events\ScanCompleted;
+use Backstage\Seo\Facades\Seo;
+use Backstage\Seo\Models\SeoScan as SeoScanModel;
+use Backstage\Seo\SeoScore;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Vormkracht10\Seo\Events\ScanCompleted;
-use Vormkracht10\Seo\Facades\Seo;
-use Vormkracht10\Seo\Models\SeoScan as SeoScanModel;
-use Vormkracht10\Seo\SeoScore;
 
 class SeoScan extends Command
 {

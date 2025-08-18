@@ -1,13 +1,14 @@
 <?php
 
-namespace Vormkracht10\Seo\Traits;
+namespace Backstage\Seo\Traits;
 
+use Backstage\Seo\Facades\Seo;
+use Backstage\Seo\Models\SeoScore as SeoScoreModel;
+use Backstage\Seo\SeoScore;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Vormkracht10\Seo\Facades\Seo;
-use Vormkracht10\Seo\Models\SeoScore as SeoScoreModel;
-use Vormkracht10\Seo\SeoScore;
 
+/** @phpstan-ignore-next-line */
 trait HasSeoScore
 {
     public function seoScore(): SeoScore

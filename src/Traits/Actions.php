@@ -1,6 +1,6 @@
 <?php
 
-namespace Vormkracht10\Seo\Traits;
+namespace Backstage\Seo\Traits;
 
 use Illuminate\Http\Client\Response;
 use Readability\Readability;
@@ -16,11 +16,16 @@ trait Actions
             $body = $crawler->filter('body')->html();
         }
 
-        $readability = new Readability($body);
+        try {
+            $readability = new Readability($body);
+            $readability->init();
 
-        $readability->init();
-
-        return $readability->getContent()->textContent;
+            return $readability->getContent()->textContent;
+        } catch (\Exception $e) {
+            // If Readability fails, fall back to extracting text from the body
+            // Remove HTML tags and return plain text
+            return strip_tags($body);
+        }
     }
 
     private function extractPhrases(string $content): array
