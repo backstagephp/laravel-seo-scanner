@@ -78,7 +78,7 @@ class InvalidHeadElementsCheck implements Check
         
         // Extract tags from the cleaned content
         preg_match_all('/<([a-zA-Z][a-zA-Z0-9]*)[^>]*>/i', $headContentWithoutTemplates, $matches);
-        $headTags = $matches[1] ?? [];
+        $headTags = $matches[1];
 
         if (empty($headTags)) {
             // No elements in head section
