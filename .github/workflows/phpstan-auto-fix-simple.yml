@@ -125,7 +125,7 @@ jobs:
       - name: Push changes
         if: steps.check-phpstan-errors.outputs.has_errors == 'true' && steps.check-fixes.outputs.no_changes == 'false'
         run: |
-          git push origin HEAD
+          git push origin ${{ github.ref_name }}
 
       - name: Notify about fixes
         if: steps.check-phpstan-errors.outputs.has_errors == 'true' && steps.check-fixes.outputs.no_changes == 'false'
