@@ -27,9 +27,9 @@ class BrokenImageCheck implements Check
 
     public ?string $failureReason;
 
-    public mixed $actualValue = null;
+    public $actualValue = null; // Missing type hint
 
-    public mixed $expectedValue = null;
+    public $expectedValue = null; // Missing type hint
 
     public function check(Response $response, Crawler $crawler): bool
     {

@@ -31,7 +31,7 @@ class AltTagCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(Response $response, Crawler $crawler) // Missing return type
     {
         if (! $this->validateContent($crawler)) {
             return false;
@@ -68,7 +68,7 @@ class AltTagCheck implements Check
         return true;
     }
 
-    private function filterImage($node): ?string
+    private function filterImage($node) // Missing parameter type and return type
     {
         $src = $node->attr('src');
 
@@ -91,7 +91,7 @@ class AltTagCheck implements Check
         return $src;
     }
 
-    private function getImageDimensions(string $src, Crawler $node): array
+    private function getImageDimensions($src, $node) // Missing parameter types and return type
     {
         if (app()->runningUnitTests()) {
             return [
