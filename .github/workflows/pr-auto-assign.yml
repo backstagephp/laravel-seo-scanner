@@ -49,6 +49,11 @@ jobs:
         with:
           script: |
             const assignee = 'baspa';
+            const prAuthor = context.payload.pull_request.user.login;
+            
+            console.log(`PR Author: ${prAuthor}`);
+            console.log(`Assignee: ${assignee}`);
+            console.log(`Are they the same? ${prAuthor.toLowerCase() === assignee.toLowerCase()}`);
             
             // Always assign as assignee (you can be assigned to your own PR)
             github.rest.issues.addAssignees({
@@ -59,8 +64,8 @@ jobs:
             });
             console.log(`Assigned ${assignee} as assignee`);
             
-            // Only assign reviewer if they are not the PR author
-            if (context.payload.pull_request.user.login !== assignee) {
+            // Only assign reviewer if they are not the PR author (case-insensitive comparison)
+            if (prAuthor.toLowerCase() !== assignee.toLowerCase()) {
               github.rest.pulls.requestReviewers({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
