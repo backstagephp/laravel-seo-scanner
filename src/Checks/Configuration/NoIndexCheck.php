@@ -25,28 +25,23 @@ class NoIndexCheck implements Check
 
     public bool $continueAfterFailure = false;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         if ($response->header('X-Robots-Tag') === 'noindex') {
             $this->failureReason = __('failed.configuration.noindex.tag');
 
             return false;
         }
-
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
         if (! $crawler->filterXPath('//meta[@name="robots"]')->getNode(0) &&
             ! $crawler->filterXPath('//meta[@name="googlebot"]')->getNode(0)
@@ -54,18 +49,14 @@ class NoIndexCheck implements Check
             return true;
         }
 
-        $robotContent = $crawler->filterXPath('//meta[@name="robots"]')->each(function (Crawler $node, $i) {
-            return $node->attr('content');
-        });
+        $robotContent = $crawler->filterXPath('//meta[@name="robots"]')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('content'));
 
-        $googlebotContent = $crawler->filterXPath('//meta[@name="googlebot"]')->each(function (Crawler $node, $i) {
-            return $node->attr('content');
-        });
+        $googlebotContent = $crawler->filterXPath('//meta[@name="googlebot"]')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('content'));
 
         $content = array_merge($robotContent, $googlebotContent);
 
         foreach ($content as $tag) {
-            if (str_contains($tag, 'noindex')) {
+            if (str_contains((string) $tag, 'noindex')) {
                 $this->failureReason = __('failed.configuration.noindex.meta');
 
                 return false;

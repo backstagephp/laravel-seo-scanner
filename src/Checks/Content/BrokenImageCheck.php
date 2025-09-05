@@ -25,37 +25,31 @@ class BrokenImageCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
-    public $actualValue = null; // Missing type hint
+    public $actualValue: mixed; // Missing type hint
 
-    public $expectedValue = null; // Missing type hint
+    public $expectedValue: mixed; // Missing type hint
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $content = $crawler->filterXPath('//img')->each(function (Crawler $node, $i) {
-            return $node->attr('src');
-        });
+        $content = $crawler->filterXPath('//img')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('src'));
 
-        if (! $content) {
+        if ($content === []) {
             return true;
         }
 
         $links = [];
 
-        $content = collect($content)->filter(fn ($value) => $value !== null)
-            ->map(fn ($link) => addBaseIfRelativeUrl($link, $this->url))
-            ->filter(fn ($link) => isBrokenLink($link))
-            ->map(function ($link) use (&$links) {
+        $content = collect($content)->filter(fn ($value): bool => $value !== null)
+            ->map(fn ($link): string => addBaseIfRelativeUrl($link, $this->url))
+            ->filter(fn ($link): bool => isBrokenLink($link))
+            ->map(function (string $link) use (&$links): string {
 
                 $remoteStatus = getRemoteStatus($link);
 

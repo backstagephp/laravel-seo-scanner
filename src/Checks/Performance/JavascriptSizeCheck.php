@@ -25,42 +25,33 @@ class JavascriptSizeCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = 1000000;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         if (app()->runningUnitTests()) {
-            if (strlen($response->body()) > 1000000) {
-                return false;
-            }
-
-            return true;
+            return strlen($response->body()) <= 1000000;
         }
 
         $this->expectedValue = bytesToHumanReadable($this->expectedValue);
-
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $crawler = $crawler->filterXPath('//script')->each(function (Crawler $node, $i) {
-            $src = $node->attr('src');
+        $crawler = $crawler->filterXPath('//script')->each(function (Crawler $crawler, $i) {
+            $src = $crawler->attr('src');
 
             if ($src) {
                 return $src;
             }
         });
 
-        $content = collect($crawler)->filter(fn ($value) => $value !== null)->toArray();
+        $content = collect($crawler)->filter(fn ($value): bool => $value !== null)->toArray();
 
         if (! $content) {
             return true;
@@ -68,7 +59,7 @@ class JavascriptSizeCheck implements Check
 
         $links = [];
 
-        $tooBigLinks = collect($content)->filter(function ($url) use (&$links) {
+        $tooBigLinks = collect($content)->filter(function ($url) use (&$links): bool {
             if (! $url) {
                 return false;
             }
@@ -84,7 +75,7 @@ class JavascriptSizeCheck implements Check
             $size = getRemoteFileSize(url: $url);
 
             if (! $size || $size > 1000000) {
-                $size = $size ? bytesToHumanReadable($size) : 'unknown';
+                $size = $size !== 0 ? bytesToHumanReadable($size) : 'unknown';
 
                 $links[] = $url.' (size: '.$size.')';
 

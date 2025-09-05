@@ -25,24 +25,19 @@ class HtmlSizeCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = 100000;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         $this->expectedValue = bytesToHumanReadable($this->expectedValue);
-
-        if (! $this->validateContent($response)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($response);
     }
 
-    public function validateContent(Response $response): bool
+    public function validateContent(): void(Response $response): bool
     {
         $content = $response->body();
 

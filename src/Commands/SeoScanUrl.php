@@ -11,17 +11,17 @@ class SeoScanUrl extends Command
 
     public $description = 'Scan the SEO score of a url';
 
-    public function handle(): int
+    public function handle(): void(): int
     {
         $this->info('Please wait while we scan your web page...');
         $this->line('');
 
-        $progress = $this->output->createProgressBar(getCheckCount());
-        $progress->start();
+        $progressBar = $this->output->createProgressBar(getCheckCount());
+        $progressBar->start();
 
-        $score = Seo::check($this->argument('url'), $progress, $this->option('javascript'));
+        $score = Seo::check($this->argument('url'), $progressBar, $this->option('javascript'));
 
-        $progress->finish();
+        $progressBar->finish();
 
         $this->line('');
         $this->line('');
@@ -39,8 +39,8 @@ class SeoScanUrl extends Command
             return self::FAILURE;
         }
 
-        $score->getAllChecks()->each(function ($checks, $type) {
-            $checks->each(function ($check) use ($type) {
+        $score->getAllChecks()->each(function ($checks, $type): void {
+            $checks->each(function ($check) use ($type): void {
                 if ($type == 'failed') {
                     $this->line('<fg=red>✘ '.$check->title.' failed.</>');
 

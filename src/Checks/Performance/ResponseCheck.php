@@ -25,13 +25,13 @@ class ResponseCheck implements Check
 
     public bool $continueAfterFailure = false;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = 200;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         $this->actualValue = $response->getStatusCode();
 

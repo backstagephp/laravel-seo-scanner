@@ -25,37 +25,33 @@ class OpenGraphImageCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $crawler = $crawler->filterXPath('//meta')->each(function (Crawler $node, $i) {
-            $property = $node->attr('property');
-            $content = $node->attr('content');
+        $crawler = $crawler->filterXPath('//meta')->each(function (Crawler $crawler, $i) {
+            $property = $crawler->attr('property');
+            $content = $crawler->attr('content');
 
             if ($property === 'og:image') {
                 return $content;
             }
         });
 
-        $content = (string) collect($crawler)->first(fn ($value) => $value !== null);
+        $content = (string) collect($crawler)->first(fn ($value): bool => $value !== null);
 
         $this->actualValue = $content;
 
-        if (! $content) {
+        if ($content === '' || $content === '0') {
             $this->failureReason = __('failed.meta.open_graph_image');
 
             return false;

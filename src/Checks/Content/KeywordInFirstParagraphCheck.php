@@ -26,13 +26,13 @@ class KeywordInFirstParagraphCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         if (! $this->validateContent($crawler)) {
             $this->failureReason = __('failed.meta.keyword_in_first_paragraph_check');
@@ -43,11 +43,11 @@ class KeywordInFirstParagraphCheck implements Check
         return true;
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
         $keywords = $this->getKeywords($crawler);
 
-        if (! $keywords) {
+        if ($keywords === []) {
             return false;
         }
 
@@ -58,30 +58,25 @@ class KeywordInFirstParagraphCheck implements Check
         if (! $firstParagraph) {
             return false;
         }
-
-        if (! Str::contains($firstParagraph, $keywords)) {
-            return false;
-        }
-
-        return true;
+        return Str::contains($firstParagraph, $keywords);
     }
 
-    public function getFirstParagraphContent(Crawler $crawler): ?string
+    public function getFirstParagraphContent(): void(Crawler $crawler): ?string
     {
         $node = $crawler->filterXPath('//p')->getNode(0);
 
-        if (! $node) {
+        if (!$node instanceof \DOMNode) {
             return null;
         }
 
         return $crawler->filterXPath('//p')->text();
     }
 
-    public function getKeywords(Crawler $crawler): array
+    public function getKeywords(): void(Crawler $crawler): array
     {
         $node = $crawler->filterXPath('//meta[@name="keywords"]')->getNode(0);
 
-        if (! $node) {
+        if (!$node instanceof \DOMNode) {
             return [];
         }
 

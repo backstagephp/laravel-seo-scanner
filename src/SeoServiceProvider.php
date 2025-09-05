@@ -10,7 +10,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class SeoServiceProvider extends PackageServiceProvider
 {
-    public function configurePackage(Package $package): void
+    public function configurePackage(): void(Package $package): void
     {
         $package
             ->name('laravel-seo')
@@ -29,8 +29,8 @@ class SeoServiceProvider extends PackageServiceProvider
         }
 
         $package
-            ->hasInstallCommand(function (InstallCommand $command) {
-                $command
+            ->hasInstallCommand(function (InstallCommand $installCommand): void {
+                $installCommand
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
