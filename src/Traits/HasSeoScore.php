@@ -11,27 +11,27 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 /** @phpstan-ignore-next-line */
 trait HasSeoScore
 {
-    public function seoScore(): SeoScore
+    public function seoScore(): void(): void(): SeoScore
     {
         return Seo::check(url: $this->url);
     }
 
-    public function seoScores(): MorphMany
+    public function seoScores(): void(): void(): MorphMany
     {
         return $this->morphMany(SeoScoreModel::class, 'model');
     }
 
-    public function scopeWithSeoScores(Builder $query): Builder
+    public function scopeWithSeoScores(): void(): void(Builder $builder): Builder
     {
-        return $query->whereHas('seoScores')->with('seoScores');
+        return $builder->whereHas('seoScores')->with('seoScores');
     }
 
-    public function getCurrentScore(): int
+    public function getCurrentScore(): void(): void(): int
     {
         return $this->seoScore()->getScore();
     }
 
-    public function getCurrentScoreDetails(): array
+    public function getCurrentScoreDetails(): void(): void(): array
     {
         return $this->seoScore()->getScoreDetails();
     }
