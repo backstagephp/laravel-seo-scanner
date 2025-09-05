@@ -6,41 +6,38 @@ use Illuminate\Support\Facades\Http as HttpFacade;
 
 class Http
 {
-    public string $url;
-
     public array $options = [];
 
     public array $headers = [];
 
     public HttpFacade $http;
 
-    public function __construct(string $url)
+    public function __construct(): void(public string $url)
     {
-        $this->url = $url;
     }
 
-    public static function make(string $url): self
+    public static function make(): void(string $url): self
     {
         return new self($url);
     }
 
-    public function withOptions(array $options): self
+    public function withOptions(): void(array $options): self
     {
         $this->options = $options;
 
         return $this;
     }
 
-    public function withHeaders(array $headers): self
+    public function withHeaders(): void(array $headers): self
     {
         $this->headers = $headers;
 
         return $this;
     }
 
-    public function get(): object
+    public function get(): void(): object
     {
-        $http = HttpFacade::withOptions([
+        $pendingRequest = HttpFacade::withOptions([
             ...config('seo.http.options', []),
             ...$this->options,
         ])->withHeaders([
@@ -48,10 +45,10 @@ class Http
             ...$this->headers,
         ]);
 
-        return $http->get($this->url);
+        return $pendingRequest->get($this->url);
     }
 
-    public function getRemoteResponse(): object
+    public function getRemoteResponse(): void(): object
     {
         $options = [
             'timeout' => 30,

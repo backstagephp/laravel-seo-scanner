@@ -25,43 +25,33 @@ class CssSizeCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = 15000;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         $this->expectedValue = bytesToHumanReadable($this->expectedValue);
-
         if (app()->runningUnitTests()) {
-            if (strlen($response->body()) > 15000) {
-                return false;
-            }
-
-            return true;
+            return strlen($response->body()) <= 15000;
         }
-
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $crawler = $crawler->filterXPath('//link')->each(function (Crawler $node, $i) {
-            $rel = $node->attr('rel');
-            $href = $node->attr('href');
+        $crawler = $crawler->filterXPath('//link')->each(function (Crawler $crawler, $i) {
+            $rel = $crawler->attr('rel');
+            $href = $crawler->attr('href');
 
             if ($rel === 'stylesheet') {
                 return $href;
             }
         });
 
-        $content = collect($crawler)->filter(fn ($value) => $value !== null)->toArray();
+        $content = collect($crawler)->filter(fn ($value): bool => $value !== null)->toArray();
 
         if (! $content) {
             return true;
@@ -69,7 +59,7 @@ class CssSizeCheck implements Check
 
         $links = [];
 
-        $tooBigLinks = collect($content)->filter(function ($url) use (&$links) {
+        $tooBigLinks = collect($content)->filter(function ($url) use (&$links): bool {
             if (! str_contains($url, 'http')) {
                 $url = url($url);
             }
@@ -81,7 +71,7 @@ class CssSizeCheck implements Check
             $size = getRemoteFileSize(url: $url);
 
             if (! $size || $size > 15000) {
-                $size = $size ? bytesToHumanReadable($size) : 'unknown';
+                $size = $size !== 0 ? bytesToHumanReadable($size) : 'unknown';
 
                 $links[] = $url.' (size: '.$size.')';
 

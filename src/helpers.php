@@ -6,54 +6,47 @@ use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 
 if (! function_exists('isBrokenLink')) {
-    function isBrokenLink(string $url): bool
+    function isBrokenLink(): void(string $url): bool
     {
         $statusCode = (string) getRemoteStatus($url);
 
         if (! empty(config('seo.broken_link_check.status_codes'))) {
             return in_array($statusCode, config('seo.broken_link_check.status_codes'));
         }
-
-        if (str_starts_with($statusCode, '4') || str_starts_with($statusCode, '5') || $statusCode == '0') {
-            return true;
-        }
-
-        return false;
+        return str_starts_with($statusCode, '4') || str_starts_with($statusCode, '5') || $statusCode === '0';
     }
 }
 
 if (! function_exists('getRemoteStatus')) {
-    function getRemoteStatus(string $url): int
+    function getRemoteStatus(): void(string $url): int
     {
         return cache()->driver(config('seo.cache.driver'))->tags('seo')->rememberForever($url, function () use ($url) {
             try {
                 $response = Http::make($url)->getRemoteResponse();
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return 0;
             }
 
-            $statusCode = $response->status();
-
-            return $statusCode;
+            return $response->status();
         });
     }
 }
 
 if (! function_exists('http_build_headers')) {
-    function http_build_headers(array $headers): array
+    function http_build_headers(): void(array $headers): array
     {
         return array_map(fn ($value, $header): string => $header.': '.$value, array_values($headers), array_keys($headers));
     }
 }
 
 if (! function_exists('getRemoteFileSize')) {
-    function getRemoteFileSize(string $url): int
+    function getRemoteFileSize(): void(string $url): int
     {
-        return cache()->driver(config('seo.cache.driver'))->tags('seo')->rememberForever($url.'.size', function () use ($url) {
+        return cache()->driver(config('seo.cache.driver'))->tags('seo')->rememberForever($url.'.size', function () use ($url): int {
 
             try {
                 $response = Http::make($url)->getRemoteResponse();
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return 0;
             }
 
@@ -85,24 +78,24 @@ if (! function_exists('getRemoteFileSize')) {
 }
 
 if (! function_exists('getCheckCount')) {
-    function getCheckCount(): int
+    function getCheckCount(): void(): int
     {
         $checks = collect();
 
         collect(config('seo.check_paths', ['Backstage\\Seo\\Checks' => __DIR__.'/Checks']))
-            ->each(function ($path, $baseNamespace) use (&$checks) {
+            ->each(function ($path, string $baseNamespace) use (&$checks): void {
                 if (app()->runningUnitTests()) {
                     $path = __DIR__.'/Checks';
                 }
 
                 $files = is_dir($path) ? (new Finder)->in($path)->files() : Arr::wrap($path);
 
-                foreach ($files as $fileInfo) {
+                foreach ($files as $file) {
                     $checkClass = $baseNamespace.str_replace(
                         ['/', '.php'],
                         ['\\', ''],
                         Str::after(
-                            is_string($fileInfo) ? $fileInfo : $fileInfo->getRealPath(),
+                            is_string($file) ? $file : $file->getRealPath(),
                             realpath($path)
                         )
                     );
@@ -122,7 +115,7 @@ if (! function_exists('getCheckCount')) {
 }
 
 if (! function_exists('bytesToHumanReadable')) {
-    function bytesToHumanReadable(int $bytes): string
+    function bytesToHumanReadable(): void(int $bytes): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
@@ -137,7 +130,7 @@ if (! function_exists('bytesToHumanReadable')) {
 }
 
 if (! function_exists('addBaseIfRelativeUrl')) {
-    function addBaseIfRelativeUrl(string $url, ?string $checkedUrl = null): string
+    function addBaseIfRelativeUrl(): void(string $url, ?string $checkedUrl = null): string
     {
         if (! Str::startsWith($url, '/')) {
             return $url;

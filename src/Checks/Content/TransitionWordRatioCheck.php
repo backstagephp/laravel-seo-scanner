@@ -28,26 +28,22 @@ class TransitionWordRatioCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($response, $crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($response, $crawler);
     }
 
-    public function validateContent(Response $response, Crawler $crawler): bool
+    public function validateContent(): void(Response $response, Crawler $crawler): bool
     {
         $content = $this->getTextContent($response, $crawler);
 
-        if ($content == 'Sorry, Readability was unable to parse this page for content.') {
+        if ($content === 'Sorry, Readability was unable to parse this page for content.') {
             $this->failureReason = __('failed.content.length.parse');
 
             return false;
@@ -68,11 +64,11 @@ class TransitionWordRatioCheck implements Check
         return true;
     }
 
-    public function calculatePercentageOfTransitionWordsInContent($content, $transitionWords)
+    public function calculatePercentageOfTransitionWordsInContent(): void(string $content, $transitionWords): int|float
     {
         $phrases = $this->extractPhrases($content);
 
-        if (count($phrases) === 0) {
+        if ($phrases === []) {
             $this->actualValue = 0;
             $this->failureReason = __('failed.content.transition_words_ratio_check.no_phrases_found');
 
@@ -88,7 +84,7 @@ class TransitionWordRatioCheck implements Check
         return round($phrasesWithTransitionWord / count($phrases) * 100, 0, PHP_ROUND_HALF_UP);
     }
 
-    public function calculateNumberOfPhrasesWithTransitionWord(string $content, string $transitionWord): int
+    public function calculateNumberOfPhrasesWithTransitionWord(): void(string $content, string $transitionWord): int
     {
         preg_match_all('/\b[\w\s]+\b/', $content, $matches);
 
