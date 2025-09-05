@@ -31,7 +31,7 @@ class ResponseCheck implements Check
 
     public mixed $expectedValue = 200;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         $this->actualValue = $response->getStatusCode();
 

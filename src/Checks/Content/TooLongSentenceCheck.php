@@ -33,12 +33,12 @@ class TooLongSentenceCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         return $this->validateContent($response, $crawler);
     }
 
-    public function validateContent(): void(Response $response, Crawler $crawler): bool
+    public function validateContent(): void(): void(Response $response, Crawler $crawler): bool
     {
         $phrases = $this->extractPhrases(
             $this->getTextContent($response, $crawler)
@@ -72,7 +72,7 @@ class TooLongSentenceCheck implements Check
         return true;
     }
 
-    private function calculateSentencesWithTooManyWords(): void(array $sentences): array
+    private function calculateSentencesWithTooManyWords(): void(): void(array $sentences): array
     {
         $tooLongSentences = [];
 

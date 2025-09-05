@@ -32,7 +32,7 @@ class RobotsCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         $url = $response->transferStats?->getHandlerStats()['url'] ?? null;
 

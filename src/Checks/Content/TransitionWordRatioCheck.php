@@ -34,12 +34,12 @@ class TransitionWordRatioCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         return $this->validateContent($response, $crawler);
     }
 
-    public function validateContent(): void(Response $response, Crawler $crawler): bool
+    public function validateContent(): void(): void(Response $response, Crawler $crawler): bool
     {
         $content = $this->getTextContent($response, $crawler);
 
@@ -64,7 +64,7 @@ class TransitionWordRatioCheck implements Check
         return true;
     }
 
-    public function calculatePercentageOfTransitionWordsInContent(): void(string $content, $transitionWords): int|float
+    public function calculatePercentageOfTransitionWordsInContent(): void(): void(string $content, $transitionWords): int|float
     {
         $phrases = $this->extractPhrases($content);
 
@@ -84,7 +84,7 @@ class TransitionWordRatioCheck implements Check
         return round($phrasesWithTransitionWord / count($phrases) * 100, 0, PHP_ROUND_HALF_UP);
     }
 
-    public function calculateNumberOfPhrasesWithTransitionWord(): void(string $content, string $transitionWord): int
+    public function calculateNumberOfPhrasesWithTransitionWord(): void(): void(string $content, string $transitionWord): int
     {
         preg_match_all('/\b[\w\s]+\b/', $content, $matches);
 

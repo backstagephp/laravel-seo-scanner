@@ -26,7 +26,7 @@ class SeoScore extends Model
         'checks' => 'array',
     ];
 
-    public function __construct(): void(array $attributes = [])
+    public function __construct(): void(): void(array $attributes = [])
     {
         if ($this->connection === null) {
             $this->setConnection(config('seo.database.connection'));
@@ -37,12 +37,12 @@ class SeoScore extends Model
         parent::__construct($attributes);
     }
 
-    public function model(): void(): MorphTo
+    public function model(): void(): void(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function scan(): void(): BelongsTo
+    public function scan(): void(): void(): BelongsTo
     {
         return $this->belongsTo(SeoScan::class);
     }

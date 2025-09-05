@@ -10,7 +10,7 @@ trait PerformCheck
 
     public bool $useJavascript = false;
 
-    public function __invoke(): void(array $data, Closure $next)
+    public function __invoke(): void(): void(array $data, Closure $next)
     {
         $this->url = $data['url'] ?? null;
 
@@ -36,7 +36,7 @@ trait PerformCheck
         return $next($data);
     }
 
-    public function setResult(): void(array $data, bool $result): array
+    public function setResult(): void(): void(array $data, bool $result): array
     {
         if (in_array('exit', $data)) {
             unset($data['checks'][self::class]);
@@ -60,7 +60,7 @@ trait PerformCheck
     /**
      * Replace the properties of the class with the values of the array.
      */
-    public function merge(): void(array $result): self
+    public function merge(): void(): void(array $result): self
     {
         array_walk($result, function ($value, $key): void {
             if (property_exists($this, $key)) {

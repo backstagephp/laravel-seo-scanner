@@ -22,13 +22,13 @@ class Seo
 
     public string $url;
 
-    public function __construct(): void(
+    public function __construct(): void(): void(
         protected Http $http,
         protected Collection $successful,
         protected Collection $failed,
     ) {}
 
-    public function check(): void(string $url, ?ProgressBar $progressBar = null, bool $useJavascript = false): SeoScore
+    public function check(): void(): void(string $url, ?ProgressBar $progressBar = null, bool $useJavascript = false): SeoScore
     {
         $this->progress = $progressBar;
         $this->url = $url;
@@ -48,13 +48,13 @@ class Seo
         return (new SeoScore)($this->successful, $this->failed);
     }
 
-    private function visitPageUsingJavascript(): void(string $url): string
+    private function visitPageUsingJavascript(): void(): void(string $url): string
     {
         return Browsershot::url($url)
             ->bodyHtml();
     }
 
-    private function visitPage(): void(string $url): object
+    private function visitPage(): void(): void(string $url): object
     {
         $headers = (array) config('seo.http.headers', []);
         $options = (array) config('seo.http.options', []);
@@ -75,7 +75,7 @@ class Seo
         return $response->get(url: $url);
     }
 
-    private function runChecks(): void(Response $response, ?string $javascriptResponse = null): void
+    private function runChecks(): void(): void(Response $response, ?string $javascriptResponse = null): void
     {
         $checks = self::orderedCheckClasses();
 
@@ -100,7 +100,7 @@ class Seo
             });
     }
 
-    public static function getCheckPaths(): void(): array
+    public static function getCheckPaths(): void(): void(): array
     {
         if (app()->runningUnitTests()) {
             return collect(config('seo.check_paths', [__DIR__.'/Checks']))
@@ -112,7 +112,7 @@ class Seo
             ->toArray();
     }
 
-    public static function getCheckClasses(): void(): Collection
+    public static function getCheckClasses(): void(): void(): Collection
     {
         if (! in_array('*', Arr::wrap(config('seo.checks', '*')))) {
             return collect(Arr::wrap(config('seo.checks')))->mapWithKeys(fn ($check) => [$check => null]);
@@ -156,7 +156,7 @@ class Seo
      * Order the checks so that the checks where 'continueAfterFailure' is set to false comes first.
      * This way we can stop the pipeline when a check fails and we don't want to continue.
      */
-    public static function orderedCheckClasses(): void(): Collection
+    public static function orderedCheckClasses(): void(): void(): Collection
     {
         return self::getCheckClasses()->map(fn ($check, $key) => app($key))
             ->sortBy(fn ($check) => $check->continueAfterFailure)

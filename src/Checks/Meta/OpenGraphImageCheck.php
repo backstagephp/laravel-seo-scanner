@@ -31,12 +31,12 @@ class OpenGraphImageCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         return $this->validateContent($crawler);
     }
 
-    public function validateContent(): void(Crawler $crawler): bool
+    public function validateContent(): void(): void(Crawler $crawler): bool
     {
         $crawler = $crawler->filterXPath('//meta')->each(function (Crawler $crawler, $i) {
             $property = $crawler->attr('property');

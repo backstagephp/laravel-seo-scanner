@@ -32,7 +32,7 @@ class KeywordInFirstParagraphCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         if (! $this->validateContent($crawler)) {
             $this->failureReason = __('failed.meta.keyword_in_first_paragraph_check');
@@ -43,7 +43,7 @@ class KeywordInFirstParagraphCheck implements Check
         return true;
     }
 
-    public function validateContent(): void(Crawler $crawler): bool
+    public function validateContent(): void(): void(Crawler $crawler): bool
     {
         $keywords = $this->getKeywords($crawler);
 
@@ -61,7 +61,7 @@ class KeywordInFirstParagraphCheck implements Check
         return Str::contains($firstParagraph, $keywords);
     }
 
-    public function getFirstParagraphContent(): void(Crawler $crawler): ?string
+    public function getFirstParagraphContent(): void(): void(Crawler $crawler): ?string
     {
         $node = $crawler->filterXPath('//p')->getNode(0);
 
@@ -72,7 +72,7 @@ class KeywordInFirstParagraphCheck implements Check
         return $crawler->filterXPath('//p')->text();
     }
 
-    public function getKeywords(): void(Crawler $crawler): array
+    public function getKeywords(): void(): void(Crawler $crawler): array
     {
         $node = $crawler->filterXPath('//meta[@name="keywords"]')->getNode(0);
 

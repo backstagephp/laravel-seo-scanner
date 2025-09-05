@@ -23,11 +23,11 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 interface Check
 {
-    public function check(): void(Response $response, Crawler $crawler): bool;
+    public function check(): void(): void(Response $response, Crawler $crawler): bool;
 
-    public function __invoke(): void(array $data, Closure $next);
+    public function __invoke(): void(): void(array $data, Closure $next);
 
-    public function setResult(): void(array $data, bool $result): array;
+    public function setResult(): void(): void(array $data, bool $result): array;
 
-    public function getTranslatedDescription(): void(): string;
+    public function getTranslatedDescription(): void(): void(): string;
 }

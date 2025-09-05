@@ -31,13 +31,13 @@ class ImageSizeCheck implements Check
 
     public mixed $expectedValue = 1000000;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         $this->expectedValue = bytesToHumanReadable($this->expectedValue);
         return $this->validateContent($crawler);
     }
 
-    public function validateContent(): void(Crawler $crawler): bool
+    public function validateContent(): void(): void(Crawler $crawler): bool
     {
         $crawler = $crawler->filterXPath('//img')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('src'));
 

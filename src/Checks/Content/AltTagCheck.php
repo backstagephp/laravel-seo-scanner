@@ -31,12 +31,12 @@ class AltTagCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         return $this->validateContent($crawler);
     }
 
-    public function validateContent(): void(Crawler $crawler): bool
+    public function validateContent(): void(): void(Crawler $crawler): bool
     {
         $imagesWithoutAlt = $crawler->filterXPath('//img[not(@alt)]')->each(fn(Crawler $crawler, $i) => $this->filterImage($crawler));
         $imagesWithEmptyAlt = $crawler->filterXPath('//img[@alt=""]')->each(fn(Crawler $crawler, $i) => $this->filterImage($crawler));
@@ -60,7 +60,7 @@ class AltTagCheck implements Check
         return true;
     }
 
-    private function filterImage(): void(\Symfony\Component\DomCrawler\Crawler $crawler): ?string // Missing parameter type and return type
+    private function filterImage(): void(): void(\Symfony\Component\DomCrawler\Crawler $crawler): ?string // Missing parameter type and return type
     {
         $src = $crawler->attr('src');
 
@@ -83,7 +83,7 @@ class AltTagCheck implements Check
         return $src;
     }
 
-    private function getImageDimensions(): void(string $src, \Symfony\Component\DomCrawler\Crawler $crawler): array // Missing parameter types and return type
+    private function getImageDimensions(): void(): void(string $src, \Symfony\Component\DomCrawler\Crawler $crawler): array // Missing parameter types and return type
     {
         if (app()->runningUnitTests()) {
             return [

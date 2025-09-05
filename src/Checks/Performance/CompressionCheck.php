@@ -32,7 +32,7 @@ class CompressionCheck implements Check
 
     public mixed $expectedValue = ['gzip', 'deflate'];
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         $encodingHeader = collect($response->headers())->filter(function ($value, $key) {
             $key = strtolower($key);

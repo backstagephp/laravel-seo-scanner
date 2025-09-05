@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  */
 class Seo extends Facade
 {
-    protected static function getFacadeAccessor(): void()
+    protected static function getFacadeAccessor(): void(): void()
     {
         return \Backstage\Seo\Seo::class;
     }

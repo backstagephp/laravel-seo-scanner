@@ -49,12 +49,12 @@ class TransitionWords
         ],
     ];
 
-    public static function getTransitionWords(): void(): array
+    public static function getTransitionWords(): void(): void(): array
     {
         return self::$transitionWords;
     }
 
-    public static function getTransitionWordsOnly(): void(?string $locale = null): array
+    public static function getTransitionWordsOnly(): void(): void(?string $locale = null): array
     {
         $transitionWords = self::$transitionWords;
 
@@ -69,7 +69,7 @@ class TransitionWords
         return $words;
     }
 
-    public static function getTransitionWordsByType(): void(string $type): array
+    public static function getTransitionWordsByType(): void(): void(string $type): array
     {
         return self::$transitionWords[$type];
     }
