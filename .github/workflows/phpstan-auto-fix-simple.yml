@@ -26,6 +26,7 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_branch || github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -58,12 +59,11 @@ jobs:
           echo "errors=$(./vendor/bin/phpstan analyse --memory-limit=512M --error-format=json 2>/dev/null || echo '[]')" >> $GITHUB_OUTPUT
           echo "error_count=$(echo '${{ steps.phpstan-details.outputs.errors }}' | jq length 2>/dev/null || echo '0')" >> $GITHUB_OUTPUT
 
-      - name: Create fix branch
+      - name: Setup git
         if: steps.check-phpstan-errors.outputs.has_errors == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git checkout -b fix/phpstan-issues-${{ github.run_number }}
 
       - name: Apply Rector and PHPStan fixes
         if: steps.check-phpstan-errors.outputs.has_errors == 'true'
@@ -125,90 +125,17 @@ jobs:
       - name: Push changes
         if: steps.check-phpstan-errors.outputs.has_errors == 'true' && steps.check-fixes.outputs.no_changes == 'false'
         run: |
-          git push origin fix/phpstan-issues-${{ github.run_number }}
+          git push origin HEAD
 
-      - name: Create Pull Request
+      - name: Notify about fixes
         if: steps.check-phpstan-errors.outputs.has_errors == 'true' && steps.check-fixes.outputs.no_changes == 'false'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: pr } = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: '🔧 Auto-fix PHPStan Issues',
-              head: 'fix/phpstan-issues-${{ github.run_number }}',
-              base: '${{ github.event.workflow_run.head_branch || github.ref_name }}',
-              body: `## 🔧 Automatically Fixed PHPStan Issues
-
-              This PR was automatically created to fix PHPStan static analysis issues detected in the CI pipeline.
-
-              ### What was fixed:
-              - ✅ Added missing return types
-              - ✅ Added type hints for class properties  
-              - ✅ Added basic docblock annotations
-              - ✅ Fixed array type declarations
-
-              ### How it works:
-              This PR was created by the [PHPStan Auto-Fix workflow](.github/workflows/phpstan-auto-fix-simple.yml) which:
-              1. Detects when the PHPStan workflow fails
-              2. Applies common fixes for typical issues
-              3. Creates a PR with the fixes
-
-              ### Review:
-              Please review the changes and merge if they look correct. The fixes are based on common patterns and may need manual adjustment.
-
-              ---
-              *This PR was created automatically by GitHub Actions.*`
-            });
-
-            // Add labels
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pr.number,
-              labels: ['bug', 'phpstan', 'auto-generated']
-            });
-
-            // Assign to the repository owner
-            await github.rest.issues.addAssignees({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pr.number,
-              assignees: ['baspa']
-            });
-
-            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
-
-      - name: Comment on original workflow run
-        if: steps.check-phpstan-errors.outputs.has_errors == 'true' && steps.check-fixes.outputs.no_changes == 'false'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ github.event.workflow_run.pull_requests[0].number || 'null' }}
-            });
-
-            const hasExistingComment = comments.some(comment => 
-              comment.user.login === 'github-actions[bot]' && 
-              comment.body.includes('🔧 Auto-fix PHPStan Issues')
-            );
-
-            if (!hasExistingComment) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ github.event.workflow_run.pull_requests[0].number || 'null' }},
-                body: `## 🔧 PHPStan Issues Auto-Fixed
-
-                The PHPStan workflow detected issues and I've automatically created a fix PR for you!
-
-                **Fix PR:** [🔧 Auto-fix PHPStan Issues](https://github.com/${{ github.repository }}/pull/{{ pr_number }})
-
-                The automated fix script has addressed common PHPStan issues. Please review and merge the fix PR when ready.
-
-                ---
-                *This comment was created automatically by the PHPStan Auto-Fix workflow.*`
-              });
-            }
+        run: |
+          echo "🎉 Successfully applied automated fixes!"
+          echo "✅ Applied Rector refactoring rules"
+          echo "✅ Added missing return types"
+          echo "✅ Added type hints for class properties"
+          echo "✅ Fixed array type declarations"
+          echo "✅ Applied code quality improvements"
+          echo ""
+          echo "The fixes have been committed and pushed to the current branch."
+          echo "Please review the changes and create a PR if needed."
