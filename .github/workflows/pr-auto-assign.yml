@@ -1,0 +1,73 @@
+name: PR Auto Assignment and Labeling
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  auto-assign-and-label:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Get branch name
+        id: branch
+        run: echo "branch_name=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
+
+      - name: Determine label based on branch prefix or author
+        id: label
+        run: |
+          # Check if it's a Dependabot PR
+          if [[ "${{ github.actor }}" == "dependabot[bot]" ]]; then
+            echo "label=dependencies" >> $GITHUB_OUTPUT
+          # Check branch prefixes
+          elif [[ "${{ github.head_ref }}" == feature/* ]] || [[ "${{ github.head_ref }}" == feat/* ]]; then
+            echo "label=enhancement" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.head_ref }}" == fix/* ]]; then
+            echo "label=fix" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.head_ref }}" == docs/* ]]; then
+            echo "label=documentation" >> $GITHUB_OUTPUT
+          else
+            echo "label=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Add label to PR
+        if: steps.label.outputs.label != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['${{ steps.label.outputs.label }}']
+            })
+
+      - name: Assign reviewer and assignee
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const assignee = 'baspa';
+            
+            // Always assign as assignee (you can be assigned to your own PR)
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: [assignee]
+            });
+            console.log(`Assigned ${assignee} as assignee`);
+            
+            // Only assign reviewer if they are not the PR author
+            if (context.payload.pull_request.user.login !== assignee) {
+              github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                reviewers: [assignee]
+              });
+              console.log(`Assigned ${assignee} as reviewer`);
+            } else {
+              console.log(`Skipping reviewer assignment - ${assignee} is the PR author`);
+            }
