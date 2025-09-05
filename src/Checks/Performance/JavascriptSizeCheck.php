@@ -31,7 +31,7 @@ class JavascriptSizeCheck implements Check
 
     public mixed $expectedValue = 1000000;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         if (app()->runningUnitTests()) {
             return strlen($response->body()) <= 1000000;
@@ -41,7 +41,7 @@ class JavascriptSizeCheck implements Check
         return $this->validateContent($crawler);
     }
 
-    public function validateContent(): void(Crawler $crawler): bool
+    public function validateContent(): void(): void(Crawler $crawler): bool
     {
         $crawler = $crawler->filterXPath('//script')->each(function (Crawler $crawler, $i) {
             $src = $crawler->attr('src');

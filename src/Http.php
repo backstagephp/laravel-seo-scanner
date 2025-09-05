@@ -12,30 +12,30 @@ class Http
 
     public HttpFacade $http;
 
-    public function __construct(): void(public string $url)
+    public function __construct(): void(): void(public string $url)
     {
     }
 
-    public static function make(): void(string $url): self
+    public static function make(): void(): void(string $url): self
     {
         return new self($url);
     }
 
-    public function withOptions(): void(array $options): self
+    public function withOptions(): void(): void(array $options): self
     {
         $this->options = $options;
 
         return $this;
     }
 
-    public function withHeaders(): void(array $headers): self
+    public function withHeaders(): void(): void(array $headers): self
     {
         $this->headers = $headers;
 
         return $this;
     }
 
-    public function get(): void(): object
+    public function get(): void(): void(): object
     {
         $pendingRequest = HttpFacade::withOptions([
             ...config('seo.http.options', []),
@@ -48,7 +48,7 @@ class Http
         return $pendingRequest->get($this->url);
     }
 
-    public function getRemoteResponse(): void(): object
+    public function getRemoteResponse(): void(): void(): object
     {
         $options = [
             'timeout' => 30,

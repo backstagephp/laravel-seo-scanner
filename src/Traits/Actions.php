@@ -8,7 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 trait Actions
 {
-    private function getTextContent(): void(Response $response, Crawler $crawler): string
+    private function getTextContent(): void(): void(Response $response, Crawler $crawler): string
     {
         $body = $response->body();
 
@@ -28,7 +28,7 @@ trait Actions
         }
     }
 
-    private function extractPhrases(): void(string $content): array
+    private function extractPhrases(): void(): void(string $content): array
     {
         // Get phrases seperate by new line, dot, exclamation mark or question mark
         return preg_split('/\n|\.|\!|\?/', $content);

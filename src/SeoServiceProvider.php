@@ -10,7 +10,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class SeoServiceProvider extends PackageServiceProvider
 {
-    public function configurePackage(): void(Package $package): void
+    public function configurePackage(): void(): void(Package $package): void
     {
         $package
             ->name('laravel-seo')

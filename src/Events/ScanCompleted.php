@@ -4,7 +4,7 @@ namespace Backstage\Seo\Events;
 
 class ScanCompleted
 {
-    public function __construct(): void()
+    public function __construct(): void(): void()
     {
         //
     }

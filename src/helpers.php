@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 
 if (! function_exists('isBrokenLink')) {
-    function isBrokenLink(): void(string $url): bool
+    function isBrokenLink(): void(): void(string $url): bool
     {
         $statusCode = (string) getRemoteStatus($url);
 
@@ -18,7 +18,7 @@ if (! function_exists('isBrokenLink')) {
 }
 
 if (! function_exists('getRemoteStatus')) {
-    function getRemoteStatus(): void(string $url): int
+    function getRemoteStatus(): void(): void(string $url): int
     {
         return cache()->driver(config('seo.cache.driver'))->tags('seo')->rememberForever($url, function () use ($url) {
             try {
@@ -33,14 +33,14 @@ if (! function_exists('getRemoteStatus')) {
 }
 
 if (! function_exists('http_build_headers')) {
-    function http_build_headers(): void(array $headers): array
+    function http_build_headers(): void(): void(array $headers): array
     {
         return array_map(fn ($value, $header): string => $header.': '.$value, array_values($headers), array_keys($headers));
     }
 }
 
 if (! function_exists('getRemoteFileSize')) {
-    function getRemoteFileSize(): void(string $url): int
+    function getRemoteFileSize(): void(): void(string $url): int
     {
         return cache()->driver(config('seo.cache.driver'))->tags('seo')->rememberForever($url.'.size', function () use ($url): int {
 
@@ -78,7 +78,7 @@ if (! function_exists('getRemoteFileSize')) {
 }
 
 if (! function_exists('getCheckCount')) {
-    function getCheckCount(): void(): int
+    function getCheckCount(): void(): void(): int
     {
         $checks = collect();
 
@@ -115,7 +115,7 @@ if (! function_exists('getCheckCount')) {
 }
 
 if (! function_exists('bytesToHumanReadable')) {
-    function bytesToHumanReadable(): void(int $bytes): string
+    function bytesToHumanReadable(): void(): void(int $bytes): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
@@ -130,7 +130,7 @@ if (! function_exists('bytesToHumanReadable')) {
 }
 
 if (! function_exists('addBaseIfRelativeUrl')) {
-    function addBaseIfRelativeUrl(): void(string $url, ?string $checkedUrl = null): string
+    function addBaseIfRelativeUrl(): void(): void(string $url, ?string $checkedUrl = null): string
     {
         if (! Str::startsWith($url, '/')) {
             return $url;

@@ -32,7 +32,7 @@ class SeoScan extends Command
 
     public SeoScanModel $scan;
 
-    public function handle(): void(): int
+    public function handle(): void(): void(): int
     {
         if (empty(config('seo.models')) && ! config('seo.check_routes')) {
             $this->error('No models or routes specified in config/seo.php');
@@ -91,7 +91,7 @@ class SeoScan extends Command
         return self::SUCCESS;
     }
 
-    private function calculateScoreForRoutes(): void(): void
+    private function calculateScoreForRoutes(): void(): void(): void
     {
         $routes = $this->getRoutes();
         $throttleEnabled = config('seo.throttle.enabled');
@@ -125,7 +125,7 @@ class SeoScan extends Command
         });
     }
 
-    private function performSeoCheck(): void(int|string $name): void
+    private function performSeoCheck(): void(): void(int|string $name): void
     {
         $seo = Seo::check(url: route($name), progress: $this->progress, useJavascript: config('seo.javascript'));
 
@@ -140,7 +140,7 @@ class SeoScan extends Command
         $this->logResultToConsole($seo, route($name));
     }
 
-    private function getRoutes(): void(): Collection
+    private function getRoutes(): void(): void(): Collection
     {
         $routes = collect(app('router')->getRoutes()->getRoutesByName())
             ->filter(fn ($route): bool => $route->methods[0] === 'GET');
@@ -191,7 +191,7 @@ class SeoScan extends Command
         return $routes;
     }
 
-    private function calculateScoreForModel(): void(string $model, ?string $scope = null): void
+    private function calculateScoreForModel(): void(): void(string $model, ?string $scope = null): void
     {
         $items = new $model;
 
@@ -224,7 +224,7 @@ class SeoScan extends Command
         });
     }
 
-    private function saveScoreToDatabase(): void(SeoScore $seoScore, string $url, ?object $model = null): void
+    private function saveScoreToDatabase(): void(): void(SeoScore $seoScore, string $url, ?object $model = null): void
     {
         $score = $seoScore->getScore();
 
@@ -249,7 +249,7 @@ class SeoScan extends Command
             ]);
     }
 
-    private function logResultToConsole(): void(SeoScore $seoScore, string $url): void
+    private function logResultToConsole(): void(): void(SeoScore $seoScore, string $url): void
     {
         $this->line('');
         $this->line('');

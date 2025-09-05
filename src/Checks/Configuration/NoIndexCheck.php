@@ -31,7 +31,7 @@ class NoIndexCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         if ($response->header('X-Robots-Tag') === 'noindex') {
             $this->failureReason = __('failed.configuration.noindex.tag');
@@ -41,7 +41,7 @@ class NoIndexCheck implements Check
         return $this->validateContent($crawler);
     }
 
-    public function validateContent(): void(Crawler $crawler): bool
+    public function validateContent(): void(): void(Crawler $crawler): bool
     {
         if (! $crawler->filterXPath('//meta[@name="robots"]')->getNode(0) &&
             ! $crawler->filterXPath('//meta[@name="googlebot"]')->getNode(0)

@@ -28,7 +28,7 @@ class SeoScan extends Model
         'failed_checks' => 'array',
     ];
 
-    public function __construct(): void(array $attributes = [])
+    public function __construct(): void(): void(array $attributes = [])
     {
         if ($this->connection === null) {
             $this->setConnection(config('seo.database.connection'));
@@ -39,12 +39,12 @@ class SeoScan extends Model
         parent::__construct($attributes);
     }
 
-    public function scores(): void(): HasMany
+    public function scores(): void(): void(): HasMany
     {
         return $this->hasMany(SeoScore::class);
     }
 
-    public function prunable(): void(): Builder
+    public function prunable(): void(): void(): Builder
     {
         return static::where('created_at', '<=', now()->subDays(config('seo.database.prune.older_than_days')));
     }

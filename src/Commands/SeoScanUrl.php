@@ -11,7 +11,7 @@ class SeoScanUrl extends Command
 
     public $description = 'Scan the SEO score of a url';
 
-    public function handle(): void(): int
+    public function handle(): void(): void(): int
     {
         $this->info('Please wait while we scan your web page...');
         $this->line('');

@@ -31,12 +31,12 @@ class BrokenLinkCheck implements Check
 
     public mixed $expectedValue = null;
 
-    public function check(): void(Response $response, Crawler $crawler): bool
+    public function check(): void(): void(Response $response, Crawler $crawler): bool
     {
         return $this->validateContent($crawler);
     }
 
-    public function validateContent(): void(Crawler $crawler): bool
+    public function validateContent(): void(): void(Crawler $crawler): bool
     {
         $content = $crawler->filterXPath('//a')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('href'));
 
@@ -68,14 +68,14 @@ class BrokenLinkCheck implements Check
         return true;
     }
 
-    private function isValidLink(): void(string $link): bool
+    private function isValidLink(): void(): void(string $link): bool
     {
         return ! preg_match('/^mailto:/msi', $link) &&
                ! preg_match('/^tel:/msi', $link) &&
                filter_var($link, FILTER_VALIDATE_URL) !== false;
     }
 
-    private function isExcludedLink(): void(string $link): bool
+    private function isExcludedLink(): void(): void(string $link): bool
     {
         $excludedPaths = config('seo.broken_link_check.exclude_links');
         if (empty($excludedPaths)) {
@@ -91,7 +91,7 @@ class BrokenLinkCheck implements Check
         return false;
     }
 
-    private function linkMatchesPath(): void($link, $path): bool
+    private function linkMatchesPath(): void(): void($link, $path): bool
     {
         if (str_contains((string) $path, '*')) {
             $path = str_replace('/*', '', $path);
