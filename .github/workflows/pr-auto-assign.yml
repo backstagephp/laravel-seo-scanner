@@ -18,8 +18,8 @@ jobs:
       - name: Determine label based on branch prefix or author
         id: label
         run: |
-          # Check if it's a Dependabot PR
-          if [[ "${{ github.actor }}" == "dependabot[bot]" ]]; then
+          # Check if it's a Dependabot PR (using the PR author, not the workflow actor)
+          if [[ "${{ github.event.pull_request.user.login }}" == "dependabot[bot]" ]]; then
             echo "label=dependencies" >> $GITHUB_OUTPUT
           # Check branch prefixes
           elif [[ "${{ github.head_ref }}" == feature/* ]] || [[ "${{ github.head_ref }}" == feat/* ]]; then
