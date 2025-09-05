@@ -25,13 +25,13 @@ class TtfbCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = 0.6;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         $ttfb = $response->transferStats?->getHandlerStats()['starttransfer_time'] ?? null;
 

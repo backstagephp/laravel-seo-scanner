@@ -26,13 +26,13 @@ class RobotsCheck implements Check
 
     public bool $continueAfterFailure = false;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         $url = $response->transferStats?->getHandlerStats()['url'] ?? null;
 
@@ -42,9 +42,9 @@ class RobotsCheck implements Check
             return false;
         }
 
-        $client = new UriClient($url);
+        $uriClient = new UriClient($url);
 
-        if (! $client->userAgent('Googlebot')->isAllowed($url)) {
+        if (! $uriClient->userAgent('Googlebot')->isAllowed($url)) {
             $this->failureReason = __('failed.configuration.robots.disallowed');
 
             return false;

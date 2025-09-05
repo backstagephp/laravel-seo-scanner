@@ -25,29 +25,21 @@ class AltTagCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler) // Missing return type
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $imagesWithoutAlt = $crawler->filterXPath('//img[not(@alt)]')->each(function (Crawler $node, $i) {
-            return $this->filterImage($node);
-        });
-        $imagesWithEmptyAlt = $crawler->filterXPath('//img[@alt=""]')->each(function (Crawler $node, $i) {
-            return $this->filterImage($node);
-        });
+        $imagesWithoutAlt = $crawler->filterXPath('//img[not(@alt)]')->each(fn(Crawler $crawler, $i) => $this->filterImage($crawler));
+        $imagesWithEmptyAlt = $crawler->filterXPath('//img[@alt=""]')->each(fn(Crawler $crawler, $i) => $this->filterImage($crawler));
 
         // Remove null values from the arrays
         $imagesWithoutAlt = array_filter($imagesWithoutAlt);
@@ -57,7 +49,7 @@ class AltTagCheck implements Check
 
         $this->actualValue = $imagesWithoutAlt;
 
-        if (count($imagesWithoutAlt) > 0) {
+        if ($imagesWithoutAlt !== []) {
             $this->failureReason = __('failed.content.alt_tag', [
                 'actualValue' => implode(', ', $imagesWithoutAlt),
             ]);
@@ -68,9 +60,9 @@ class AltTagCheck implements Check
         return true;
     }
 
-    private function filterImage($node) // Missing parameter type and return type
+    private function filterImage(): void(\Symfony\Component\DomCrawler\Crawler $crawler): ?string // Missing parameter type and return type
     {
-        $src = $node->attr('src');
+        $src = $crawler->attr('src');
 
         if (! $src) {
             return null;
@@ -82,7 +74,7 @@ class AltTagCheck implements Check
 
         $src = addBaseIfRelativeUrl($src, $this->url);
 
-        $dimensions = $this->getImageDimensions($src, $node);
+        $dimensions = $this->getImageDimensions($src, $crawler);
 
         if ($dimensions['width'] < 5 || $dimensions['height'] < 5) {
             return null;
@@ -91,12 +83,12 @@ class AltTagCheck implements Check
         return $src;
     }
 
-    private function getImageDimensions($src, $node) // Missing parameter types and return type
+    private function getImageDimensions(): void(string $src, \Symfony\Component\DomCrawler\Crawler $crawler): array // Missing parameter types and return type
     {
         if (app()->runningUnitTests()) {
             return [
-                'width' => $node->attr('width'),
-                'height' => $node->attr('height'),
+                'width' => $crawler->attr('width'),
+                'height' => $crawler->attr('height'),
             ];
         }
 

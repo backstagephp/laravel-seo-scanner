@@ -27,22 +27,18 @@ class TooLongSentenceCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if ($this->validateContent($response, $crawler)) {
-            return true;
-        }
-
-        return false;
+        return $this->validateContent($response, $crawler);
     }
 
-    public function validateContent(Response $response, Crawler $crawler): bool
+    public function validateContent(): void(Response $response, Crawler $crawler): bool
     {
         $phrases = $this->extractPhrases(
             $this->getTextContent($response, $crawler)
@@ -51,7 +47,7 @@ class TooLongSentenceCheck implements Check
         $sentencesWithTooManyWords = $this->calculateSentencesWithTooManyWords($phrases);
         $this->actualValue = $sentencesWithTooManyWords;
 
-        if (count($sentencesWithTooManyWords) === 0) {
+        if ($sentencesWithTooManyWords === []) {
             return true;
         }
 
@@ -76,12 +72,12 @@ class TooLongSentenceCheck implements Check
         return true;
     }
 
-    private function calculateSentencesWithTooManyWords(array $sentences): array
+    private function calculateSentencesWithTooManyWords(): void(array $sentences): array
     {
         $tooLongSentences = [];
 
         foreach ($sentences as $sentence) {
-            if (str_word_count($sentence) > 20) {
+            if (str_word_count((string) $sentence) > 20) {
                 $tooLongSentences[] = $sentence;
             }
         }

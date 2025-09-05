@@ -32,7 +32,7 @@ class SeoScan extends Command
 
     public SeoScanModel $scan;
 
-    public function handle(): int
+    public function handle(): void(): int
     {
         if (empty(config('seo.models')) && ! config('seo.check_routes')) {
             $this->error('No models or routes specified in config/seo.php');
@@ -91,9 +91,9 @@ class SeoScan extends Command
         return self::SUCCESS;
     }
 
-    private function calculateScoreForRoutes(): void
+    private function calculateScoreForRoutes(): void(): void
     {
-        $routes = self::getRoutes();
+        $routes = $this->getRoutes();
         $throttleEnabled = config('seo.throttle.enabled');
         $maxRequests = config('seo.throttle.requests_per_minute') ?? 'N/A';
         $requestCount = 0;
@@ -104,7 +104,7 @@ class SeoScan extends Command
             sleep(5);
         }
 
-        $routes->each(function ($path, $name) use ($throttleEnabled, $maxRequests, &$requestCount, &$startTime) {
+        $routes->each(function ($path, $name) use ($throttleEnabled, $maxRequests, &$requestCount, &$startTime): void {
             $this->progress->start();
 
             if ($throttleEnabled) {
@@ -125,7 +125,7 @@ class SeoScan extends Command
         });
     }
 
-    private function performSeoCheck($name): void
+    private function performSeoCheck(): void(int|string $name): void
     {
         $seo = Seo::check(url: route($name), progress: $this->progress, useJavascript: config('seo.javascript'));
 
@@ -140,28 +140,28 @@ class SeoScan extends Command
         $this->logResultToConsole($seo, route($name));
     }
 
-    private static function getRoutes(): Collection
+    private function getRoutes(): void(): Collection
     {
         $routes = collect(app('router')->getRoutes()->getRoutesByName())
-            ->filter(fn ($route) => $route->methods[0] === 'GET');
+            ->filter(fn ($route): bool => $route->methods[0] === 'GET');
 
         // Check if all routes should be checked
         if (in_array('*', Arr::wrap(config('seo.routes')))) {
             $routes = $routes->map(fn ($route) => $route->uri);
         } else {
             // Only check the routes specified in the config
-            $routes = $routes->filter(fn ($route) => in_array($route->getName(), Arr::wrap(config('seo.routes'))))
+            $routes = $routes->filter(fn ($route): bool => in_array($route->getName(), Arr::wrap(config('seo.routes'))))
                 ->map(fn ($route) => $route->uri);
         }
 
         // Filter out excluded routes by name
         if (! empty(config('seo.exclude_routes'))) {
-            $routes = $routes->filter(fn ($route, $name) => ! in_array($name, config('seo.exclude_routes')));
+            $routes = $routes->filter(fn ($route, $name): bool => ! in_array($name, config('seo.exclude_routes')));
         }
 
         // Filter out excluded routes by path
         if (! empty(config('seo.exclude_paths'))) {
-            $routes = $routes->filter(function ($route) {
+            $routes = $routes->filter(function ($route): bool {
                 foreach (config('seo.exclude_paths') as $path) {
                     // if path contains a wildcard, check if the route starts with the path
                     if (str_contains($path, '*')) {
@@ -183,15 +183,15 @@ class SeoScan extends Command
         }
 
         // Exclude routes that contain a parameter or where it ends with .txt or .xml
-        $routes = $routes->filter(fn ($route) => ! str_contains($route, '{') &&
-            ! str_ends_with($route, '.txt') &&
-            ! str_ends_with($route, '.xml')
+        $routes = $routes->filter(fn ($route): bool => ! str_contains((string) $route, '{') &&
+            ! str_ends_with((string) $route, '.txt') &&
+            ! str_ends_with((string) $route, '.xml')
         );
 
         return $routes;
     }
 
-    private function calculateScoreForModel(string $model, ?string $scope = null): void
+    private function calculateScoreForModel(): void(string $model, ?string $scope = null): void
     {
         $items = new $model;
 
@@ -224,14 +224,12 @@ class SeoScan extends Command
         });
     }
 
-    private function saveScoreToDatabase(SeoScore $seo, string $url, ?object $model = null): void
+    private function saveScoreToDatabase(): void(SeoScore $seoScore, string $url, ?object $model = null): void
     {
-        $score = $seo->getScore();
+        $score = $seoScore->getScore();
 
         // Get the failed checks of each score so we can store them in the scan table.
-        $failedChecks = $seo->getFailedChecks()->map(function ($check) {
-            return get_class($check);
-        })->toArray();
+        $failedChecks = $seoScore->getFailedChecks()->map(fn($check) => $check::class)->toArray();
 
         $this->failedChecks = array_unique(array_merge($this->failedChecks, array_values($failedChecks)));
 
@@ -243,25 +241,25 @@ class SeoScan extends Command
                 'model_id' => $model ? $model->id : null,
                 'score' => $score,
                 'checks' => json_encode([
-                    'failed' => $seo->getFailedChecks(),
-                    'successful' => $seo->getSuccessfulChecks(),
+                    'failed' => $seoScore->getFailedChecks(),
+                    'successful' => $seoScore->getSuccessfulChecks(),
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
     }
 
-    private function logResultToConsole(SeoScore $seo, string $url): void
+    private function logResultToConsole(): void(SeoScore $seoScore, string $url): void
     {
         $this->line('');
         $this->line('');
         $this->line('-----------------------------------------------------------------------------------------------------------------------------------');
-        $this->line('> '.$url.' | <fg=green>'.$seo->getSuccessfulChecks()->count().' passed</> <fg=red>'.($seo->getFailedChecks()->count().' failed</>'));
+        $this->line('> '.$url.' | <fg=green>'.$seoScore->getSuccessfulChecks()->count().' passed</> <fg=red>'.($seoScore->getFailedChecks()->count().' failed</>'));
         $this->line('-----------------------------------------------------------------------------------------------------------------------------------');
         $this->line('');
 
-        $seo->getAllChecks()->each(function ($checks, $type) {
-            $checks->each(function ($check) use ($type) {
+        $seoScore->getAllChecks()->each(function ($checks, $type): void {
+            $checks->each(function ($check) use ($type): void {
                 if ($type == 'failed') {
                     $this->line('<fg=red>✘ '.$check->title.' failed.</>');
 

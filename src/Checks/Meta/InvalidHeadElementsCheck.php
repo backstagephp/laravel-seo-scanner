@@ -25,7 +25,7 @@ class InvalidHeadElementsCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
@@ -46,16 +46,12 @@ class InvalidHeadElementsCheck implements Check
         'template',
     ];
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($response)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($response);
     }
 
-    public function validateContent(Response $response): bool
+    public function validateContent(): void(Response $response): bool
     {
         // Get the raw HTML content from the response
         $html = $response->body();
@@ -78,10 +74,10 @@ class InvalidHeadElementsCheck implements Check
         $headContentWithoutTemplates = preg_replace('/<template[^>]*>.*?<\/template>/is', '', $headContent);
 
         // Extract tags from the cleaned content
-        preg_match_all('/<([a-zA-Z][a-zA-Z0-9]*)[^>]*>/i', $headContentWithoutTemplates, $matches);
+        preg_match_all('/<([a-zA-Z][a-zA-Z0-9]*)[^>]*>/i', (string) $headContentWithoutTemplates, $matches);
         $headTags = $matches[1];
 
-        if (empty($headTags)) {
+        if ($headTags === []) {
             // No elements in head section
             $this->failureReason = __('failed.meta.invalid_head_elements.no_head');
             $this->actualValue = 'No head elements found';
@@ -91,16 +87,16 @@ class InvalidHeadElementsCheck implements Check
 
         $invalidElements = [];
 
-        foreach ($headTags as $tagName) {
-            $tagName = strtolower($tagName);
+        foreach ($headTags as $headTag) {
+            $headTag = strtolower($headTag);
 
             // Check if the element is valid for the head section
-            if (! in_array($tagName, $this->validHeadElements)) {
-                $invalidElements[] = $tagName;
+            if (! in_array($headTag, $this->validHeadElements)) {
+                $invalidElements[] = $headTag;
             }
         }
 
-        if (! empty($invalidElements)) {
+        if ($invalidElements !== []) {
             $this->failureReason = __('failed.meta.invalid_head_elements.found', [
                 'actualValue' => implode(', ', array_unique($invalidElements)),
             ]);

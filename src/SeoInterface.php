@@ -4,5 +4,5 @@ namespace Backstage\Seo;
 
 interface SeoInterface
 {
-    public function getUrlAttribute(): ?string;
+    public function getUrlAttribute(): void(): ?string;
 }
