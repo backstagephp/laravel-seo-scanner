@@ -25,30 +25,23 @@ class ImageSizeCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = 1000000;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         $this->expectedValue = bytesToHumanReadable($this->expectedValue);
-
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $crawler = $crawler->filterXPath('//img')->each(function (Crawler $node, $i) {
-            return $node->attr('src');
-        });
+        $crawler = $crawler->filterXPath('//img')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('src'));
 
-        $content = collect($crawler)->filter(fn ($value) => $value !== null)->toArray();
+        $content = collect($crawler)->filter(fn ($value): bool => $value !== null)->toArray();
 
         if (! $content) {
             return true;
@@ -56,7 +49,7 @@ class ImageSizeCheck implements Check
 
         $links = [];
 
-        $tooBigOrFailedLinks = collect($content)->filter(function ($url) use (&$links) {
+        $tooBigOrFailedLinks = collect($content)->filter(function ($url) use (&$links): bool {
             if (! str_contains($url, 'http')) {
                 $url = url($url);
             }
@@ -78,7 +71,7 @@ class ImageSizeCheck implements Check
             return false;
         })->toArray();
 
-        if (! empty($tooBigOrFailedLinks) && count($links) > 0) {
+        if (! empty($tooBigOrFailedLinks) && $links !== []) {
             $this->actualValue = $links;
 
             $this->failureReason = __('failed.performance.image_size', [

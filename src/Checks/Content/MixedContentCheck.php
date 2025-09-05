@@ -25,34 +25,28 @@ class MixedContentCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $content = $crawler->filterXPath('//a')->each(function (Crawler $node, $i) {
-            return $node->attr('href');
-        });
+        $content = $crawler->filterXPath('//a')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('href'));
 
-        if (! $content) {
+        if ($content === []) {
             return true;
         }
 
         $links = [];
 
-        $nonSecureLinks = collect($content)->filter(function ($item) use (&$links) {
+        $nonSecureLinks = collect($content)->filter(function ($item) use (&$links): bool {
             if (preg_match('/^http:\/\//', $item)) {
                 $links[] = $item;
 

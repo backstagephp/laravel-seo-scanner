@@ -25,52 +25,38 @@ class BrokenLinkCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
-        $content = $crawler->filterXPath('//a')->each(function (Crawler $node, $i) {
-            return $node->attr('href');
-        });
+        $content = $crawler->filterXPath('//a')->each(fn(Crawler $crawler, $i): ?string => $crawler->attr('href'));
 
-        if (! $content) {
+        if ($content === []) {
             return true;
         }
 
-        $content = collect($content)->filter(fn ($value) => $value !== null)
-            ->map(fn ($link) => addBaseIfRelativeUrl($link, $this->url))
-            ->filter(function ($link) {
-                return $this->isValidLink($link) && ! $this->isExcludedLink($link);
-            })
-            ->filter(function ($link) {
-                return isBrokenLink($link) ? $link : false;
-            })->map(function ($link) {
-                return [
-                    'url' => $link,
-                    'status' => (string) getRemoteStatus($link),
-                ];
-            })
+        $content = collect($content)->filter(fn ($value): bool => $value !== null)
+            ->map(fn ($link): string => addBaseIfRelativeUrl($link, $this->url))
+            ->filter(fn($link): bool => $this->isValidLink($link) && ! $this->isExcludedLink($link))
+            ->filter(fn($link) => isBrokenLink($link) ? $link : false)->map(fn($link): array => [
+                'url' => $link,
+                'status' => (string) getRemoteStatus($link),
+            ])
             ->all();
 
         $this->actualValue = $content;
 
         if (count($content) > 0) {
-            $failureReasons = collect($content)->map(function ($link) {
-                return $link['url'].' ('.$link['status'].')';
-            })->implode(', ');
+            $failureReasons = collect($content)->map(fn($link): string => $link['url'].' ('.$link['status'].')')->implode(', ');
 
             $this->failureReason = __('failed.content.broken_links', [
                 'actualValue' => $failureReasons,
@@ -82,22 +68,22 @@ class BrokenLinkCheck implements Check
         return true;
     }
 
-    private function isValidLink($link): bool
+    private function isValidLink(): void(string $link): bool
     {
         return ! preg_match('/^mailto:/msi', $link) &&
                ! preg_match('/^tel:/msi', $link) &&
                filter_var($link, FILTER_VALIDATE_URL) !== false;
     }
 
-    private function isExcludedLink($link): bool
+    private function isExcludedLink(): void(string $link): bool
     {
         $excludedPaths = config('seo.broken_link_check.exclude_links');
         if (empty($excludedPaths)) {
             return false;
         }
 
-        foreach ($excludedPaths as $path) {
-            if ($this->linkMatchesPath($link, $path)) {
+        foreach ($excludedPaths as $excludedPath) {
+            if ($this->linkMatchesPath($link, $excludedPath)) {
                 return true;
             }
         }
@@ -105,14 +91,14 @@ class BrokenLinkCheck implements Check
         return false;
     }
 
-    private function linkMatchesPath($link, $path): bool
+    private function linkMatchesPath(): void($link, $path): bool
     {
-        if (str_contains($path, '*')) {
+        if (str_contains((string) $path, '*')) {
             $path = str_replace('/*', '', $path);
 
-            return str_starts_with($link, $path);
+            return str_starts_with((string) $link, $path);
         }
 
-        return str_contains($link, $path);
+        return str_contains((string) $link, (string) $path);
     }
 }

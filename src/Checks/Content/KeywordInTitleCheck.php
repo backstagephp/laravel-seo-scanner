@@ -26,13 +26,13 @@ class KeywordInTitleCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         if (! $this->validateContent($crawler)) {
             $this->failureReason = __('failed.meta.keyword_in_title_check');
@@ -43,11 +43,11 @@ class KeywordInTitleCheck implements Check
         return true;
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
         $keywords = $this->getKeywords($crawler);
 
-        if (! $keywords) {
+        if ($keywords === []) {
             return false;
         }
 
@@ -55,22 +55,17 @@ class KeywordInTitleCheck implements Check
 
         $title = $crawler->filterXPath('//title')->text();
 
-        if (! $title) {
+        if ($title === '' || $title === '0') {
             return false;
         }
-
-        if (! Str::contains($title, $keywords)) {
-            return false;
-        }
-
-        return true;
+        return Str::contains($title, $keywords);
     }
 
-    public function getKeywords(Crawler $crawler): array
+    public function getKeywords(): void(Crawler $crawler): array
     {
         $node = $crawler->filterXPath('//meta[@name="keywords"]')->getNode(0);
 
-        if (! $node) {
+        if (!$node instanceof \DOMNode) {
             return [];
         }
 

@@ -25,26 +25,22 @@ class TitleLengthCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = 60;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
-        if (! $this->validateContent($crawler)) {
-            return false;
-        }
-
-        return true;
+        return $this->validateContent($crawler);
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
         $node = $crawler->filterXPath('//title')->getNode(0);
 
-        if (! $node) {
+        if (!$node instanceof \DOMNode) {
             $this->failureReason = __('failed.content.no_title');
 
             return false;
@@ -52,7 +48,7 @@ class TitleLengthCheck implements Check
 
         $content = $crawler->filterXPath('//title')->text();
 
-        if (! $content) {
+        if ($content === '' || $content === '0') {
             $this->failureReason = __('failed.content.no_title');
 
             return false;

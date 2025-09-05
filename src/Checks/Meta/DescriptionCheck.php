@@ -25,13 +25,13 @@ class DescriptionCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = null;
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         if (! $this->validateContent($crawler)) {
             $this->failureReason = __('failed.meta.description');
@@ -42,7 +42,7 @@ class DescriptionCheck implements Check
         return true;
     }
 
-    public function getDescriptionContent(Crawler $crawler): ?string
+    public function getDescriptionContent(): void(Crawler $crawler): ?string
     {
         /** @var \DOMElement|null $node */
         $node = $crawler->filterXPath('//meta[@name="description"]')->getNode(0);
@@ -54,14 +54,14 @@ class DescriptionCheck implements Check
         return null;
     }
 
-    public function validateContent(Crawler $crawler): bool
+    public function validateContent(): void(Crawler $crawler): bool
     {
         $content = $this->getDescriptionContent($crawler);
 
-        return ! empty($content);
+        return $content !== null && $content !== '' && $content !== '0';
     }
 
-    public function isDescriptionSet(Crawler $crawler): bool
+    public function isDescriptionSet(): void(Crawler $crawler): bool
     {
         return $this->getDescriptionContent($crawler) !== null;
     }

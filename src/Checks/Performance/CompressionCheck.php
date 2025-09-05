@@ -26,22 +26,22 @@ class CompressionCheck implements Check
 
     public bool $continueAfterFailure = true;
 
-    public ?string $failureReason;
+    public ?string $failureReason = null;
 
     public mixed $actualValue = null;
 
     public mixed $expectedValue = ['gzip', 'deflate'];
 
-    public function check(Response $response, Crawler $crawler): bool
+    public function check(): void(Response $response, Crawler $crawler): bool
     {
         $encodingHeader = collect($response->headers())->filter(function ($value, $key) {
             $key = strtolower($key);
-
-            return Str::contains($key, 'content-encoding') || Str::contains($key, 'x-encoded-content-encoding');
-        })->filter(function ($values) {
-            $header = collect($values)->filter(function ($value) {
-                return in_array($value, $this->expectedValue);
-            });
+            if (Str::contains($key, 'content-encoding')) {
+                return true;
+            }
+            return Str::contains($key, 'x-encoded-content-encoding');
+        })->filter(function ($values): bool {
+            $header = collect($values)->filter(fn($value): bool => in_array($value, $this->expectedValue));
 
             return ! $header->isEmpty();
         });
