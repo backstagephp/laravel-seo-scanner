@@ -34,7 +34,7 @@ jobs:
 
       - name: Add label to PR
         if: steps.label.outputs.label != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -45,7 +45,7 @@ jobs:
             })
 
       - name: Assign reviewer and assignee
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const assignee = 'baspa';
