@@ -3,7 +3,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/backstage/laravel-seo-scanner.svg?style=flat-square)](https://packagist.org/packages/backstage/laravel-seo-scanner)
 [![Tests](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/run-tests.yml)
 [![PHPStan](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/phpstan.yml/badge.svg?branch=main)](https://github.com/backstagephp/laravel-seo-scanner/actions/workflows/phpstan.yml)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/backstage/laravel-seo-scanner)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/backstagephp/laravel-seo-scanner)
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/backstage/laravel-seo-scanner)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/backstage/laravel-seo-scanner.svg?style=flat-square)](https://packagist.org/packages/backstage/laravel-seo-scanner)
 
