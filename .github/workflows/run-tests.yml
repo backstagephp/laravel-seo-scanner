@@ -19,10 +19,10 @@ jobs:
         include:
           - laravel: 10.*
             testbench: 8.*
-            carbon: ^2.63
+            carbon: ^2.72.6
           - laravel: 11.*
             testbench: 9.*
-            carbon: ^2.72.2
+            carbon: ^2.72.6|^3.8.4
           - laravel: 12.*
             testbench: 10.*
             carbon: ^3.8.4
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
