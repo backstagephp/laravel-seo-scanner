@@ -19,7 +19,7 @@ jobs:
         include:
           - laravel: 10.*
             testbench: 8.*
-            carbon: ^2.72.0
+            carbon: ^2.72.6
           - laravel: 11.*
             testbench: 9.*
             carbon: ^2.72.6|^3.8.4
@@ -49,6 +49,9 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Configure Composer for testing
+        run: composer config audit.block-insecure false
 
       - name: Install dependencies
         run: |
