@@ -33,9 +33,9 @@ class ResponseCheck implements Check
 
     public function check(Response $response, Crawler $crawler): bool
     {
-        $this->actualValue = $response->getStatusCode();
+        $this->actualValue = $response->status();
 
-        if ($response->getStatusCode() === 200) {
+        if ($response->status() === 200) {
             return true;
         }
 
