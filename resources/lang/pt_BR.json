@@ -23,6 +23,8 @@
     "failed.content.image_dimensions.missing": "A página contém imagens sem atributos width e height explícitos. Estas imagens foram encontradas: :actualValue.",
     "Images below the fold should use loading=\"lazy\" because this defers offscreen image loading and improves the initial page load performance.": "As imagens abaixo da dobra devem usar loading=\"lazy\" porque isso adia o carregamento de imagens fora da tela e melhora o desempenho do carregamento inicial da página.",
     "failed.content.lazy_loading.missing": "A página contém imagens abaixo da dobra que não são carregadas de forma lazy. Estas imagens foram encontradas: :actualValue.",
+    "When a page targets multiple languages or regions it should use valid hreflang annotations so search engines serve the correct localised version of the page.": "Quando uma página tem como alvo vários idiomas ou regiões, ela deve usar anotações hreflang válidas para que os mecanismos de busca sirvam a versão localizada correta da página.",
+    "failed.meta.hreflang.invalid": "A página contém valores hreflang inválidos: :actualValue.",
     "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.": "Todos os links da página devem redirecionar para um URL usando HTTPS em vez de HTTP por ser mais seguro.",
     "CSS files are not bigger than 15 KB because this will slow down the page load time.": "Os arquivos CSS não devem ser maiores que 15KB, pois isso deixa mais devagar o tempo de carregamento da página.",
     "Every image on the page should have an alt tag to describe the image.": "Todas as imagems da página devem ter uma tag alt para descrevê-la.",

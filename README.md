@@ -125,6 +125,7 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page has a valid viewport meta tag.<br>
 ✅ The page has a character encoding declared.<br>
 ✅ The page has a favicon.<br>
+✅ The page has valid hreflang annotations.<br>
 ✅ The title contains one or more keywords.<br>
 ✅ One or more keywords are present in the first paragraph.<br>
 ✅ The page does not contain invalid HTML elements in the head section.<br>
