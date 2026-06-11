@@ -137,6 +137,7 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page response returns a 200 status code. <br>
 ✅ HTML is not larger than 100 KB. <br>
 ✅ Images are not larger than 1 MB. <br>
+✅ Images use modern formats (WebP/AVIF). <br>
 ✅ JavaScript files are not larger than 1 MB. <br>
 ✅ CSS files are not larger than 15 KB. <br>
 ✅ HTML is GZIP compressed. <br>
