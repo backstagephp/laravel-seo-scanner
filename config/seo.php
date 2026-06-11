@@ -1,5 +1,9 @@
 <?php
 
+use Backstage\Seo\Checks\PageSpeed\ClsCheck;
+use Backstage\Seo\Checks\PageSpeed\LcpCheck;
+use Backstage\Seo\Checks\PageSpeed\PerformanceScoreCheck;
+
 return [
 
     /*
@@ -43,7 +47,15 @@ return [
     'checks' => ['*'],
 
     // If you wish to skip running some checks, list the classes in the array below.
-    'exclude_checks' => [],
+    //
+    // The PageSpeed checks below call the Google PageSpeed Insights API and are
+    // opt-in: they are excluded by default. To enable them, set a value for
+    // seo.pagespeed.api_key and remove the checks you want to run from this array.
+    'exclude_checks' => [
+        PerformanceScoreCheck::class,
+        LcpCheck::class,
+        ClsCheck::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -183,6 +195,28 @@ return [
     |
     */
     'javascript' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | PageSpeed Insights
+    |--------------------------------------------------------------------------
+    |
+    | The PageSpeed checks call the Google PageSpeed Insights API to retrieve
+    | the Lighthouse performance score and Core Web Vitals (LCP, CLS). They are
+    | opt-in: provide an API key and remove the PageSpeed checks from the
+    | "exclude_checks" array above to enable them. You can request a free key at
+    | https://developers.google.com/speed/docs/insights/v5/get-started.
+    |
+    */
+    'pagespeed' => [
+        'api_key' => env('SEO_PAGESPEED_API_KEY'),
+
+        // The strategy to use: 'mobile' or 'desktop'.
+        'strategy' => 'mobile',
+
+        // Maximum time (in seconds) to wait for the API response.
+        'timeout' => 60,
+    ],
 
     /*
     |--------------------------------------------------------------------------
