@@ -28,7 +28,7 @@ if (! function_exists('getRemoteStatus')) {
         return cache()->driver(config('seo.cache.driver'))->tags('seo')->rememberForever($url, function () use ($url) {
             try {
                 $response = Http::make($url)->getRemoteResponse();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return 0;
             }
 
@@ -53,7 +53,7 @@ if (! function_exists('getRemoteFileSize')) {
 
             try {
                 $response = Http::make($url)->getRemoteResponse();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return 0;
             }
 
