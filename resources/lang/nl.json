@@ -5,6 +5,8 @@
     "The page should have a viewport meta tag with width=device-width so it renders correctly on mobile devices, which is important for mobile-first indexing.": "De pagina moet een viewport meta-tag met width=device-width hebben zodat deze correct wordt weergegeven op mobiele apparaten, wat belangrijk is voor mobile-first indexering.",
     "failed.meta.viewport.missing": "De pagina bevat geen viewport meta-tag, terwijl dat wel zou moeten.",
     "failed.meta.viewport.invalid": "De viewport meta-tag bevat geen width=device-width. De gevonden waarde was: :actualValue.",
+    "The page should declare its character encoding (for example <meta charset=\"utf-8\">) so browsers and search engines interpret the text correctly.": "De pagina moet haar tekencodering declareren (bijvoorbeeld <meta charset=\"utf-8\">) zodat browsers en zoekmachines de tekst correct interpreteren.",
+    "failed.meta.charset.missing": "De pagina declareert geen tekencodering, terwijl dat wel zou moeten.",
     "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.": "Alle links op de pagina moeten doorverwijzen naar een URL met HTTPS in plaats van HTTP omdat dit veiliger is.",
     "CSS files are not bigger than 15 KB because this will slow down the page load time.": "CSS-bestanden zijn niet groter dan 15 KB omdat dit de laadtijd van de pagina zal vertragen.",
     "Every image on the page should have an alt tag to describe the image.": "Elke afbeelding op de pagina moet een alt-tag hebben om de afbeelding te beschrijven.",

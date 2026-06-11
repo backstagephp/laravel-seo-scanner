@@ -5,6 +5,8 @@
     "The page should have a viewport meta tag with width=device-width so it renders correctly on mobile devices, which is important for mobile-first indexing.": "La page devrait avoir une balise meta viewport avec width=device-width afin qu'elle s'affiche correctement sur les appareils mobiles, ce qui est important pour l'indexation mobile-first.",
     "failed.meta.viewport.missing": "La page ne contient pas de balise meta viewport, alors qu'elle le devrait.",
     "failed.meta.viewport.invalid": "La balise meta viewport ne contient pas width=device-width. La valeur trouvée était : :actualValue.",
+    "The page should declare its character encoding (for example <meta charset=\"utf-8\">) so browsers and search engines interpret the text correctly.": "La page devrait déclarer son encodage de caractères (par exemple <meta charset=\"utf-8\">) afin que les navigateurs et les moteurs de recherche interprètent correctement le texte.",
+    "failed.meta.charset.missing": "La page ne déclare pas d'encodage de caractères, alors qu'elle le devrait.",
     "When the page has the 'nofollow' tag or meta tag set, search engines will not follow the links on the page.": "Lorsque la page a la balise meta ou la meta 'nofollow' définie, les moteurs de recherche ne suivent pas les liens de la page.",
     "The Time To First Byte (TTFB) should be below 600 ms because this will improve the page load time.": "Le Temps de Premier Octet (TTFB) devrait être inférieur à 600 ms, cela indique que le temps de chargement de la page n'est pas optimisé.",
     "The page response should return a 200 status code because this means the page is available.": "Le code réponse de la page devrait être un code 200, pour signifier que la page est fonctionnelle.",
