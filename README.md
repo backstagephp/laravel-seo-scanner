@@ -194,6 +194,49 @@ php artisan seo:scan-url https://backstagephp.com
 
 > Note: The command will only check the SEO score of the url and output the score in the CLI. It will not save the score to the database.
 
+### Output formats
+
+Both `seo:scan` and `seo:scan-url` support a `--format` option. The default is the human-readable console output. Use `--format=json` to get structured JSON instead, which is ideal for CI pipelines or AI agents:
+
+```bash
+php artisan seo:scan-url https://backstagephp.com --format=json
+```
+
+For `seo:scan-url` this outputs a single object; for `seo:scan` it outputs an array with one object per scanned URL. Each object looks like:
+
+```json
+{
+    "url": "https://backstagephp.com",
+    "score": 87,
+    "passed": 24,
+    "failed": 3,
+    "checks": {
+        "passed": [
+            {
+                "check": "Backstage\\Seo\\Checks\\Meta\\TitleLengthCheck",
+                "category": "Meta",
+                "title": "The page title is not longer than 60 characters",
+                "priority": "medium",
+                "scoreWeight": 5
+            }
+        ],
+        "failed": [
+            {
+                "check": "Backstage\\Seo\\Checks\\Meta\\CanonicalCheck",
+                "category": "Meta",
+                "title": "The page has a canonical URL",
+                "priority": "medium",
+                "scoreWeight": 3,
+                "timeToFix": 5,
+                "failureReason": "The page does not contain a canonical URL, while it should.",
+                "actualValue": null,
+                "expectedValue": null
+            }
+        ]
+    }
+}
+```
+
 ### Scanning routes in an SPA application
 
 If you have an SPA application, you can enable javascript rendering. This will use a headless browser to render the content. To enable javascript rendering, set the `javascript` option to `true` in the config file. You can also enable javascript rendering for a single route by adding the `--javascript` option to the command:

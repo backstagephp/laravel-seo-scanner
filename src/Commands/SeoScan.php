@@ -14,7 +14,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 
 class SeoScan extends Command
 {
-    public $signature = 'seo:scan';
+    public $signature = 'seo:scan {--format=console : The output format (console or json)}';
 
     public $description = 'Scan the SEO score of your website';
 
@@ -26,7 +26,11 @@ class SeoScan extends Command
 
     public int $routeCount = 0;
 
-    public ProgressBar $progress;
+    public ?ProgressBar $progress = null;
+
+    public bool $json = false;
+
+    public array $results = [];
 
     public array $failedChecks = [];
 
@@ -34,6 +38,8 @@ class SeoScan extends Command
 
     public function handle(): int
     {
+        $this->json = $this->option('format') === 'json';
+
         if (empty(config('seo.models')) && ! config('seo.check_routes')) {
             $this->error('No models or routes specified in config/seo.php');
 
@@ -51,11 +57,13 @@ class SeoScan extends Command
 
         $startTime = microtime(true);
 
-        $this->info('Please wait while we scan your web page(s)...');
-        $this->line('');
+        if (! $this->json) {
+            $this->info('Please wait while we scan your web page(s)...');
+            $this->line('');
 
-        $this->progress = $this->output->createProgressBar(getCheckCount());
-        $this->line('');
+            $this->progress = $this->output->createProgressBar(getCheckCount());
+            $this->line('');
+        }
 
         if (config('seo.check_routes')) {
             $this->calculateScoreForRoutes();
@@ -73,7 +81,11 @@ class SeoScan extends Command
 
         $totalPages = $this->modelCount + $this->routeCount;
 
-        $this->info('Command completed with '.$this->failed.' failed and '.$this->success.' successful checks on '.$totalPages.' pages.');
+        if ($this->json) {
+            $this->output->writeln(json_encode($this->results, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        } else {
+            $this->info('Command completed with '.$this->failed.' failed and '.$this->success.' successful checks on '.$totalPages.' pages.');
+        }
 
         cache()->driver(config('seo.cache.driver'))->tags('seo')->flush();
 
@@ -100,12 +112,14 @@ class SeoScan extends Command
         $startTime = time();
 
         if ($throttleEnabled) {
-            $this->line('<fg=yellow>Throttling enabled. Maximum requests per minute: '.$maxRequests.'</>');
+            if (! $this->json) {
+                $this->line('<fg=yellow>Throttling enabled. Maximum requests per minute: '.$maxRequests.'</>');
+            }
             sleep(5);
         }
 
         $routes->each(function ($path, $name) use ($throttleEnabled, $maxRequests, &$requestCount, &$startTime) {
-            $this->progress->start();
+            $this->progress?->start();
 
             if ($throttleEnabled) {
 
@@ -121,7 +135,7 @@ class SeoScan extends Command
             }
 
             $this->performSeoCheck($name);
-            $this->progress->finish();
+            $this->progress?->finish();
         });
     }
 
@@ -137,7 +151,18 @@ class SeoScan extends Command
             $this->saveScoreToDatabase(seo: $seo, url: route($name));
         }
 
-        $this->logResultToConsole($seo, route($name));
+        $this->recordResult($seo, route($name));
+    }
+
+    private function recordResult(SeoScore $seo, string $url): void
+    {
+        if ($this->json) {
+            $this->results[] = array_merge(['url' => $url], $seo->toArray());
+
+            return;
+        }
+
+        $this->logResultToConsole($seo, $url);
     }
 
     private static function getRoutes(): Collection
@@ -200,7 +225,7 @@ class SeoScan extends Command
         }
 
         $items->get()->filter->url->map(function ($model) {
-            $this->progress->start();
+            $this->progress?->start();
 
             $seo = $model->seoScore();
 
@@ -212,15 +237,17 @@ class SeoScan extends Command
                 $this->saveScoreToDatabase(seo: $seo, url: $model->url, model: $model);
             }
 
-            $this->progress->finish();
+            $this->progress?->finish();
 
             if ($this->failed === 0 && $this->success === 0) {
-                $this->line('<fg=red>✘ Unfortunately, the url that is used is not correct. Please try again with a different url.</>');
+                if (! $this->json) {
+                    $this->line('<fg=red>✘ Unfortunately, the url that is used is not correct. Please try again with a different url.</>');
+                }
 
                 return self::FAILURE;
             }
 
-            $this->logResultToConsole(seo: $seo, url: $model->url);
+            $this->recordResult($seo, $model->url);
         });
     }
 
