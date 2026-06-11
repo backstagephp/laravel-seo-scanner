@@ -13,6 +13,8 @@
     "The page should contain structured data (JSON-LD) because this helps search engines understand the content and can enable rich results.": "La page devrait contenir des données structurées (JSON-LD) car cela aide les moteurs de recherche à comprendre le contenu et peut activer les résultats enrichis.",
     "failed.meta.structured_data.missing": "La page ne contient pas de données structurées (JSON-LD), alors qu'elle le devrait.",
     "failed.meta.structured_data.invalid": "La page contient des données structurées (JSON-LD) mais aucune n'est du JSON valide.",
+    "The page should define the core Open Graph tags (og:title, og:description, og:url and og:type) so it is presented correctly when shared on social media.": "La page devrait définir les principales balises Open Graph (og:title, og:description, og:url et og:type) afin qu'elle soit présentée correctement lorsqu'elle est partagée sur les réseaux sociaux.",
+    "failed.meta.open_graph.incomplete": "Les balises Open Graph suivantes manquent sur la page : :actualValue.",
     "When the page has the 'nofollow' tag or meta tag set, search engines will not follow the links on the page.": "Lorsque la page a la balise meta ou la meta 'nofollow' définie, les moteurs de recherche ne suivent pas les liens de la page.",
     "The Time To First Byte (TTFB) should be below 600 ms because this will improve the page load time.": "Le Temps de Premier Octet (TTFB) devrait être inférieur à 600 ms, cela indique que le temps de chargement de la page n'est pas optimisé.",
     "The page response should return a 200 status code because this means the page is available.": "Le code réponse de la page devrait être un code 200, pour signifier que la page est fonctionnelle.",
