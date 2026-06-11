@@ -103,6 +103,7 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page has a logical heading structure (no skipped heading levels). <br>
 ✅ All links redirect to an url using HTTPS. <br>
 ✅ Every image has an alt attribute. <br>
+✅ Every image has explicit width and height attributes (prevents layout shift). <br>
 ✅ The page contains no broken links. <br>
 ✅ The page contains no broken images. <br>
 ✅ Length of the content is at least 2100 characters. <br>
