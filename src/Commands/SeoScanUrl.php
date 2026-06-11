@@ -3,26 +3,53 @@
 namespace Backstage\Seo\Commands;
 
 use Backstage\Seo\Facades\Seo;
+use Backstage\Seo\SeoScore;
 use Illuminate\Console\Command;
 
 class SeoScanUrl extends Command
 {
-    public $signature = 'seo:scan-url {url} {--javascript}';
+    public $signature = 'seo:scan-url {url} {--javascript} {--format=console : The output format (console or json)}';
 
     public $description = 'Scan the SEO score of a url';
 
     public function handle(): int
     {
-        $this->info('Please wait while we scan your web page...');
-        $this->line('');
+        $json = $this->option('format') === 'json';
 
-        $progress = $this->output->createProgressBar(getCheckCount());
-        $progress->start();
+        if (! $json) {
+            $this->info('Please wait while we scan your web page...');
+            $this->line('');
+        }
+
+        $progress = $json ? null : $this->output->createProgressBar(getCheckCount());
+        $progress?->start();
 
         $score = Seo::check($this->argument('url'), $progress, $this->option('javascript'));
 
-        $progress->finish();
+        $progress?->finish();
 
+        if ($json) {
+            return $this->outputJson($score);
+        }
+
+        return $this->outputConsole($score);
+    }
+
+    private function outputJson(SeoScore $score): int
+    {
+        $hasChecks = $score->getSuccessfulChecks()->isNotEmpty() || $score->getFailedChecks()->isNotEmpty();
+
+        $payload = array_merge(['url' => $this->argument('url')], $score->toArray());
+
+        $this->output->writeln(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+
+        cache()->driver(config('seo.cache.driver'))->tags('seo')->flush();
+
+        return $hasChecks ? self::SUCCESS : self::FAILURE;
+    }
+
+    private function outputConsole(SeoScore $score): int
+    {
         $this->line('');
         $this->line('');
         $this->line('-----------------------------------------------------------------------------------------------------------------------------------');

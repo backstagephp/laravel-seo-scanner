@@ -60,4 +60,49 @@ class SeoScore
     {
         return collect(['successful' => $this->successful])->merge(['failed' => $this->failed]);
     }
+
+    /**
+     * Return a machine-readable representation of the score and its checks,
+     * suitable for JSON output.
+     */
+    public function toArray(): array
+    {
+        return [
+            'score' => $this->score,
+            'passed' => $this->successful->count(),
+            'failed' => $this->failed->count(),
+            'checks' => [
+                'passed' => $this->successful
+                    ->map(fn ($check, $class) => $this->mapCheck($check, $class, false))
+                    ->values()
+                    ->all(),
+                'failed' => $this->failed
+                    ->map(fn ($check, $class) => $this->mapCheck($check, $class, true))
+                    ->values()
+                    ->all(),
+            ],
+        ];
+    }
+
+    private function mapCheck(object $check, string $class, bool $failed): array
+    {
+        $segments = explode('\\', $class);
+
+        $data = [
+            'check' => $class,
+            'category' => $segments[count($segments) - 2] ?? null,
+            'title' => $check->title,
+            'priority' => $check->priority,
+            'scoreWeight' => $check->scoreWeight,
+        ];
+
+        if ($failed) {
+            $data['timeToFix'] = $check->timeToFix;
+            $data['failureReason'] = $check->failureReason ?? null;
+            $data['actualValue'] = $check->actualValue ?? null;
+            $data['expectedValue'] = $check->expectedValue ?? null;
+        }
+
+        return $data;
+    }
 }
