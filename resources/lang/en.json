@@ -17,6 +17,8 @@
     "failed.meta.open_graph.incomplete": "The page is missing the following Open Graph tags: :actualValue.",
     "The page should define a twitter:card meta tag so it is presented as a rich card when shared on X (Twitter).": "The page should define a twitter:card meta tag so it is presented as a rich card when shared on X (Twitter).",
     "failed.meta.twitter_card.missing": "The page does not contain a twitter:card meta tag, while it should.",
+    "Headings should not skip levels (for example an h2 followed by an h4) because a logical heading structure helps search engines and assistive technologies understand the page.": "Headings should not skip levels (for example an h2 followed by an h4) because a logical heading structure helps search engines and assistive technologies understand the page.",
+    "failed.content.heading_structure.skipped": "The page skips one or more heading levels: :actualValue.",
     "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.": "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.",
     "CSS files are not bigger than 15 KB because this will slow down the page load time.": "CSS files are not bigger than 15 KB because this will slow down the page load time.",
     "Every image on the page should have an alt tag to describe the image.": "Every image on the page should have an alt tag to describe the image.",

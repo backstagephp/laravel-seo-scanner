@@ -17,6 +17,8 @@
     "failed.meta.open_graph.incomplete": "Les balises Open Graph suivantes manquent sur la page : :actualValue.",
     "The page should define a twitter:card meta tag so it is presented as a rich card when shared on X (Twitter).": "La page devrait définir une balise meta twitter:card afin qu'elle soit présentée comme une carte enrichie lorsqu'elle est partagée sur X (Twitter).",
     "failed.meta.twitter_card.missing": "La page ne contient pas de balise meta twitter:card, alors qu'elle le devrait.",
+    "Headings should not skip levels (for example an h2 followed by an h4) because a logical heading structure helps search engines and assistive technologies understand the page.": "Les titres ne devraient pas sauter de niveaux (par exemple un h2 suivi d'un h4) car une structure de titres logique aide les moteurs de recherche et les technologies d'assistance à comprendre la page.",
+    "failed.content.heading_structure.skipped": "La page saute un ou plusieurs niveaux de titre : :actualValue.",
     "When the page has the 'nofollow' tag or meta tag set, search engines will not follow the links on the page.": "Lorsque la page a la balise meta ou la meta 'nofollow' définie, les moteurs de recherche ne suivent pas les liens de la page.",
     "The Time To First Byte (TTFB) should be below 600 ms because this will improve the page load time.": "Le Temps de Premier Octet (TTFB) devrait être inférieur à 600 ms, cela indique que le temps de chargement de la page n'est pas optimisé.",
     "The page response should return a 200 status code because this means the page is available.": "Le code réponse de la page devrait être un code 200, pour signifier que la page est fonctionnelle.",

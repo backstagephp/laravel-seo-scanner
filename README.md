@@ -100,6 +100,7 @@ These checks are available in the package. You can add or remove checks in the c
 ### Content
 
 ✅ The page has an H1 tag and if it is used only once per page. <br>
+✅ The page has a logical heading structure (no skipped heading levels). <br>
 ✅ All links redirect to an url using HTTPS. <br>
 ✅ Every image has an alt attribute. <br>
 ✅ The page contains no broken links. <br>
