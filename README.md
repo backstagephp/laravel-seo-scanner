@@ -123,6 +123,7 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The title contains one or more keywords.<br>
 ✅ One or more keywords are present in the first paragraph.<br>
 ✅ The page does not contain invalid HTML elements in the head section.<br>
+✅ The page contains structured data (JSON-LD).<br>
 
 ### Performance
 
