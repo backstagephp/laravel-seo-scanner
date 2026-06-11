@@ -117,6 +117,7 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page has an Open Graph image.<br>
 ✅ The page has a canonical URL.<br>
 ✅ The page has complete Open Graph tags (og:title, og:description, og:url, og:type).<br>
+✅ The page has a Twitter card.<br>
 ✅ The lang attribute is set on the html tag.<br>
 ✅ The page has a valid viewport meta tag.<br>
 ✅ The page has a character encoding declared.<br>

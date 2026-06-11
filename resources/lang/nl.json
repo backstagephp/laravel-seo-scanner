@@ -15,6 +15,8 @@
     "failed.meta.structured_data.invalid": "De pagina bevat gestructureerde data (JSON-LD), maar geen daarvan is geldige JSON.",
     "The page should define the core Open Graph tags (og:title, og:description, og:url and og:type) so it is presented correctly when shared on social media.": "De pagina moet de belangrijkste Open Graph-tags (og:title, og:description, og:url en og:type) definiëren zodat deze correct wordt weergegeven bij het delen op sociale media.",
     "failed.meta.open_graph.incomplete": "De volgende Open Graph-tags ontbreken op de pagina: :actualValue.",
+    "The page should define a twitter:card meta tag so it is presented as a rich card when shared on X (Twitter).": "De pagina moet een twitter:card meta-tag definiëren zodat deze als rich card wordt weergegeven bij het delen op X (Twitter).",
+    "failed.meta.twitter_card.missing": "De pagina bevat geen twitter:card meta-tag, terwijl dat wel zou moeten.",
     "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.": "Alle links op de pagina moeten doorverwijzen naar een URL met HTTPS in plaats van HTTP omdat dit veiliger is.",
     "CSS files are not bigger than 15 KB because this will slow down the page load time.": "CSS-bestanden zijn niet groter dan 15 KB omdat dit de laadtijd van de pagina zal vertragen.",
     "Every image on the page should have an alt tag to describe the image.": "Elke afbeelding op de pagina moet een alt-tag hebben om de afbeelding te beschrijven.",
