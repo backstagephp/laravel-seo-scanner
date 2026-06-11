@@ -115,6 +115,7 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page has a meta description. <br>
 ✅ The page title is not longer than 60 characters. <br>
 ✅ The page has an Open Graph image.<br>
+✅ The page has a canonical URL.<br>
 ✅ The lang attribute is set on the html tag.<br>
 ✅ The title contains one or more keywords.<br>
 ✅ One or more keywords are present in the first paragraph.<br>

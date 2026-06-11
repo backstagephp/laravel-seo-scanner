@@ -1,4 +1,7 @@
 {
+    "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.",
+    "failed.meta.canonical.missing": "The page does not contain a canonical URL, while it should.",
+    "failed.meta.canonical.broken": "The page contains a broken canonical URL. This URL was found: :actualValue.",
     "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.": "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.",
     "CSS files are not bigger than 15 KB because this will slow down the page load time.": "CSS files are not bigger than 15 KB because this will slow down the page load time.",
     "Every image on the page should have an alt tag to describe the image.": "Every image on the page should have an alt tag to describe the image.",
