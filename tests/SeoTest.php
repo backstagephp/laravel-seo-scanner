@@ -1,5 +1,7 @@
 <?php
 
+use Backstage\Seo\Checks\Content\MultipleHeadingCheck;
+
 it('can run the SEO check for a single URL', function () {
     $this->artisan('seo:scan-url', ['url' => 'https://backstagephp.com'])
         ->assertExitCode(0);
@@ -11,7 +13,7 @@ it('can run the SEO check for routes', function () {
         'https://backstagephp.com',
     ]]);
     config(['seo.checks' => [
-        \Backstage\Seo\Checks\Content\MultipleHeadingCheck::class,
+        MultipleHeadingCheck::class,
     ]]);
 
     $this->artisan('seo:scan')
@@ -22,7 +24,7 @@ it('can only run configured checks', function () {
     config(['seo.database.save' => false]);
     config(['seo.check_routes' => false]);
     config(['seo.checks' => [
-        \Backstage\Seo\Checks\Content\MultipleHeadingCheck::class,
+        MultipleHeadingCheck::class,
     ]]);
 
     $this->artisan('seo:scan-url', ['url' => 'https://backstagephp.com'])
