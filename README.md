@@ -49,8 +49,8 @@ Easily configure which routes to scan, exclude or include specific checks or eve
 
 ## Minimum requirements
 
--   PHP 8.1 or higher (8.1, 8.2, 8.3, 8.4)
--   Laravel 9.0 or higher (9.x, 10.x, 11.x, 12.x)
+-   PHP 8.2 or higher (8.2, 8.3, 8.4, 8.5)
+-   Laravel 12.0 or higher (12.x, 13.x)
 
 ## Installation
 

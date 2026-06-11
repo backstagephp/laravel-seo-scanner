@@ -17,11 +17,13 @@ trait Actions
         }
 
         try {
-            $readability = new Readability($body);
+            // Tidy is disabled because recent libtidy/PHP versions reject the
+            // tidy configuration that the readability library passes.
+            $readability = new Readability($body, null, 'libxml', false);
             $readability->init();
 
             return $readability->getContent()->textContent;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // If Readability fails, fall back to extracting text from the body
             // Remove HTML tags and return plain text
             return strip_tags($body);
