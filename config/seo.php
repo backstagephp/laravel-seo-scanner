@@ -1,5 +1,9 @@
 <?php
 
+use Backstage\Seo\Checks\PageSpeed\ClsCheck;
+use Backstage\Seo\Checks\PageSpeed\LcpCheck;
+use Backstage\Seo\Checks\PageSpeed\PerformanceScoreCheck;
+
 return [
 
     /*
@@ -48,9 +52,9 @@ return [
     // opt-in: they are excluded by default. To enable them, set a value for
     // seo.pagespeed.api_key and remove the checks you want to run from this array.
     'exclude_checks' => [
-        \Backstage\Seo\Checks\PageSpeed\PerformanceScoreCheck::class,
-        \Backstage\Seo\Checks\PageSpeed\LcpCheck::class,
-        \Backstage\Seo\Checks\PageSpeed\ClsCheck::class,
+        PerformanceScoreCheck::class,
+        LcpCheck::class,
+        ClsCheck::class,
     ],
 
     /*
