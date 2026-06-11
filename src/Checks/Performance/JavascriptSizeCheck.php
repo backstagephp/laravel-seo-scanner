@@ -53,11 +53,7 @@ class JavascriptSizeCheck implements Check
     public function validateContent(Crawler $crawler): bool
     {
         $crawler = $crawler->filterXPath('//script')->each(function (Crawler $node, $i) {
-            $src = $node->attr('src');
-
-            if ($src) {
-                return $src;
-            }
+            return $node->attr('src');
         });
 
         $content = collect($crawler)->filter(fn ($value) => $value !== null)->toArray();

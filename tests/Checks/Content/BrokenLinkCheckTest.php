@@ -122,7 +122,7 @@ it('can check if link is broken by checking on configured status codes', functio
 
     $check->url = 'backstagephp.com';
 
-    $this->assertTrue($check->check(Http::get('backstagephp.com/admin/dashboard'), $crawler));
+    $this->assertTrue($check->check(Http::get('backstagephp.com'), $crawler));
 });
 
 it('can exclude certain paths from the broken link check', function () {

@@ -47,7 +47,7 @@ it('can perform the Javascript size check on a page with a Javascript file small
     // Set the URL property that the check needs
     $check->url = 'backstagephp.com';
 
-    $this->assertTrue($check->check(Http::get('backstagephp.com/script.js'), $crawler));
+    $this->assertTrue($check->check(Http::get('https://backstagephp.com/script.js'), $crawler));
 });
 
 it('can perform the Javascript size check on a page without Javascript files', function () {

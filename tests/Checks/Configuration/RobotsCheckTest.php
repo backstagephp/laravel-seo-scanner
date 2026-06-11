@@ -12,5 +12,5 @@ it('can perform the robots check', function () {
             Disallow: /admin', 200),
     ]);
 
-    $this->assertTrue($check->check(Http::get('backstagephp.com'), new Crawler));
+    $this->assertTrue($check->check(Http::get('https://backstagephp.com'), new Crawler));
 });
