@@ -19,6 +19,8 @@
     "failed.meta.twitter_card.missing": "De pagina bevat geen twitter:card meta-tag, terwijl dat wel zou moeten.",
     "Headings should not skip levels (for example an h2 followed by an h4) because a logical heading structure helps search engines and assistive technologies understand the page.": "Koppen mogen geen niveaus overslaan (bijvoorbeeld een h2 gevolgd door een h4) omdat een logische koppenstructuur zoekmachines en hulptechnologieën helpt de pagina te begrijpen.",
     "failed.content.heading_structure.skipped": "De pagina slaat een of meer koppenniveaus over: :actualValue.",
+    "Images should have explicit width and height attributes because this reserves space during loading and prevents layout shift (CLS).": "Afbeeldingen moeten expliciete width- en height-attributen hebben omdat dit ruimte reserveert tijdens het laden en layout shift (CLS) voorkomt.",
+    "failed.content.image_dimensions.missing": "De pagina bevat afbeeldingen zonder expliciete width- en height-attributen. Deze afbeeldingen zijn gevonden: :actualValue.",
     "All links on the page should redirect to an url using HTTPS instead of HTTP because this is more secure.": "Alle links op de pagina moeten doorverwijzen naar een URL met HTTPS in plaats van HTTP omdat dit veiliger is.",
     "CSS files are not bigger than 15 KB because this will slow down the page load time.": "CSS-bestanden zijn niet groter dan 15 KB omdat dit de laadtijd van de pagina zal vertragen.",
     "Every image on the page should have an alt tag to describe the image.": "Elke afbeelding op de pagina moet een alt-tag hebben om de afbeelding te beschrijven.",
