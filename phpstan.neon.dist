@@ -9,4 +9,10 @@ parameters:
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
+    ignoreErrors:
+        # env() is the correct pattern in a publishable package config file;
+        # larastan only recognises the application's own config directory.
+        -
+            identifier: larastan.noEnvCallsOutsideOfConfig
+            path: config/seo.php
 

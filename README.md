@@ -247,6 +247,30 @@ php artisan seo:scan-url https://backstagephp.com --javascript
 
 > Note: This command will use Puppeteer to render the page. Make sure that you have Puppeteer installed on your system. You can install Puppeteer by running the following command: `npm install puppeteer`. **At this moment it's only available when scanning single routes.**
 
+### PageSpeed Insights (Core Web Vitals)
+
+The package can pull the Google PageSpeed (Lighthouse) performance score and Core Web Vitals straight from the [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started) — no third-party package required. These checks are **opt-in** because they call an external API and are slower and rate-limited.
+
+To enable them:
+
+1. Request a free API key and set it (for example via `.env`):
+
+```bash
+SEO_PAGESPEED_API_KEY=your-api-key
+```
+
+2. Remove the PageSpeed checks you want to run from the `exclude_checks` array in `config/seo.php`:
+
+```php
+'exclude_checks' => [
+    // \Backstage\Seo\Checks\PageSpeed\PerformanceScoreCheck::class,
+    // \Backstage\Seo\Checks\PageSpeed\LcpCheck::class,
+    // \Backstage\Seo\Checks\PageSpeed\ClsCheck::class,
+],
+```
+
+You can configure the strategy (`mobile` or `desktop`) and request timeout under the `pagespeed` key in the config file. The three checks share a single API call per URL.
+
 ### Throttling
 
 If you want to throttle the requests, you can set the `throttle` option to `true` in the config file. You can also set the amount of requests per minute by setting the `requests_per_minute` option in the config file.
