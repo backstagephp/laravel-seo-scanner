@@ -1,4 +1,6 @@
 {
+    "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.": "De pagina zou via HTTPS geserveerd moeten worden, omdat dit het verkeer versleutelt, vereist is voor moderne browserfuncties en een bevestigd Google-rankingsignaal is.",
+    "failed.security.https.insecure": "De pagina wordt niet via HTTPS geserveerd. Deze werd bereikt via :actualValue.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "De pagina moet een canonieke URL hebben omdat dit zoekmachines vertelt welke versie van een pagina de voorkeursversie is en duplicate content voorkomt.",
     "failed.meta.canonical.missing": "De pagina bevat geen canonieke URL, terwijl dat wel zou moeten.",
     "failed.meta.canonical.broken": "De pagina bevat een kapotte canonieke URL. Deze URL is gevonden: :actualValue.",

@@ -1,4 +1,6 @@
 {
+    "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.": "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.",
+    "failed.security.https.insecure": "The page is not served over HTTPS. It was reached over :actualValue.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.",
     "failed.meta.canonical.missing": "The page does not contain a canonical URL, while it should.",
     "failed.meta.canonical.broken": "The page contains a broken canonical URL. This URL was found: :actualValue.",
