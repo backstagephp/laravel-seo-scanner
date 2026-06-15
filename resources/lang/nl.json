@@ -1,4 +1,7 @@
 {
+    "The site should have a valid XML sitemap because it helps search engines discover and crawl all important pages efficiently.": "De site zou een geldige XML-sitemap moeten hebben, omdat deze zoekmachines helpt alle belangrijke pagina's efficiënt te ontdekken en te crawlen.",
+    "failed.configuration.sitemap.missing": "We konden geen XML-sitemap voor deze site vinden op :actualValue, terwijl die er zou moeten zijn.",
+    "failed.configuration.sitemap.invalid": "De sitemap gevonden op :actualValue is geen geldige XML-sitemap (geen urlset- of sitemapindex-element).",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "De pagina moet een canonieke URL hebben omdat dit zoekmachines vertelt welke versie van een pagina de voorkeursversie is en duplicate content voorkomt.",
     "failed.meta.canonical.missing": "De pagina bevat geen canonieke URL, terwijl dat wel zou moeten.",
     "failed.meta.canonical.broken": "De pagina bevat een kapotte canonieke URL. Deze URL is gevonden: :actualValue.",
