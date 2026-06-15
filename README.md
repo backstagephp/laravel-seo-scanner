@@ -97,6 +97,10 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page does not have 'nofollow' set. <br>
 ✅ Robots.txt allows indexing. <br>
 
+### AI
+
+✅ Known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, ...) are not blocked in robots.txt. <br>
+
 ### Content
 
 ✅ The page has an H1 tag and if it is used only once per page. <br>

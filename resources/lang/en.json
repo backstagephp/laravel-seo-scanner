@@ -1,4 +1,6 @@
 {
+    "The robots.txt file should not block known AI crawlers (such as GPTBot, ClaudeBot and PerplexityBot) unless that is intended, because blocking them removes the site from AI-powered search engines and assistants.": "The robots.txt file should not block known AI crawlers (such as GPTBot, ClaudeBot and PerplexityBot) unless that is intended, because blocking them removes the site from AI-powered search engines and assistants.",
+    "failed.ai.ai_crawlers.blocked": "The robots.txt file blocks the following AI crawlers, which limits AI and LLM visibility: :actualValue.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.",
     "failed.meta.canonical.missing": "The page does not contain a canonical URL, while it should.",
     "failed.meta.canonical.broken": "The page contains a broken canonical URL. This URL was found: :actualValue.",
