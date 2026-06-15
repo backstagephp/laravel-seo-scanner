@@ -1,4 +1,6 @@
 {
+    "The page should set security headers such as Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options and Referrer-Policy because they protect visitors and signal a well maintained, trustworthy site.": "A página deve definir cabeçalhos de segurança como Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options e Referrer-Policy porque eles protegem os visitantes e indicam um site bem mantido e confiável.",
+    "failed.security.headers.missing": "A página está sem os seguintes cabeçalhos de segurança recomendados: :actualValue.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "A página deve ter uma URL canônica porque isso informa aos mecanismos de busca qual versão de uma página é a preferida e evita conteúdo duplicado.",
     "failed.meta.canonical.missing": "A página não contém uma URL canônica, embora devesse.",
     "failed.meta.canonical.broken": "A página contém uma URL canônica quebrada. Esta URL foi encontrada: :actualValue.",
