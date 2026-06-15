@@ -1,4 +1,6 @@
 {
+    "The site should provide an llms.txt file because it gives large language models a curated, Markdown overview of the site, which improves how AI tools understand and cite the content.": "De site zou een llms.txt-bestand moeten aanbieden, omdat dit large language models een samengesteld Markdown-overzicht van de site geeft, wat verbetert hoe AI-tools de inhoud begrijpen en citeren.",
+    "failed.ai.llms_txt.missing": "We konden geen llms.txt-bestand voor deze site vinden op :actualValue, terwijl dit wordt aanbevolen voor AI- en LLM-zichtbaarheid.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "De pagina moet een canonieke URL hebben omdat dit zoekmachines vertelt welke versie van een pagina de voorkeursversie is en duplicate content voorkomt.",
     "failed.meta.canonical.missing": "De pagina bevat geen canonieke URL, terwijl dat wel zou moeten.",
     "failed.meta.canonical.broken": "De pagina bevat een kapotte canonieke URL. Deze URL is gevonden: :actualValue.",
