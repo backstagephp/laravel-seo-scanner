@@ -1,4 +1,6 @@
 {
+    "The page should be reachable without a long chain of redirects because each extra redirect adds latency and can dilute SEO signals.": "De pagina zou bereikbaar moeten zijn zonder een lange keten van redirects, omdat elke extra redirect vertraging toevoegt en SEO-signalen kan verzwakken.",
+    "failed.security.redirect_chain.too_long": "De pagina wordt bereikt via :actualValue redirects. Beperk het aantal redirects tot :expectedValue of minder.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "De pagina moet een canonieke URL hebben omdat dit zoekmachines vertelt welke versie van een pagina de voorkeursversie is en duplicate content voorkomt.",
     "failed.meta.canonical.missing": "De pagina bevat geen canonieke URL, terwijl dat wel zou moeten.",
     "failed.meta.canonical.broken": "De pagina bevat een kapotte canonieke URL. Deze URL is gevonden: :actualValue.",

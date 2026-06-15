@@ -1,4 +1,6 @@
 {
+    "The page should be reachable without a long chain of redirects because each extra redirect adds latency and can dilute SEO signals.": "A página deve ser acessível sem uma longa cadeia de redirecionamentos porque cada redirecionamento extra adiciona latência e pode diluir os sinais de SEO.",
+    "failed.security.redirect_chain.too_long": "A página é acessada por meio de :actualValue redirecionamentos. Reduza o número de redirecionamentos para :expectedValue ou menos.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "A página deve ter uma URL canônica porque isso informa aos mecanismos de busca qual versão de uma página é a preferida e evita conteúdo duplicado.",
     "failed.meta.canonical.missing": "A página não contém uma URL canônica, embora devesse.",
     "failed.meta.canonical.broken": "A página contém uma URL canônica quebrada. Esta URL foi encontrada: :actualValue.",
