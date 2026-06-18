@@ -2,8 +2,8 @@
 
 use Backstage\Seo\Checks\Content\MultipleHeadingCheck;
 use Backstage\Seo\Models\SeoScan as SeoScanModel;
-use Backstage\Seo\Services\PageScanRunner;
 use Backstage\Seo\SeoScore;
+use Backstage\Seo\Services\PageScanRunner;
 use Backstage\Seo\Tests\Support\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
