@@ -100,6 +100,7 @@ These checks are available in the package. You can add or remove checks in the c
 ### AI
 
 ✅ Known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, ...) are not blocked in robots.txt. <br>
+✅ The site provides an llms.txt file. <br>
 
 ### Content
 

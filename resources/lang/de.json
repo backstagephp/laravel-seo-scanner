@@ -1,6 +1,8 @@
 {
     "The robots.txt file should not block known AI crawlers (such as GPTBot, ClaudeBot and PerplexityBot) unless that is intended, because blocking them removes the site from AI-powered search engines and assistants.": "Die robots.txt-Datei sollte bekannte KI-Crawler (wie GPTBot, ClaudeBot und PerplexityBot) nicht blockieren, sofern dies nicht beabsichtigt ist, da deren Blockierung die Website aus KI-gestützten Suchmaschinen und Assistenten entfernt.",
     "failed.ai.ai_crawlers.blocked": "Die robots.txt-Datei blockiert die folgenden KI-Crawler, was die Sichtbarkeit bei KI und LLMs einschränkt: :actualValue.",
+    "The site should provide an llms.txt file because it gives large language models a curated, Markdown overview of the site, which improves how AI tools understand and cite the content.": "Die Website sollte eine llms.txt-Datei bereitstellen, da sie großen Sprachmodellen einen kuratierten Markdown-Überblick über die Website bietet, was verbessert, wie KI-Tools die Inhalte verstehen und zitieren.",
+    "failed.ai.llms_txt.missing": "Wir konnten unter :actualValue keine llms.txt-Datei für diese Website finden, obwohl sie für die Sichtbarkeit bei KI und LLMs empfohlen wird.",
     "The page should have a canonical URL because this tells search engines which version of a page is the preferred one and prevents duplicate content issues.": "Die Seite sollte eine kanonische URL haben, da dies den Suchmaschinen mitteilt, welche Version einer Seite die bevorzugte ist, und Duplicate Content verhindert.",
     "failed.meta.canonical.missing": "Die Seite enthält keine kanonische URL, obwohl sie es sollte.",
     "failed.meta.canonical.broken": "Die Seite enthält eine defekte kanonische URL. Diese URL wurde gefunden: :actualValue.",
