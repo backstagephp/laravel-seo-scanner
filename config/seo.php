@@ -155,6 +155,18 @@ return [
     */
     'models' => [],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Chunk size
+    |--------------------------------------------------------------------------
+    |
+    | When scanning with the --queue flag, the work is split into batched jobs
+    | of this many pages each. It also controls the batch size used to read
+    | model records so large tables are not loaded into memory all at once.
+    |
+    */
+    'chunk_size' => 100,
+
     'http' => [
         /*
         |--------------------------------------------------------------------------
