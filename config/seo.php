@@ -160,9 +160,10 @@ return [
     | Chunk size
     |--------------------------------------------------------------------------
     |
-    | When scanning models, records are read in chunks of this size instead of
-    | loading every record into memory at once. Lower this for large tables on
-    | memory-constrained environments.
+    | Model records are read in chunks of this size instead of loading every
+    | record into memory at once. When scanning with the --queue flag, it also
+    | controls how many pages each batched job scans. Lower it for large tables
+    | on memory-constrained environments.
     |
     */
     'chunk_size' => 100,

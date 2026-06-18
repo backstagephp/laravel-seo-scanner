@@ -3,18 +3,20 @@
 namespace Backstage\Seo\Commands;
 
 use Backstage\Seo\Events\ScanCompleted;
-use Backstage\Seo\Facades\Seo;
+use Backstage\Seo\Jobs\ScanChunk;
 use Backstage\Seo\Models\SeoScan as SeoScanModel;
 use Backstage\Seo\SeoScore;
+use Backstage\Seo\Services\PageScanRunner;
+use Backstage\Seo\Services\ScanFinalizer;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Bus;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class SeoScan extends Command
 {
-    public $signature = 'seo:scan {--format=console : The output format (console or json)}';
+    public $signature = 'seo:scan {--format=console : The output format (console or json)} {--queue : Dispatch the scan as batched queue jobs instead of running it synchronously}';
 
     public $description = 'Scan the SEO score of your website';
 
@@ -34,7 +36,7 @@ class SeoScan extends Command
 
     public array $failedChecks = [];
 
-    public SeoScanModel $scan;
+    public ?SeoScanModel $scan = null;
 
     public function handle(): int
     {
@@ -44,6 +46,10 @@ class SeoScan extends Command
             $this->error('No models or routes specified in config/seo.php');
 
             return self::FAILURE;
+        }
+
+        if ($this->option('queue')) {
+            return $this->dispatchQueuedScan();
         }
 
         if (config('seo.database.save')) {
@@ -103,6 +109,83 @@ class SeoScan extends Command
         return self::SUCCESS;
     }
 
+    private function dispatchQueuedScan(): int
+    {
+        $scan = SeoScanModel::create([
+            'total_checks' => getCheckCount(),
+            'started_at' => now(),
+        ]);
+
+        $jobs = $this->buildChunkJobs($scan);
+
+        if (empty($jobs)) {
+            $this->error('No pages found to scan.');
+
+            return self::FAILURE;
+        }
+
+        $scanId = $scan->id;
+
+        Bus::batch($jobs)
+            ->name('SEO scan #'.$scanId)
+            ->finally(function () use ($scanId) {
+                if ($scan = SeoScanModel::find($scanId)) {
+                    app(ScanFinalizer::class)->finalize($scan);
+                }
+            })
+            ->dispatch();
+
+        $pages = collect($jobs)->sum(fn (ScanChunk $job) => count($job->urls) + count($job->ids));
+
+        $this->info('Dispatched '.count($jobs).' scan job(s) to the queue for '.$pages.' page(s).');
+
+        return self::SUCCESS;
+    }
+
+    /**
+     * Build the batch of ScanChunk jobs for the configured routes and models.
+     *
+     * @return array<int, ScanChunk>
+     */
+    private function buildChunkJobs(SeoScanModel $scan): array
+    {
+        $chunkSize = (int) config('seo.chunk_size', 100);
+        $jobs = [];
+
+        if (config('seo.check_routes')) {
+            self::getRoutes()
+                ->map(fn ($uri, $name) => route($name))
+                ->values()
+                ->chunk($chunkSize)
+                ->each(function (Collection $urls) use (&$jobs, $scan) {
+                    $jobs[] = new ScanChunk(scanId: $scan->id, urls: $urls->all());
+                });
+        }
+
+        foreach (config('seo.models') ?? [] as $model) {
+            [$class, $scope] = is_array($model) ? [$model[0], $model[1]] : [$model, null];
+
+            $query = new $class;
+
+            if ($scope) {
+                $query = $query->{$scope}();
+            }
+
+            $query->lazyById($chunkSize)
+                ->filter->url
+                ->chunk($chunkSize)
+                ->each(function ($items) use (&$jobs, $scan, $class) {
+                    $jobs[] = new ScanChunk(
+                        scanId: $scan->id,
+                        model: $class,
+                        ids: collect($items)->map->getKey()->values()->all(),
+                    );
+                });
+        }
+
+        return $jobs;
+    }
+
     private function calculateScoreForRoutes(): void
     {
         $routes = self::getRoutes();
@@ -141,17 +224,30 @@ class SeoScan extends Command
 
     private function performSeoCheck($name): void
     {
-        $seo = Seo::check(url: route($name), progress: $this->progress, useJavascript: config('seo.javascript'));
+        $url = route($name);
 
-        $this->failed += count($seo->getFailedChecks());
-        $this->success += count($seo->getSuccessfulChecks());
+        $seo = app(PageScanRunner::class)->scan(
+            scan: $this->scan,
+            url: $url,
+            progress: $this->progress,
+            useJavascript: config('seo.javascript'),
+        );
+
+        $this->accumulate($seo);
         $this->routeCount++;
 
-        if (config('seo.database.save')) {
-            $this->saveScoreToDatabase(seo: $seo, url: route($name));
-        }
+        $this->recordResult($seo, $url);
+    }
 
-        $this->recordResult($seo, route($name));
+    private function accumulate(SeoScore $seo): void
+    {
+        $this->failed += count($seo->getFailedChecks());
+        $this->success += count($seo->getSuccessfulChecks());
+
+        $this->failedChecks = array_values(array_unique(array_merge(
+            $this->failedChecks,
+            $seo->getFailedChecks()->map(fn ($check) => get_class($check))->values()->all(),
+        )));
     }
 
     private function recordResult(SeoScore $seo, string $url): void
@@ -227,15 +323,14 @@ class SeoScan extends Command
         $items->lazyById(config('seo.chunk_size', 100))->filter->url->each(function ($model) {
             $this->progress?->start();
 
-            $seo = $model->seoScore();
+            $seo = app(PageScanRunner::class)->scan(
+                scan: $this->scan,
+                url: $model->url,
+                model: $model,
+            );
 
-            $this->failed += count($seo->getFailedChecks());
-            $this->success += count($seo->getSuccessfulChecks());
+            $this->accumulate($seo);
             $this->modelCount++;
-
-            if (config('seo.database.save')) {
-                $this->saveScoreToDatabase(seo: $seo, url: $model->url, model: $model);
-            }
 
             $this->progress?->finish();
 
@@ -249,33 +344,6 @@ class SeoScan extends Command
 
             $this->recordResult($seo, $model->url);
         });
-    }
-
-    private function saveScoreToDatabase(SeoScore $seo, string $url, ?object $model = null): void
-    {
-        $score = $seo->getScore();
-
-        // Get the failed checks of each score so we can store them in the scan table.
-        $failedChecks = $seo->getFailedChecks()->map(function ($check) {
-            return get_class($check);
-        })->toArray();
-
-        $this->failedChecks = array_unique(array_merge($this->failedChecks, array_values($failedChecks)));
-
-        DB::table('seo_scores')
-            ->insert([
-                'seo_scan_id' => $this->scan->id,
-                'url' => $url,
-                'model_type' => $model ? $model->getMorphClass() : null,
-                'model_id' => $model ? $model->id : null,
-                'score' => $score,
-                'checks' => json_encode([
-                    'failed' => $seo->getFailedChecks(),
-                    'successful' => $seo->getSuccessfulChecks(),
-                ]),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
     }
 
     private function logResultToConsole(SeoScore $seo, string $url): void
