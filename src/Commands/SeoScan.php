@@ -320,7 +320,7 @@ class SeoScan extends Command
             $items = $items->{$scope}();
         }
 
-        $items->get()->filter->url->map(function ($model) {
+        $items->lazyById(config('seo.chunk_size', 100))->filter->url->each(function ($model) {
             $this->progress?->start();
 
             $seo = app(PageScanRunner::class)->scan(
