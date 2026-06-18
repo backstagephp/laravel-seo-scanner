@@ -1,4 +1,7 @@
 {
+    "The site should have a valid XML sitemap because it helps search engines discover and crawl all important pages efficiently.": "De site zou een geldige XML-sitemap moeten hebben, omdat deze zoekmachines helpt alle belangrijke pagina's efficiënt te ontdekken en te crawlen.",
+    "failed.configuration.sitemap.missing": "We konden geen XML-sitemap voor deze site vinden op :actualValue, terwijl die er zou moeten zijn.",
+    "failed.configuration.sitemap.invalid": "De sitemap gevonden op :actualValue is geen geldige XML-sitemap (geen urlset- of sitemapindex-element).",
     "The robots.txt file should not block known AI crawlers (such as GPTBot, ClaudeBot and PerplexityBot) unless that is intended, because blocking them removes the site from AI-powered search engines and assistants.": "Het robots.txt-bestand zou bekende AI-crawlers (zoals GPTBot, ClaudeBot en PerplexityBot) niet moeten blokkeren tenzij dat de bedoeling is, omdat het blokkeren ervan de site verwijdert uit AI-gestuurde zoekmachines en assistenten.",
     "failed.ai.ai_crawlers.blocked": "Het robots.txt-bestand blokkeert de volgende AI-crawlers, wat de AI- en LLM-zichtbaarheid beperkt: :actualValue.",
     "The site should provide an llms.txt file because it gives large language models a curated, Markdown overview of the site, which improves how AI tools understand and cite the content.": "De site zou een llms.txt-bestand moeten aanbieden, omdat dit large language models een samengesteld Markdown-overzicht van de site geeft, wat verbetert hoe AI-tools de inhoud begrijpen en citeren.",
