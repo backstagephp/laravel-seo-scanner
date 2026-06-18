@@ -9,6 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 
 class ScanChunk implements ShouldQueue
@@ -30,6 +31,19 @@ class ScanChunk implements ShouldQueue
         public ?string $model = null,
         public array $ids = [],
     ) {}
+
+    /**
+     * Throttle chunk jobs across all workers when throttling is enabled, so
+     * parallel workers collectively respect the configured request rate.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return config('seo.throttle.enabled')
+            ? [new RateLimited('seo-scan')]
+            : [];
+    }
 
     public function handle(PageScanRunner $runner): void
     {

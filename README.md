@@ -34,6 +34,7 @@ Easily configure which routes to scan, exclude or include specific checks or eve
     -   [Scanning a single route](#scanning-a-single-route)
     -   [Scanning routes in an SPA application](#scanning-routes-in-an-spa-application)
     -   [Throttling](#throttling)
+    -   [Scanning large sites](#scanning-large-sites)
     -   [Scan model urls](#scan-model-urls)
     -   [Saving scans into the database](#saving-scans-into-the-database)
     -   [Listening to events](#listening-to-events)
@@ -293,6 +294,43 @@ If you want to throttle the requests, you can set the `throttle` option to `true
     'requests_per_minute' => 10,
 ],
 ```
+
+### Scanning large sites
+
+For large sites (think a webshop with thousands of product pages) a single synchronous run is slow and can hit the queue job timeout. The scanner can instead split the work into batched queue jobs and process them with multiple workers.
+
+Run the scan as a batch of queued jobs:
+
+```bash
+php artisan seo:scan --queue
+```
+
+This creates one scan record, splits the routes and model records into chunks, and dispatches them as a `Bus::batch` of `ScanChunk` jobs. When the batch finishes, the scan record is finalized (page count, failed checks, duration) and the `ScanCompleted` event is fired.
+
+Memory stays flat regardless of how many model records you have: records are read in batches using `lazyById()` rather than loaded all at once. The batch size is controlled by `chunk_size`, which is also the number of pages each queue job scans:
+
+```php
+// config/seo.php
+'chunk_size' => 100,
+```
+
+Dispatch the jobs onto a dedicated queue so you can scale its workers independently:
+
+```php
+// config/seo.php
+'queue' => 'seo',
+```
+
+```bash
+# Run several workers against the seo queue to scan in parallel
+php artisan queue:work --queue=seo
+php artisan queue:work --queue=seo
+php artisan queue:work --queue=seo
+```
+
+> Use a real queue connection (Redis, database, …) for parallel workers — the `sync` driver runs jobs inline and cannot run them in parallel.
+
+**Throttling across parallel workers.** The `throttle` setting (see above) is enforced across all workers when scanning with `--queue`, using a cache-backed rate limiter. Because each job scans `chunk_size` pages, the limiter allows roughly `requests_per_minute / chunk_size` jobs per minute. For this to be shared between workers, use a shared cache store (Redis, Memcached or database) — not the `array` driver.
 
 ### Scan model urls
 
