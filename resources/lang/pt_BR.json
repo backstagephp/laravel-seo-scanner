@@ -1,4 +1,6 @@
 {
+    "The page should set security headers such as Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options and Referrer-Policy because they protect visitors and signal a well maintained, trustworthy site.": "A página deve definir cabeçalhos de segurança como Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options e Referrer-Policy porque eles protegem os visitantes e indicam um site bem mantido e confiável.",
+    "failed.security.headers.missing": "A página está sem os seguintes cabeçalhos de segurança recomendados: :actualValue.",
     "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.": "A página deve ser servida por HTTPS porque ele criptografa o tráfego, é necessário para recursos modernos do navegador e é um sinal de classificação confirmado pelo Google.",
     "failed.security.https.insecure": "A página não é servida por HTTPS. Ela foi acessada por :actualValue.",
     "The site should have a valid XML sitemap because it helps search engines discover and crawl all important pages efficiently.": "O site deve ter um sitemap XML válido porque ele ajuda os mecanismos de busca a descobrir e rastrear todas as páginas importantes de forma eficiente.",

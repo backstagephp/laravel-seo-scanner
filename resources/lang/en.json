@@ -1,4 +1,6 @@
 {
+    "The page should set security headers such as Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options and Referrer-Policy because they protect visitors and signal a well maintained, trustworthy site.": "The page should set security headers such as Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options and Referrer-Policy because they protect visitors and signal a well maintained, trustworthy site.",
+    "failed.security.headers.missing": "The page is missing the following recommended security headers: :actualValue.",
     "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.": "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.",
     "failed.security.https.insecure": "The page is not served over HTTPS. It was reached over :actualValue.",
     "The site should have a valid XML sitemap because it helps search engines discover and crawl all important pages efficiently.": "The site should have a valid XML sitemap because it helps search engines discover and crawl all important pages efficiently.",

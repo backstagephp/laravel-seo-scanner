@@ -150,6 +150,7 @@ These checks are available in the package. You can add or remove checks in the c
 
 ### Security
 
+✅ The page sets recommended security headers (HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy). <br>
 ✅ The page is served over HTTPS. <br>
 
 ## Usage
