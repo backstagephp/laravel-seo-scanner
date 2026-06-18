@@ -30,7 +30,7 @@ class ScanFinalizer
         $scan->update([
             'pages' => $rows->count(),
             'failed_checks' => $failedChecks,
-            'time' => $scan->started_at ? $scan->started_at->diffInSeconds(now(), true) : null,
+            'time' => $scan->started_at->diffInSeconds(now(), true),
             'finished_at' => now(),
         ]);
 
