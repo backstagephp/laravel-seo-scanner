@@ -109,6 +109,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Queue
+    |--------------------------------------------------------------------------
+    |
+    | The queue that the batched scan jobs (seo:scan --queue) are dispatched
+    | onto. Set this to a dedicated queue so you can scale its workers
+    | independently. Leave null to use the default queue.
+    |
+    */
+    'queue' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Domains (DNS resolving)
     |--------------------------------------------------------------------------
     |

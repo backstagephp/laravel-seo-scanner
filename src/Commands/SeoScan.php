@@ -128,6 +128,7 @@ class SeoScan extends Command
 
         Bus::batch($jobs)
             ->name('SEO scan #'.$scanId)
+            ->onQueue(config('seo.queue'))
             ->finally(function () use ($scanId) {
                 if ($scan = SeoScanModel::find($scanId)) {
                     app(ScanFinalizer::class)->finalize($scan);
