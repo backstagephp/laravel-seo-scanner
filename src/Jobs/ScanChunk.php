@@ -7,6 +7,7 @@ use Backstage\Seo\Services\PageScanRunner;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
@@ -54,7 +55,7 @@ class ScanChunk implements ShouldQueue
         }
 
         foreach ($this->urls as $url) {
-            $runner->scan($scan, $url, useJavascript: config('seo.javascript'));
+            $this->scanSafely($runner, $scan, $url);
         }
 
         if ($this->model && ! empty($this->ids)) {
@@ -64,7 +65,20 @@ class ScanChunk implements ShouldQueue
                 ->whereIn($instance->getKeyName(), $this->ids)
                 ->get()
                 ->filter->url
-                ->each(fn ($model) => $runner->scan($scan, $model->url, $model));
+                ->each(fn ($model) => $this->scanSafely($runner, $scan, $model->url, $model));
+        }
+    }
+
+    /**
+     * Scan a single page, isolating failures so one unscannable page can't
+     * abort the whole chunk and lose every other page in it.
+     */
+    private function scanSafely(PageScanRunner $runner, SeoScanModel $scan, string $url, ?Model $model = null): void
+    {
+        try {
+            $runner->scan($scan, $url, $model, useJavascript: config('seo.javascript'));
+        } catch (\Throwable $e) {
+            report($e);
         }
     }
 }

@@ -106,6 +106,7 @@
     "failed.content.broken_links": "The page contains broken links. These links were found: :actualValue.",
     "failed.content.length": "The content is :actualValue characters long. It should be at least :expectedValue characters long.",
     "failed.content.length.parse": "We were unable to parse the content of this page, please try again.",
+    "failed.check.error": "This check could not be completed because of an unexpected error.",
     "failed.content.mixed_content": "The page contains links to insecure addresses, while it should not. These links were found :actualValue.",
     "failed.content.multiple_h1": "The page contains multiple h1 tags, while it should not. These tags were found :actualValue.",
     "failed.content.no_heading": "The page does not contain any h1 tag, while it should.",

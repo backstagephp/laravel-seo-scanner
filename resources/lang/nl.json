@@ -106,6 +106,7 @@
     "failed.content.broken_links": "De pagina bevat kapotte links. Deze links zijn gevonden: :actualValue.",
     "failed.content.length": "De inhoud is :actualValue tekens lang. Dit zou minstens :expectedValue tekens moeten zijn.",
     "failed.content.length.parse": "We konden de inhoud van deze pagina niet analyseren. Probeer het opnieuw.",
+    "failed.check.error": "Deze controle kon niet worden voltooid vanwege een onverwachte fout.",
     "failed.content.mixed_content": "De pagina bevat links naar onveilige adressen, terwijl dat niet zou moeten. Deze links zijn gevonden: :actualValue.",
     "failed.content.multiple_h1": "De pagina bevat meerdere h1-tags, terwijl dat niet zou moeten. Deze tags zijn gevonden: :actualValue.",
     "failed.content.no_heading": "De pagina bevat geen h1-tag, terwijl dat wel zou moeten.",

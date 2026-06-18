@@ -107,6 +107,7 @@
     "failed.content.broken_links": "Die Seite enthält defekte Links. Diese Links wurden gefunden: :actualValue.",
     "failed.content.length": "Der Inhalt enthält :actualValue Zeichen. Er sollte mindestens :expectedValue Zeichen enthalten.",
     "failed.content.length.parse": "Wir konnten den Inhalt dieser Seite nicht analysieren, bitte versuchen Sie es noch einmal.",
+    "failed.check.error": "Diese Prüfung konnte aufgrund eines unerwarteten Fehlers nicht abgeschlossen werden.",
     "failed.content.mixed_content": "Die Seite enthält Links zu unsicheren Adressen, obwohl dies nicht der Fall sein sollte. Diese Links wurden gefunden: :actualValue.",
     "failed.content.multiple_h1": "Die Seite enthält mehrere h1-Tags, obwohl sie das nicht sollte. Diese Tags wurden gefunden: :actualValue.",
     "failed.content.no_heading": "Die Seite enthält keine h1-Tags, obwohl sie welche enthalten sollte.",

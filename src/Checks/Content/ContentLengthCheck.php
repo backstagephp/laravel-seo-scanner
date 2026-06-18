@@ -61,7 +61,15 @@ class ContentLengthCheck implements Check
 
         $readability = new Readability($body);
 
-        $readability->init();
+        // php-readability can throw on real-world HTML (e.g. j0k3r/php-readability#96,
+        // "Undefined array key 0"). Degrade gracefully instead of aborting the scan.
+        try {
+            $readability->init();
+        } catch (\Throwable $e) {
+            $this->failureReason = __('failed.content.length.parse');
+
+            return null;
+        }
 
         $textContent = $readability->getContent()->textContent;
 

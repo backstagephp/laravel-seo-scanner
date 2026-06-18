@@ -16,15 +16,30 @@ trait PerformCheck
 
         $this->useJavascript = $data['javascriptResponse'] ?? false;
 
+        $threw = false;
+
         if (! in_array('exit', $data)) {
-            $result = $this->check($data['response'], $data['crawler']);
+            try {
+                $result = $this->check($data['response'], $data['crawler']);
+            } catch (\Throwable $e) {
+                // A single check throwing must not abort the whole pipeline
+                // (and, in queued scans, the whole ScanChunk). Record it as a
+                // failed check and let the remaining checks run.
+                $threw = true;
+                $result = false;
+                $this->failureReason = __('failed.check.error');
+
+                report($e);
+            }
         }
 
         $result = $result ?? false;
 
         $data = $this->setResult($data, $result);
 
-        if (! $result && ! $this->continueAfterFailure) {
+        // Only honour fail-fast (continueAfterFailure = false) for genuine check
+        // failures, never for unexpected exceptions.
+        if (! $result && ! $this->continueAfterFailure && ! $threw) {
             $data['exit'] = true;
         }
 
