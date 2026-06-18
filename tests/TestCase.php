@@ -4,6 +4,7 @@ namespace Backstage\Seo\Tests;
 
 use Backstage\Seo\SeoServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -17,6 +18,11 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Backstage\\Seo\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+
+        // Fail fast and loud if a test makes an HTTP request it didn't fake,
+        // instead of silently hitting the live network and timing out
+        // intermittently in CI. Tests that need HTTP must Http::fake() it.
+        Http::preventStrayRequests();
     }
 
     protected function getPackageProviders($app)
