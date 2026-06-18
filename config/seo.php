@@ -111,9 +111,10 @@ return [
          | queue, and each release counts as an attempt. This is how long a
          | throttled chunk may keep being released-and-retried before it is
          | allowed to fail, so it can ride out throttle waves on large sites.
-         | Set to null to fall back to the worker's --tries instead.
+         | At the slowest throttle (1 job/min) 6h covers ~36k URLs; raise it
+         | for bigger sites, or set null to fall back to the worker's --tries.
          */
-        'retry_until_hours' => 24,
+        'retry_until_hours' => 6,
     ],
 
     /*

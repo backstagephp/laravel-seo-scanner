@@ -67,7 +67,7 @@ class ScanChunk implements ShouldQueue
             return null;
         }
 
-        $hours = (int) config('seo.throttle.retry_until_hours', 24);
+        $hours = (int) config('seo.throttle.retry_until_hours', 6);
 
         return $hours > 0 ? now()->addHours($hours) : null;
     }
