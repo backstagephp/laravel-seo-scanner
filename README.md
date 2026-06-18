@@ -148,6 +148,10 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ CSS files are not larger than 15 KB. <br>
 ✅ HTML is GZIP compressed. <br>
 
+### Security
+
+✅ The page is served over HTTPS. <br>
+
 ## Usage
 
 ### Running the scanner in a local environment

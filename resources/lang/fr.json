@@ -1,4 +1,6 @@
 {
+    "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.": "La page devrait être servie via HTTPS car cela chiffre le trafic, est requis pour les fonctionnalités modernes des navigateurs et constitue un signal de classement confirmé par Google.",
+    "failed.security.https.insecure": "La page n'est pas servie via HTTPS. Elle a été atteinte via :actualValue.",
     "The site should have a valid XML sitemap because it helps search engines discover and crawl all important pages efficiently.": "Le site devrait avoir un sitemap XML valide car il aide les moteurs de recherche à découvrir et explorer efficacement toutes les pages importantes.",
     "failed.configuration.sitemap.missing": "Nous n'avons pas trouvé de sitemap XML pour ce site à l'adresse :actualValue, alors qu'il devrait en avoir un.",
     "failed.configuration.sitemap.invalid": "Le sitemap trouvé à l'adresse :actualValue n'est pas un sitemap XML valide (aucun élément urlset ou sitemapindex).",
