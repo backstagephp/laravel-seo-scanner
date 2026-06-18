@@ -17,9 +17,14 @@ class ScanChunk implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $tries = 1;
-
     public $timeout = 600;
+
+    /**
+     * Fail the job only after this many uncaught exceptions. Rate-limit
+     * releases are not exceptions, so they don't consume this budget — this
+     * just stops a genuinely broken chunk from retrying until retryUntil().
+     */
+    public $maxExceptions = 3;
 
     /**
      * @param  array<int, string>  $urls  Route URLs to scan.
@@ -44,6 +49,27 @@ class ScanChunk implements ShouldQueue
         return config('seo.throttle.enabled')
             ? [new RateLimited('seo-scan')]
             : [];
+    }
+
+    /**
+     * Bound retries by time rather than by a hard attempt count.
+     *
+     * The RateLimited middleware throttles by releasing the job back onto the
+     * queue, and each release counts as an attempt — so a hard `$tries` cap
+     * would fail every throttled chunk on its next pickup instead of resuming
+     * it. A time bound lets the job ride out throttle waves while still
+     * guaranteeing it can't loop forever. When throttling is off we return
+     * null so the worker's own --tries governs as usual.
+     */
+    public function retryUntil(): ?\DateTimeInterface
+    {
+        if (! config('seo.throttle.enabled')) {
+            return null;
+        }
+
+        $hours = (int) config('seo.throttle.retry_until_hours', 24);
+
+        return $hours > 0 ? now()->addHours($hours) : null;
     }
 
     public function handle(PageScanRunner $runner): void

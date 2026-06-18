@@ -105,6 +105,15 @@ return [
     'throttle' => [
         'enabled' => false,
         'requests_per_minute' => null,
+
+        /*
+         | The rate limiter throttles by releasing chunk jobs back onto the
+         | queue, and each release counts as an attempt. This is how long a
+         | throttled chunk may keep being released-and-retried before it is
+         | allowed to fail, so it can ride out throttle waves on large sites.
+         | Set to null to fall back to the worker's --tries instead.
+         */
+        'retry_until_hours' => 24,
     ],
 
     /*
