@@ -96,6 +96,12 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page does not have 'noindex' set. <br>
 ✅ The page does not have 'nofollow' set. <br>
 ✅ Robots.txt allows indexing. <br>
+✅ The site has a valid XML sitemap. <br>
+
+### AI
+
+✅ Known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, ...) are not blocked in robots.txt. <br>
+✅ The site provides an llms.txt file. <br>
 
 ### Content
 
