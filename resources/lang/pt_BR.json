@@ -106,6 +106,7 @@
     "failed.content.broken_links": "A página contém links quebrados. Links encontrados: :actualValue.",
     "failed.content.length": "O conteúdo tem :actualValue caracteres, mas deve conter ao menos :expectedValue caracteres.",
     "failed.content.length.parse": "Não foi possível analisar o conteúdo desta página. Tente novamente.",
+    "failed.check.error": "Esta verificação não pôde ser concluída devido a um erro inesperado.",
     "failed.content.mixed_content": "A página contém links para endereços inseguros, mas não deveria. Links encontrados :actualValue.",
     "failed.content.multiple_h1": "A página contém várias tags h1, mas não deveria. Tags encontradas :actualValue.",
     "failed.content.no_heading": "A página não contém nenhuma tag h1, embora deveria.",

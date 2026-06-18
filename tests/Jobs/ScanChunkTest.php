@@ -3,11 +3,14 @@
 use Backstage\Seo\Checks\Content\MultipleHeadingCheck;
 use Backstage\Seo\Jobs\ScanChunk;
 use Backstage\Seo\Models\SeoScan as SeoScanModel;
+use Backstage\Seo\SeoScore;
 use Backstage\Seo\Services\PageScanRunner;
 use Backstage\Seo\Tests\Support\Product;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 beforeEach(function () {
     config(['seo.database.connection' => 'testing']);
@@ -38,6 +41,37 @@ it('scans a chunk of urls and persists a score per url', function () {
     ]))->handle(app(PageScanRunner::class));
 
     expect(DB::connection('testing')->table('seo_scores')->count())->toBe(2);
+});
+
+it('continues scanning the chunk when one page throws', function () {
+    $scan = SeoScanModel::create(['total_checks' => 1, 'started_at' => now()]);
+
+    $runner = new class extends PageScanRunner
+    {
+        public array $scanned = [];
+
+        public function scan(?SeoScanModel $scan, string $url, ?Model $model = null, bool $useJavascript = false, ?ProgressBar $progress = null): SeoScore
+        {
+            if (str_contains($url, 'boom')) {
+                throw new RuntimeException('kaboom');
+            }
+
+            $this->scanned[] = $url;
+
+            return new SeoScore;
+        }
+    };
+
+    (new ScanChunk(scanId: $scan->id, urls: [
+        'https://example.com/a',
+        'https://example.com/boom',
+        'https://example.com/c',
+    ]))->handle($runner);
+
+    expect($runner->scanned)->toBe([
+        'https://example.com/a',
+        'https://example.com/c',
+    ]);
 });
 
 it('scans a chunk of model records by id and persists the model reference', function () {

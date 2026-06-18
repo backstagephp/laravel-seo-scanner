@@ -106,6 +106,7 @@
     "failed.content.broken_links": "La page contient des liens brisés. Ces liens ont été trouvés : :actualValue.",
     "failed.content.length": "Le contenu comporte :actualValue caractères. Il devrait comporter au moins :expectedValue caractères.",
     "failed.content.length.parse": "Nous n'avons pas pu analyser le contenu de cette page, veuillez réessayer.",
+    "failed.check.error": "Cette vérification n'a pas pu être effectuée en raison d'une erreur inattendue.",
     "failed.content.mixed_content": "La page contient des liens vers des adresses non sécurisées, alors qu'elle ne devrait pas. Ces liens ont été trouvés : :actualValue.",
     "failed.content.multiple_h1": "La page contient plusieurs balises h1, alors qu'elle ne devrait pas. Ces balises ont été trouvées : :actualValue.",
     "failed.content.no_heading": "La page ne contient aucune balise h1, alors qu'elle devrait en contenir.",
