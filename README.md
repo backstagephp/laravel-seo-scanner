@@ -96,6 +96,12 @@ These checks are available in the package. You can add or remove checks in the c
 ✅ The page does not have 'noindex' set. <br>
 ✅ The page does not have 'nofollow' set. <br>
 ✅ Robots.txt allows indexing. <br>
+✅ The site has a valid XML sitemap. <br>
+
+### AI
+
+✅ Known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, ...) are not blocked in robots.txt. <br>
+✅ The site provides an llms.txt file. <br>
 
 ### Content
 
@@ -145,6 +151,8 @@ These checks are available in the package. You can add or remove checks in the c
 ### Security
 
 ✅ The page does not use a long redirect chain. <br>
+✅ The page sets recommended security headers (HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy). <br>
+✅ The page is served over HTTPS. <br>
 
 ## Usage
 
