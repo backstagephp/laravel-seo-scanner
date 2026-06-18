@@ -1,4 +1,6 @@
 {
+    "The page should be reachable without a long chain of redirects because each extra redirect adds latency and can dilute SEO signals.": "De pagina zou bereikbaar moeten zijn zonder een lange keten van redirects, omdat elke extra redirect vertraging toevoegt en SEO-signalen kan verzwakken.",
+    "failed.security.redirect_chain.too_long": "De pagina wordt bereikt via :actualValue redirects. Beperk het aantal redirects tot :expectedValue of minder.",
     "The page should set security headers such as Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options and Referrer-Policy because they protect visitors and signal a well maintained, trustworthy site.": "De pagina zou security-headers zoals Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options en Referrer-Policy moeten instellen, omdat deze bezoekers beschermen en wijzen op een goed onderhouden, betrouwbare site.",
     "failed.security.headers.missing": "De volgende aanbevolen security-headers ontbreken op de pagina: :actualValue.",
     "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.": "De pagina zou via HTTPS geserveerd moeten worden, omdat dit het verkeer versleutelt, vereist is voor moderne browserfuncties en een bevestigd Google-rankingsignaal is.",

@@ -1,4 +1,6 @@
 {
+    "The page should be reachable without a long chain of redirects because each extra redirect adds latency and can dilute SEO signals.": "A página deve ser acessível sem uma longa cadeia de redirecionamentos porque cada redirecionamento extra adiciona latência e pode diluir os sinais de SEO.",
+    "failed.security.redirect_chain.too_long": "A página é acessada por meio de :actualValue redirecionamentos. Reduza o número de redirecionamentos para :expectedValue ou menos.",
     "The page should set security headers such as Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options and Referrer-Policy because they protect visitors and signal a well maintained, trustworthy site.": "A página deve definir cabeçalhos de segurança como Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options e Referrer-Policy porque eles protegem os visitantes e indicam um site bem mantido e confiável.",
     "failed.security.headers.missing": "A página está sem os seguintes cabeçalhos de segurança recomendados: :actualValue.",
     "The page should be served over HTTPS because it encrypts traffic, is required for modern browser features and is a confirmed Google ranking signal.": "A página deve ser servida por HTTPS porque ele criptografa o tráfego, é necessário para recursos modernos do navegador e é um sinal de classificação confirmado pelo Google.",
