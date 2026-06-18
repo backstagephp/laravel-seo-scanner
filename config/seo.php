@@ -155,6 +155,18 @@ return [
     */
     'models' => [],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Chunk size
+    |--------------------------------------------------------------------------
+    |
+    | When scanning models, records are read in chunks of this size instead of
+    | loading every record into memory at once. Lower this for large tables on
+    | memory-constrained environments.
+    |
+    */
+    'chunk_size' => 100,
+
     'http' => [
         /*
         |--------------------------------------------------------------------------
