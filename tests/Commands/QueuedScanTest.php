@@ -6,6 +6,7 @@ use Backstage\Seo\Models\SeoScan as SeoScanModel;
 use Backstage\Seo\Tests\Support\Product;
 use Illuminate\Bus\PendingBatch;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 
 beforeEach(function () {
@@ -15,6 +16,11 @@ beforeEach(function () {
     config(['seo.check_routes' => false]);
     config(['seo.models' => [Product::class]]);
     $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
+    // The non-queued run scans inline, so stub HTTP to keep it off the network.
+    Http::fake([
+        '*' => Http::response('<html><head><title>Test</title></head><body><h1>Test</h1></body></html>'),
+    ]);
 
     Schema::create('products', function ($table) {
         $table->bigIncrements('id');

@@ -1,6 +1,18 @@
 <?php
 
 use Backstage\Seo\Checks\Content\MultipleHeadingCheck;
+use Illuminate\Support\Facades\Http;
+
+beforeEach(function () {
+    // Stub every request so the scan runs against a known page instead of
+    // hitting the live site, which made these tests flaky in CI.
+    Http::fake([
+        '*' => Http::response(
+            '<html><head><title>Test page</title></head><body><h1>Test</h1><p>Content</p></body></html>',
+            200
+        ),
+    ]);
+});
 
 it('can run the SEO check for a single URL', function () {
     $this->artisan('seo:scan-url', ['url' => 'https://backstagephp.com'])
