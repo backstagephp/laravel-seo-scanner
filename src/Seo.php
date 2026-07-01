@@ -2,13 +2,13 @@
 
 namespace Backstage\Seo;
 
+use Backstage\Seo\Support\JavascriptRenderer;
 use Illuminate\Http\Client\Response;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use Spatie\Browsershot\Browsershot;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Finder\Finder;
@@ -37,7 +37,7 @@ class Seo
             $response = $this->visitPage(url: $url);
 
             if ($useJavascript) {
-                $javascriptResponse = $this->visitPageUsingJavascript(url: $url);
+                $javascriptResponse = $this->visitPageUsingJavascript(url: $url, rawResponse: $response);
             }
         } catch (\Exception $e) {
             throw new \Exception("Could not visit url `{$url}`: {$e->getMessage()}");
@@ -48,12 +48,9 @@ class Seo
         return (new SeoScore)($this->successful, $this->failed);
     }
 
-    private function visitPageUsingJavascript(string $url): string
+    private function visitPageUsingJavascript(string $url, Response $rawResponse): string
     {
-        $response = Browsershot::url($url)
-            ->bodyHtml();
-
-        return $response;
+        return app(JavascriptRenderer::class)->render($url, $rawResponse);
     }
 
     private function visitPage(string $url): object

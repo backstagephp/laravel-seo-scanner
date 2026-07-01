@@ -233,6 +233,40 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | JavaScript rendering: waiting and fallback
+    |--------------------------------------------------------------------------
+    |
+    | When JavaScript rendering is enabled, the scanner waits for the page to
+    | settle before capturing the DOM, so checks run against the fully rendered
+    | page instead of the pre-hydration app shell.
+    |
+    | strategy: how to wait for the page to settle.
+    |   - "networkidle2" (default): settle when there are at most 2 open network
+    |     connections. Recommended for unknown sites, since analytics beacons,
+    |     chat widgets and websockets keep connections open and would prevent a
+    |     stricter strategy from ever settling.
+    |   - "networkidle0": settle only when there are zero open connections.
+    |   - "delay": do not wait for the network; wait a fixed number of
+    |     milliseconds ("delay" below).
+    |
+    | timeout: hard ceiling per page, in seconds.
+    |
+    | delay: milliseconds to wait, only used when strategy is "delay".
+    |
+    | fallback_on_timeout: when a render times out, fall back to an immediate
+    | render (and then to the raw HTTP response) instead of failing the page.
+    | Set to false to keep the previous behavior of failing the page on timeout.
+    |
+    */
+    'javascript_wait' => [
+        'strategy' => 'networkidle2',
+        'timeout' => 15,
+        'delay' => 3000,
+        'fallback_on_timeout' => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | PageSpeed Insights
     |--------------------------------------------------------------------------
     |

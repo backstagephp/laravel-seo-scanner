@@ -260,6 +260,35 @@ php artisan seo:scan-url https://backstagephp.com --javascript
 
 > Note: This command will use Puppeteer to render the page. Make sure that you have Puppeteer installed on your system. You can install Puppeteer by running the following command: `npm install puppeteer`. **At this moment it's only available when scanning single routes.**
 
+#### Waiting for JavaScript to render
+
+By default the scanner now waits for the page to settle before capturing the DOM, so checks run against the fully rendered page instead of the pre-hydration app shell. You can tune this with the `javascript_wait` options in the config file:
+
+```php
+'javascript_wait' => [
+    // How to wait for the page to settle:
+    //   "networkidle2" (default) — settle at ≤ 2 open network connections.
+    //   "networkidle0" — settle only at 0 open connections.
+    //   "delay" — don't wait for the network, wait a fixed time instead.
+    'strategy' => 'networkidle2',
+
+    // Hard ceiling per page, in seconds.
+    'timeout' => 15,
+
+    // Milliseconds to wait, only used when strategy is "delay".
+    'delay' => 3000,
+
+    // On a render timeout, fall back to an immediate render (and then to the
+    // raw HTTP response) instead of failing the page. Set to false to keep the
+    // previous behavior of failing the page on timeout.
+    'fallback_on_timeout' => true,
+],
+```
+
+`networkidle2` is the default because the scanner runs against unknown sites: analytics beacons, chat widgets and websockets keep connections open, so a stricter `networkidle0` would often never settle and time out.
+
+> Note: because rendering now waits for the page, SEO scores for JavaScript-rendered pages may change compared to earlier versions. If you prefer the previous behavior where a render timeout fails the page, set `fallback_on_timeout` to `false`.
+
 ### PageSpeed Insights (Core Web Vitals)
 
 The package can pull the Google PageSpeed (Lighthouse) performance score and Core Web Vitals straight from the [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started) — no third-party package required. These checks are **opt-in** because they call an external API and are slower and rate-limited.
