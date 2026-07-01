@@ -24,7 +24,7 @@ class JavascriptRenderer
                 throw $e;
             }
 
-            Log::warning("SEO scanner: JavaScript render timed out for `{$url}`, falling back to an immediate render.", ['exception' => $e->getMessage()]);
+            Log::warning("SEO scanner: JavaScript render failed for `{$url}`, falling back to an immediate render.", ['exception' => $e->getMessage()]);
 
             try {
                 return $this->capture($url, wait: false);
