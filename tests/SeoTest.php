@@ -2,6 +2,7 @@
 
 use Backstage\Seo\Checks\Content\MultipleHeadingCheck;
 use Backstage\Seo\Support\JavascriptRenderer;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
@@ -56,7 +57,7 @@ it('uses the JavaScript renderer when javascript rendering is enabled', function
     {
         public array $renderedUrls = [];
 
-        public function render(string $url, \Illuminate\Http\Client\Response $rawResponse): string
+        public function render(string $url, Response $rawResponse): string
         {
             $this->renderedUrls[] = $url;
 
